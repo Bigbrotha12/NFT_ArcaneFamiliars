@@ -8,6 +8,8 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { MainComponent } from './main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MaterialsModule } from './materials/materials.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
