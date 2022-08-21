@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 
 /**
  * @title Autosize sidenav
