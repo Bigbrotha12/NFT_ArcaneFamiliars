@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
+/**
+ * @title Autosize sidenav
+ */
 @Component({
   selector: 'app-side-bar',
-  templateUrl: './side-bar.component.html',
-  styleUrls: ['./side-bar.component.css']
+  templateUrl: 'side-bar.component.html',
+  styleUrls: ['side-bar.component.css'],
 })
-export class SideBarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class SideBarComponent implements OnChanges {
+  
+  ngOnChanges(): void {
+    
   }
-
 }
