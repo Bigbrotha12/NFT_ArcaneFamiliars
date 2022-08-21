@@ -9,7 +9,7 @@ const routes: Routes = [
     component: LandingPComponent
   },
   {
-    path: "/app",
+    path: "app",
     component: AppPComponent
   }
 ];
