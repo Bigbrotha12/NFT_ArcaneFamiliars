@@ -1,6 +1,11 @@
 <mat-drawer-container class="side-container" autosize>
     <mat-drawer #drawer class="sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
+      <div class="sidenav-section" *ngFor="let section of sideBarContent">
+        <p>{{section.section}}</p>
+        <div class="section-item" *ngFor="let item of section.content">
+          <p>{{item.label}}</p>
+        </div>
+      </div>
     </mat-drawer>
   
     <div class="sidenav-content">

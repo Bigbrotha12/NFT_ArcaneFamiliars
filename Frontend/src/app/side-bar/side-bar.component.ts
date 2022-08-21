@@ -9,6 +9,39 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
   styleUrls: ['side-bar.component.css'],
 })
 export class SideBarComponent implements OnChanges {
+
+  sideBarContent = [
+    {
+      section: "FirstSection",
+      content: [
+        {
+          label: "FirstItem",
+          link: "url"
+        },
+        {
+          label: "SecondItem",
+          link: "url"
+        },
+        {
+          label: "ThirdItem",
+          link: "url"
+        }
+      ]
+    },
+    {
+      section: "SecondSection",
+      content: [
+        {
+          label: "FirstItem",
+          link: "url"
+        },
+        {
+          label: "SecondItem",
+          link: "url"
+        }
+      ]
+    }
+  ];
   
   ngOnChanges(): void {
     
