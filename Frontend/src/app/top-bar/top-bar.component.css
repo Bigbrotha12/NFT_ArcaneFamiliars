@@ -1,0 +1,15 @@
+.mat-toolbar {
+    background-color: rgb(60, 60, 233);
+    color: white; 
+    align-items: center; 
+    
+}
+
+.left-top-menu {
+    margin-left: 40%;
+    font-size: medium;
+}
+
+a {
+    margin: 8px;
+}
