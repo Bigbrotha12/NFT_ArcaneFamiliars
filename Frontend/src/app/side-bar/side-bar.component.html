@@ -10,7 +10,8 @@
   
     <div class="sidenav-content">
       <button type="button" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
+        <mat-icon *ngIf="!drawer.opened">arrow_forward_ios</mat-icon>
+        <mat-icon *ngIf="drawer.opened">arrow_back_ios</mat-icon>
       </button>
     </div>
   

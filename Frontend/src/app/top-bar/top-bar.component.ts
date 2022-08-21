@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-top-bar',
@@ -7,6 +7,25 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
+  topBarMenu = [
+    {
+      label: "Home",
+      link: ""
+    },
+    {
+      label: "Docs",
+      link: ""
+    },
+    {
+      label: "Whitepaper",
+      link: ""
+    },
+    {
+      label: "Play Now!",
+      link: ""
+    }
+  ]
+  
   constructor() { }
 
   ngOnInit(): void {

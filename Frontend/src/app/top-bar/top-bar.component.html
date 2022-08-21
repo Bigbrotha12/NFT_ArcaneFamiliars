@@ -1,15 +1,15 @@
 <mat-toolbar>
-    <div class="app-name">
-        <span>Arcane Familiars</span>
+    <div class="top-bar-container">
+        <div class="app-name">
+            <span>Arcane Familiars</span>
+        </div>
+        <div class="left-top-menu">
+            <div class="menu-item" *ngFor="let item of topBarMenu">
+                <a>{{item.label}}</a>
+            </div>
+        </div>
+        <div class="auth-button">
+            <button mat-raised-button>Log In</button>
+        </div>
     </div>
-    <div class="left-top-menu">
-        <a>Home</a>
-        <a>Docs</a>
-        <a>Whitepaper</a>
-        <a>Play Now!</a>
-    </div>
-    <div class="auth-button">
-        <button mat-raised-button>Log In</button>
-    </div>
-    
 </mat-toolbar>

@@ -1,12 +1,25 @@
 .mat-toolbar {
     background-color: rgb(60, 60, 233);
     color: white; 
-    align-items: center; 
-    
+}
+
+.top-bar-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+div {
+    display: flex;
+    align-items: center;
+}
+
+.app-name {
+    width: 80%;
 }
 
 .left-top-menu {
-    margin-left: 40%;
     font-size: medium;
 }
 

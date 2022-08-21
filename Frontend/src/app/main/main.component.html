@@ -1,2 +1,7 @@
-<p>main works!</p>
-<button mat-button>Play Now!</button>
+<div class="main-footer">
+    <div class="footer-container" *ngFor="let content of footerContent">
+        <p class="footer-heading">{{content.label}}</p>
+        <p class="footer-content">{{content.data}}</p>
+    </div>
+</div>
+

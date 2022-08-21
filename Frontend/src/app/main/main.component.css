@@ -1,0 +1,14 @@
+.main-footer {
+    display: flex;
+    justify-content:space-evenly;
+    background-color: gray;
+}
+
+div {
+    border: 1px solid;
+    padding: 5px;
+}
+
+.footer-container {
+    color: whitesmoke;
+}
