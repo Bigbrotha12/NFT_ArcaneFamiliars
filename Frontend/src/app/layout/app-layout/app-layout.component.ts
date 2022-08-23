@@ -7,6 +7,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppLayoutComponent implements OnInit {
 
+  sideBarContent = [
+    {
+      section: "FirstSection",
+      content: [
+        {
+          label: "FirstItem",
+          link: "url"
+        },
+        {
+          label: "SecondItem",
+          link: "url"
+        },
+        {
+          label: "ThirdItem",
+          link: "url"
+        }
+      ]
+    },
+    {
+      section: "SecondSection",
+      content: [
+        {
+          label: "FirstItem",
+          link: "url"
+        },
+        {
+          label: "SecondItem",
+          link: "url"
+        }
+      ]
+    }
+  ];
+  
   constructor() { }
 
   ngOnInit(): void {
