@@ -17,5 +17,17 @@ linkAddress = 'https://link.ropsten.x.immutable.com';
 // Link SDK
 link = new Link(this.linkAddress);
 
+async setupAccount() {
+  let address, starkPublicKey;
+  ({ address, starkPublicKey } = await this.link.setup({}));
+  
+  localStorage.setItem('WALLET_ADDRESS', address);
+  localStorage.setItem('STARK_PUBLIC_KEY', starkPublicKey);
+}
+
+getLink() {
+  console.log(this.link);
+}
+
 constructor() { }
 }

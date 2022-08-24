@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IMXqueryService } from './services/imxquery.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Arcane Familiars';
   
-
+  log(){
+    this.imx.setupAccount();
+  }
+  constructor(private imx: IMXqueryService) {}
 }
