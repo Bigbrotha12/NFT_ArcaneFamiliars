@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialsModule } from './materials/materials.module';
 import { IMXqueryService } from './services/imxquery.service';
 import { Web3queryService } from './services/web3query.service';
+import { WindowRefService } from './services/window-ref.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { Web3queryService } from './services/web3query.service';
   ],
   providers: [
     IMXqueryService,
-    Web3queryService
+    Web3queryService,
+    WindowRefService
   ],
   bootstrap: [AppComponent]
 })

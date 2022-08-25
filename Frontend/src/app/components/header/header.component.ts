@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { IMXqueryService } from 'src/app/services/imxquery.service';
 
 @Component({
-  selector: 'app-top-bar',
-  templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
-export class TopBarComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
   topBarMenu = [
     {
@@ -25,8 +26,12 @@ export class TopBarComponent implements OnInit {
       link: ""
     }
   ]
+
+  logIn() {
+    this.imx.setupAccount();
+  }
   
-  constructor() { }
+  constructor(private imx: IMXqueryService) { }
 
   ngOnInit(): void {
   }

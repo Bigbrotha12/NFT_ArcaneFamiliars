@@ -1,0 +1,14 @@
+.main-body {
+    background-color:  rgb(252, 186, 115);
+    height: 80%;
+    width: 100%;
+}
+
+.body-container {
+    display: flex;
+    width: 100%;
+}
+
+mat-card {
+    margin: 15px;
+}

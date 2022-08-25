@@ -1,9 +1,9 @@
 .mat-toolbar {
-    background-color: rgb(60, 60, 233);
+    background: linear-gradient(90deg, rgb(60, 60, 233) 0%, rgb(108, 108, 225) 50%, rgb(60, 60, 233) 100%);
     color: white; 
 }
 
-.top-bar-container {
+.header-container {
     display: flex;
     height: 100%;
     width: 100%;

@@ -9,37 +9,37 @@ export class AppLayoutComponent implements OnInit {
 
   sideBarContent = [
     {
-      section: "FirstSection",
+      section: "Familiars",
       content: [
         {
-          label: "FirstItem",
+          label: "My Collection",
           link: "url"
         },
         {
-          label: "SecondItem",
+          label: "Marketplace",
           link: "url"
         },
         {
-          label: "ThirdItem",
+          label: "Mint",
           link: "url"
         }
       ]
     },
     {
-      section: "SecondSection",
+      section: "Transactions",
       content: [
         {
-          label: "FirstItem",
+          label: "L1 Bridge",
           link: "url"
         },
         {
-          label: "SecondItem",
+          label: "Change Traits",
           link: "url"
         }
       ]
     }
   ];
-  
+
   constructor() { }
 
   ngOnInit(): void {
