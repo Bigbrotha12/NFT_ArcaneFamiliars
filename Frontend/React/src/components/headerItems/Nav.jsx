@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import styles from '../../styles/appStyles.module.css';
+import styles from '../../styles/lightStyles.module.css';
 
 export default function Nav() {
   const navItems = [

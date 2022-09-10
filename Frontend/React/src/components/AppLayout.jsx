@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/appStyles.module.css';
+import styles from '../styles/lightStyles.module.css';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
@@ -8,8 +8,6 @@ import Body from "./Body.jsx";
 
 export default function AppLayout() {
   const [userAddress, setUserAddress] = React.useState("");
-
-  
 
   return (
     <>
@@ -25,7 +23,6 @@ export default function AppLayout() {
       <section className={styles.footerSection}>
         <Footer />
       </section>
-      
     </>
   )
 }

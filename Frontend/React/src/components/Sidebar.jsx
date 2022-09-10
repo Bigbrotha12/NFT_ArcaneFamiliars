@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/appStyles.module.css';
+import styles from '../styles/lightStyles.module.css';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Typography} from '@mui/material';
 import { Link } from "react-router-dom";
 
@@ -47,7 +47,9 @@ export default function Sidebar(props) {
           {sidebarContent.map( (section) => (
             <div key={section.label}>
               <ListItem>
-                <ListItemText>{section.label}</ListItemText>
+                <ListItemText>
+                  <Typography variant="h6">{section.label}</Typography>
+                </ListItemText>
               </ListItem>
               {section.content.map( (item) => (
                 <ListItem key={item.label}>

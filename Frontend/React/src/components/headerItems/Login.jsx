@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/appStyles.module.css';
+import styles from '../../styles/lightStyles.module.css';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { Link } from '@imtbl/imx-sdk';
 import web3Utils from 'web3-utils';

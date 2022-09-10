@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/appStyles.module.css';
+import styles from '../styles/lightStyles.module.css';
 
 import Title from './headerItems/Title.jsx';
 import Nav from './headerItems/Nav.jsx';

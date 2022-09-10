@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/appStyles.module.css';
+import styles from '../styles/lightStyles.module.css';
 import { Outlet } from "react-router-dom";
 
 export default function Body() {
