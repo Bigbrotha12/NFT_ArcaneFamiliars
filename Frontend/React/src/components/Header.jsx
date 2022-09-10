@@ -1,10 +1,16 @@
 import React from 'react';
 import styles from '../styles/appStyles.module.css';
 
-export default function Header() {
+import Title from './headerItems/Title.jsx';
+import Nav from './headerItems/Nav.jsx';
+import Login from './headerItems/Login.jsx';
+
+export default function Header(props) {
   return (
     <div className={styles.header}>
-      This is a header!
+      <Title />
+      <Nav />
+      <Login address={props.address}/>
     </div>
   )
 }

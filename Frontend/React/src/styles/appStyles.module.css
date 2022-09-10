@@ -1,6 +1,6 @@
 .mainSection {
     display: flex;
-    height: 500px;
+    height: 550px;
     width: 100%;
 }
 
@@ -12,6 +12,33 @@
 
 }
 
+.headerTitle {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.headerNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 30%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.headerLogin {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+    height: 100%;
+    border: 1px solid black;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -20,15 +47,39 @@
     border: 1px solid black;
 }
 
+.link {
+    text-decoration: none;
+    color: black;
+    height: 100%;
+    width: 100%;
+}
+
 .body {
     border: 1px solid black;
     height: 100%;
     width: 80%;
 }
 
-.footer {
+.gameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.gameCanvas {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 90%;
+}
+
+.footerSection {
     border: 1px solid black;
-    height: 150px;
+    height: 100px;
     width: 100%;
 
 }

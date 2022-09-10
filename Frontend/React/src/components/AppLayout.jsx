@@ -5,13 +5,16 @@ import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
 import Body from "./Body.jsx";
 
+
 export default function AppLayout() {
+  const [userAddress, setUserAddress] = React.useState("");
 
   
+
   return (
     <>
-      <section>
-        <Header />
+      <section className={styles.headerSection}> 
+        <Header address={[userAddress, setUserAddress]} />        
       </section>
       
       <section className={styles.mainSection} >
@@ -19,7 +22,7 @@ export default function AppLayout() {
         <Body />
       </section>
 
-      <section>
+      <section className={styles.footerSection}>
         <Footer />
       </section>
       

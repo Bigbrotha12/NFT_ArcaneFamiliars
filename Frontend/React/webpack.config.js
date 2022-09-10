@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
         extensions: [".js", "jsx", ".css"],
         fallback: {
-            os: require.resolve("os-browserify/browser"),
+            os: require.resolve("os-browserify"),
             https: require.resolve("https-browserify"),
             http: require.resolve("stream-http"),
             stream: require.resolve("stream-browserify"),
@@ -45,6 +45,12 @@ module.exports = {
             use: {
                 loader: "svg-url-loader"
             }
+        },
+        {
+            test: /\.m?js/,
+            resolve: {
+                fullySpecified: false
+            }
         }
         ]
     },
@@ -59,5 +65,8 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: "bundle.js",
     },
-    devtool: "source-map"
+    devtool: "source-map",
+    devServer: {
+        historyApiFallback: true
+    }
 }
