@@ -1,0 +1,33 @@
+
+<mat-drawer-container class="side-container" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+
+      <div class="sidenav-header">
+        <h1>Options</h1>
+      </div>
+
+      <div class="sidenav-section" *ngFor="let section of sideBarContent">
+        <h2>{{section.section}}</h2>
+        <div class="section-item" *ngFor="let item of section.content">
+          <a [routerLink]="body">{{item.label}}</a>
+        </div>
+      </div>
+    </mat-drawer>
+  
+    <div class="sidenav-content">
+        <div class="content-header">
+            <button class="side-toggler" type="button" mat-button (click)="drawer.toggle()">
+                <mat-icon *ngIf="!drawer.opened">arrow_forward_ios</mat-icon>
+                <mat-icon *ngIf="drawer.opened">arrow_back_ios</mat-icon>
+            </button>
+        
+            <app-header></app-header>
+
+        </div>
+    </div>
+    <router-outlet name="app"></router-outlet>
+
+    <app-footer></app-footer>
+  
+  </mat-drawer-container>
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Come on and Live a little!</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    
+    <script type="text/javascript" src="./FamiliarImpl.js"></script>
+    <script type="text/javascript" src="./FamiliarProxy.js"></script>
+   
+    <script type="module" src="./index.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">NFT Arcane Familiars</h1>
+        <p class="lead">Summon your familiars and battle it out</p>
+        <p>Current Account: <span id="user_address">0</span></p>
+        <p>Number of Familiars: <span id="user_balance">0</span> Familiars</p>
+      </div>
+    </div>
+
+    <div class="nav">
+      <div class="container">
+          <!--
+        <table>
+          <th><a href="./coinFlip.html">Game Section</a></th>
+          <th><a href="./coinFlipAdmin.html">Administration</a></th>
+        </table>
+          -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div>
+        <h2>Enter your bet</h2>
+        <div class="input-group mb-3">
+          <table>
+            <tr>
+              <th><input class="r-bet" type="number" id="tokenId" name="tokenId"></th>
+              <th><label id="tokenId" for="tokenId">Token ID</label></th>
+            </tr>
+            <tr>
+              <th><text class="output-text" id="output" name="output"></text></th>
+              <th></th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <span id="message">Good Luck!</span>
+      </div>
+
+      <div>
+      <button type="button" id="check_id" class="btn btn-primary">Check ID</button>
+      <button type="button" id="create_nft" class="btn btn-primary">Create NFT</button>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,30 @@
+.mat-toolbar {
+    background: linear-gradient(90deg, rgb(60, 60, 233) 0%, rgb(108, 108, 225) 50%, rgb(60, 60, 233) 100%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: white; 
+    
+}
+
+.header-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+div {
+    display: flex;
+    align-items: center;
+}
+
+.app-name {
+    width: 80%;
+}
+
+.left-top-menu {
+    font-size: medium;
+}
+
+a {
+    margin: 8px;
+}
