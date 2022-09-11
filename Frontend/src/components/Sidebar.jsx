@@ -54,7 +54,9 @@ export default function Sidebar(props) {
               {section.content.map( (item) => (
                 <ListItem key={item.label}>
                   <ListItemButton>
-                    <Link className={styles.link} to={item.link}>{item.label}</Link>
+                    <Link className={styles.link} to={item.link}>
+                      <Typography variant="body2">{item.label}</Typography>  
+                    </Link>
                   </ListItemButton>
                 </ListItem>
               ))}

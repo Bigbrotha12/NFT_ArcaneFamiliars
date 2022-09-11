@@ -4,10 +4,12 @@ import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
 import Body from "./Body.jsx";
+import { SidebarContext } from './SidebarContext';
 
 
 export default function AppLayout() {
   const [userAddress, setUserAddress] = React.useState("");
+  const [showSidebar, setShowSidebar] = React.useState(true);
 
   return (
     <>
@@ -16,8 +18,10 @@ export default function AppLayout() {
       </section>
       
       <section className={styles.mainSection} >
-        <Sidebar />
-        <Body />
+        {showSidebar && <Sidebar />}
+        <SidebarContext.Provider value={setShowSidebar} >
+          <Body />
+        </SidebarContext.Provider>
       </section>
 
       <section className={styles.footerSection}>
@@ -26,3 +30,4 @@ export default function AppLayout() {
     </>
   )
 }
+

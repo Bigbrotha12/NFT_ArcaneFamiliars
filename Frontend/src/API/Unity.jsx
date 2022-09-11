@@ -1,10 +1,12 @@
 import React, { Fragment } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
+import { SidebarContext } from "../components/SidebarContext";
+import { Button } from "@mui/material";
+import style from "../styles/lightStyles.module.css";
 
 export default function UnityFrame() {
-  const [isGameOver, setIsGameOver] = React.useState(false);
-  const [userName, setUserName] = React.useState();
-  const [score, setScore] = React.useState();
+  const showSidebar = React.useContext(SidebarContext);
+  
   const { unityProvider, sendMessage, addEventListener, removeEventListener, unload } =
     useUnityContext({
       loaderUrl: "https://my-unity-game.s3.amazonaws.com/AnimalFeeder.loader.js",
@@ -19,24 +21,30 @@ export default function UnityFrame() {
     setScore(score);
   }, []);
 
+  const handleClose = async () => {
+    await unload();
+    showSidebar(true);
+  }
+
   React.useEffect(() => {
+    showSidebar(false);
     addEventListener("GameOver", handleGameOver);
     return () => {
       removeEventListener("GameOver", handleGameOver);
-      unload();
+      // let script = window.document.querySelector(
+      //   'script[src="https://my-unity-game.s3.amazonaws.com/AnimalFeeder.framework.js"]');
+      // if(script !== null) window.document.body.removeChild(script);
     };
   }, [addEventListener, removeEventListener, handleGameOver]);
   
-  function handleClickSpawnEnemies() {
-    sendMessage("GameController", "SpawnEnemies", 100);
-  }
-
   return (
-    <Fragment>
-      <Unity style={{"height": "100%", "width": "100%"}} unityProvider={unityProvider} />
-      {isGameOver === true && (
-        <p>{`Game Over ${userName}! You've scored ${score} points.`}</p>
-      )}
-    </Fragment>
+      <div className={style.unityContainer} >
+        <div className={style.unityCanvas} >
+          <Unity style={{height: 450, width: 800}} unityProvider={unityProvider} />
+        </div> 
+        <div className={style.unityButton}>
+          <Button variant="contained" onClick={handleClose}>Close Game</Button>
+        </div>
+      </div>
   );
 }

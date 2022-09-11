@@ -66,14 +66,25 @@ body {
     width: 100%;
 }
 
-.gameCanvas {
+.unityContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.unityCanvas {
     background-color: black;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
-    width: 90%;
+    height: 100%;
+    width: 100%;
+}
+
+.unityButton {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
 }
 
 .footerSection {
