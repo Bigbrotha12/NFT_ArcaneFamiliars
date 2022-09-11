@@ -1,3 +1,9 @@
 
 # system files
 ./DS_Store
+
+# outputs
+build
+
+# modules
+node_modules
