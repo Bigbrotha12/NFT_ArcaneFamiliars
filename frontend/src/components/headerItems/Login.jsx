@@ -1,20 +1,20 @@
 import React from 'react';
-import styles from '../../styles/lightStyles.module.css';
-import { Button, Menu, MenuItem } from '@mui/material';
-import { Link } from '@imtbl/imx-sdk';
+import style from '../../styles/lightStyles.module.css';
+import { Button, Menu, MenuItem, Typography } from '@mui/material';
+import { LinkContext, UserContext } from '../../constants/AppContext'; 
+import { IMXLink } from '../../API/IMXLink';
 import web3Utils from 'web3-utils';
 import { shortAddress } from '../../utils/shortAddress';
 
-export default function Login(props) {
-  const [userAddress, setUserAddress] = props.address;
+export default function Login() {
   const [menuOpen, setMenuOpen] = React.useState({open: false});
-  const provider = 'https://link.ropsten.x.immutable.com';
+  const [userInfo, setUserInfo] = React.useContext(UserContext);
+  const provider = React.useContext(LinkContext);
 
   async function handleLogin() {
-    let link = new Link(provider);
-    const { address } = await link.setup({});
+    let { address } = await IMXLink.setupAccount(provider);
     localStorage.setItem('address', address);
-    setUserAddress(address);
+    setUserInfo(current => ({...current, address: address}));
   }
 
   function openMenu(event) {
@@ -27,21 +27,25 @@ export default function Login(props) {
 
   function menuDisconnect() {
     localStorage.removeItem('address');
-    setUserAddress('');
+    setUserInfo(current => ({...current, address: null}));
     setMenuOpen({...menuOpen, open:false});
   }
 
   React.useEffect( () => {
     let address = localStorage.getItem('address');
     if(web3Utils.isAddress(address)){
-        setUserAddress(address);
+        setUserInfo(current => ({...current, address: address}));
     } 
   }, []);
 
   return (
-    <div className={styles.headerLogin}>
-        {userAddress ? 
-        <Button onClick={openMenu}>{shortAddress(userAddress)}</Button> : 
+    <div className={style.headerLogin}>
+        {userInfo.address ? 
+        <Button 
+        sx={{borderWidth: '2px', borderStyle: 'inset', borderColor: 'white', borderRadius: '10px'}}
+        onClick={openMenu}>
+          <Typography className={style.userAddress}>{shortAddress(userInfo.address)}</Typography>
+        </Button> : 
         <Button 
         sx={{backgroundColor: '#16BDE2'}} 
         variant="contained"

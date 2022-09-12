@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.10.4",
     "@imtbl/imx-sdk": "^1.26.1",
     "@mui/icons-material": "^5.10.3",
+    "@mui/lab": "^5.0.0-alpha.98",
     "@mui/material": "^5.10.4",
     "assert": "^2.0.0",
     "crypto-browserify": "^3.12.0",

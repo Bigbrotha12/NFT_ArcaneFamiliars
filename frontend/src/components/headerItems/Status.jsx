@@ -1,29 +1,29 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import styles from '../../styles/lightStyles.module.css';
+import style from '../../styles/lightStyles.module.css';
 
-export default function Nav() {
-  const navItems = [
+export default function Status() {
+  const items = [
     {
         id: 0,
-        label: "Home",
+        label: "Balance",
         url: ""
     },
     {
         id: 1,
-        label: "About",
+        label: "Familiars",
         url: ""
     },
     {
         id: 2,
-        label: "Marketplace",
+        label: "Rank",
         url: ""
     }
   ];
 
   return (
-    <div className={styles.headerNav}>
-        {navItems.map( item => {
+    <div className={style.headerNav}>
+        {items.map( item => {
             return <Typography key={item.id} variant="h6">{item.label}</Typography>
         })}
     </div>

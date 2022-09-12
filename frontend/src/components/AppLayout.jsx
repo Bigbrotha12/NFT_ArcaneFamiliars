@@ -4,24 +4,19 @@ import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
 import Body from "./Body.jsx";
-import { SidebarContext } from './SidebarContext';
-
 
 export default function AppLayout() {
-  const [userAddress, setUserAddress] = React.useState("");
   const [showSidebar, setShowSidebar] = React.useState(true);
 
   return (
     <>
       <section className={styles.headerSection}> 
-        <Header address={[userAddress, setUserAddress]} />        
+        <Header />        
       </section>
       
       <section className={styles.mainSection} >
-        {showSidebar && <Sidebar />}
-        <SidebarContext.Provider value={setShowSidebar} >
-          <Body />
-        </SidebarContext.Provider>
+        {showSidebar && <Sidebar />}     
+          <Body setShowSidebar={setShowSidebar}/>
       </section>
 
       <section className={styles.footerSection}>

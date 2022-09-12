@@ -13,9 +13,20 @@ export const IMXLink = {
     // Link SDK
     async setupAccount(provider) {
         let link = new Link(provider);
-        result = await link.setup({});
-        console.log(result);
-        
+        let result = await link.setup({});
         return result;
+    },
+
+    async deposit(type, tokenId, tokenAddress, provider) {
+        let link = new Link(provider);
+        try {
+            let result = await link.deposit({
+                "type": type,
+                "tokenId": tokenId,
+                "tokenAddress": tokenAddress
+            });
+        } catch(error) {
+            console.error(error);
+        }
     }
 }
