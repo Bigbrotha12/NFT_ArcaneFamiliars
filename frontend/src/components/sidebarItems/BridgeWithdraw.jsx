@@ -2,7 +2,7 @@ import React from 'react';
 import { Select, MenuItem, FormControl, InputLabel, TextField, Button, Typography } from '@mui/material';
 import { UserContext } from '../../constants/AppContext';
 
-export default function BridgeDeposit() {
+export default function BridgeWithdraw() {
     const [assetType, setAssetType] = React.useState("");
     const [asset, setAsset] = React.useState(""); 
     const [userAssets, setUserAsset] = React.useContext(UserContext);
@@ -20,7 +20,7 @@ export default function BridgeDeposit() {
 
     return(
         <div>
-         <Typography>Depositing NFT to IMX</Typography>
+         <Typography>Withdraw NFT to Ethereum</Typography>
 
          <FormControl fullWidth>
          <InputLabel id="asset-type2">Asset Type</InputLabel>

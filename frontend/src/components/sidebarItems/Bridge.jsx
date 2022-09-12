@@ -2,7 +2,8 @@ import style from '../../styles/lightStyles.module.css';
 import React from 'react'
 import { Card, Tab, Tabs, Typography, CardHeader, CardContent } from '@mui/material';
 import TabPanel from './TabPanel.jsx';
-import BridgeDeposit from './BridgeDeposit.jsx';
+import BridgeDeposit from './BridgeDeposit';
+import BridgeWithdraw from './BridgeWithdraw';
 
 export default function Bridge() {
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -21,7 +22,7 @@ export default function Bridge() {
         } />
         <CardContent>
           <TabPanel value={tabIndex} index={0}><BridgeDeposit /></TabPanel>
-          <TabPanel value={tabIndex} index={1}>World</TabPanel>
+          <TabPanel value={tabIndex} index={1}><BridgeWithdraw /></TabPanel>
         </CardContent>
       </Card>
     </div>

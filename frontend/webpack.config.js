@@ -11,7 +11,7 @@ module.exports = {
     entry: path.resolve(__dirname, "./src/index.jsx"),
     mode: "development",
     resolve: {
-        extensions: [".js", "jsx", ".css"],
+        extensions: [".js", ".jsx", ".css"],
         fallback: {
             os: require.resolve("os-browserify"),
             https: require.resolve("https-browserify"),

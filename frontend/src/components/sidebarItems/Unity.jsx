@@ -1,17 +1,18 @@
 import React, { Fragment } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
+import { AppConfig } from "../../constants/AppConfig";
 import { SidebarContext } from "../../constants/AppContext";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import style from "../../styles/lightStyles.module.css";
 
 export default function UnityFrame() {
   const showSidebar = React.useContext(SidebarContext);
   const { unityProvider, sendMessage, addEventListener, removeEventListener, unload } =
     useUnityContext({
-      loaderUrl: "https://my-unity-game.s3.amazonaws.com/AnimalFeeder.loader.js",
-      dataUrl: "https://my-unity-game.s3.amazonaws.com/AnimalFeeder.data",
-      frameworkUrl: "https://my-unity-game.s3.amazonaws.com/AnimalFeeder.framework.js",
-      codeUrl: "https://my-unity-game.s3.amazonaws.com/AnimalFeeder.wasm",
+      loaderUrl: AppConfig.GameFiles.loader,
+      dataUrl: AppConfig.GameFiles.data,
+      frameworkUrl: AppConfig.GameFiles.framework,
+      codeUrl: AppConfig.GameFiles.code,
     });
 
   const handleGameOver = React.useCallback((userName, score) => {
@@ -36,6 +37,7 @@ export default function UnityFrame() {
   return (
       <div className={style.unityContainer} >
         <div className={style.unityCanvas} >
+          <CircularProgress value={50} />
           <Unity className={style.unity} unityProvider={unityProvider} />
         </div> 
         <div className={style.unityButton}>

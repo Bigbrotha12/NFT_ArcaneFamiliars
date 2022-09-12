@@ -17,7 +17,7 @@ export const IMXLink = {
         return result;
     },
 
-    async deposit(type, tokenId, tokenAddress, provider) {
+    async deposit(provider, type, tokenId, tokenAddress) {
         let link = new Link(provider);
         let result;
         try {
@@ -30,5 +30,33 @@ export const IMXLink = {
             console.error(error);
         }
         return result;
-    }
+    },
+
+    async prepareWithdraw(provider, type, tokenId, tokenAddress){
+        let link = new Link(provider);
+        let result;
+        try{
+        let result = await link.prepareWithdrawal({
+            "type": type,
+            "tokenId": tokenId,
+            "tokenAddress": tokenAddress
+        })} catch(error){
+        console.error(error)
+        }
+        return result;
+    },
+
+    async completeWithdraw(provider, type, tokenId, tokenAddress){
+        let link = new Link(provider);
+        let result;
+        try{
+        let result = await link.completeWithdrawal({
+            "type": type,
+            "tokenId": tokenId,
+            "tokenAddress": tokenAddress
+        })} catch(error){
+        console.error(error)
+        }
+        return result;
+    },
 }

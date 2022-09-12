@@ -44,7 +44,7 @@ body {
 
 .mainSection {
     display: flex;
-    height: 550px;
+    height: auto;
     width: 100%;
 }
 
@@ -67,7 +67,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: auto;
     width: 100%;
 }
 
@@ -78,6 +78,8 @@ body {
 .unityContainer {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .unityCanvas {
