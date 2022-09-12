@@ -103,15 +103,4 @@ contract FamiliarProxy is Proxy, CommonStorage {
         callRouting[oldAdmin] = address(0);
         emit adminChanged(oldAdmin, address(0));
     }  
-
-    /// @notice Updates routing configuration for special roles
-    /// @dev Default routes should only be updated via upgradeAndInit function.
-    /// @dev Hence, _sender cannot be address(0).
-    /// @param _role        address of role to be routed to new target contract
-    /// @param _target      target address for given role address
-    function changeRouting(address _role, address _target) external ifAdmin {
-        require(_role != address(0), "Proxy: Improper route change");
-        callRouting[_role] = _target;
-        emit routingUpdated(_role, _target);
-    }  
 }

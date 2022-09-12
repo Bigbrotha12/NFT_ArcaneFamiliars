@@ -72,7 +72,7 @@ body {
 }
 
 .bridgeContainer {
-
+    display: flex;
 }
 
 .unityContainer {
