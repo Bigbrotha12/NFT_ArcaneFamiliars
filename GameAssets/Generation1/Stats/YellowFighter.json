@@ -1,0 +1,15 @@
+{
+    "name": "Yellow Fighter",
+    "type": "Dark",
+    "image": "Images/0002.png",
+    "stats": {
+        "HP": 450,
+        "MP": 20,
+        "Attack": 65,
+        "Defense": 50,
+        "Arcane": 60,
+        "Speed": 90
+    },
+    "trait": ["Sturdy", null, null, null],
+    "rarity": "Rare"
+}

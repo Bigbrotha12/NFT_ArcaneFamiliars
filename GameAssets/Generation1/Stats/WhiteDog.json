@@ -1,0 +1,15 @@
+{
+    "name": "White Dog",
+    "type": "Light",
+    "image": "Images/0001.png",
+    "stats": {
+        "HP": 420,
+        "MP": 40,
+        "Attack": 45,
+        "Defense": 30,
+        "Arcane": 120,
+        "Speed": 60
+    },
+    "trait": ["Brave", "Sturdy", null, null],
+    "rarity": "Common"
+}

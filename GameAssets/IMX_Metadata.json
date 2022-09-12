@@ -1,0 +1,12 @@
+{
+    "Name": "Familiar name",
+    "ID": "TokenId",
+    "Affinity": "Element",
+    "AssetID": "Familiar ID",
+    "Ability 1": "Passive 1",
+    "Ability 2": "Passive 2",
+    "Ability 3": "Passive 3",
+    "Ability 4": "Passive 4",
+    "Rarity": "rarity level",
+    "Generation": "Genesis"
+}
