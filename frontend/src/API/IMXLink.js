@@ -19,8 +19,9 @@ export const IMXLink = {
 
     async deposit(type, tokenId, tokenAddress, provider) {
         let link = new Link(provider);
+        let result;
         try {
-            let result = await link.deposit({
+            result = await link.deposit({
                 "type": type,
                 "tokenId": tokenId,
                 "tokenAddress": tokenAddress
@@ -28,5 +29,6 @@ export const IMXLink = {
         } catch(error) {
             console.error(error);
         }
+        return result;
     }
 }
