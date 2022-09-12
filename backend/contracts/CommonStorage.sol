@@ -1,45 +1,46 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >=0.8.9;
 
-pragma solidity 0.8.9;
-
+/// @title CommonStorage
+/// @notice Defines all state variables to be maintained by proxy and
+/// @notice implementation contracts.
 abstract contract CommonStorage {
 
-    // Maintain ownership data required for Ownable contract
-    // as well as implementation contract initialization status
-    address internal _owner;
-    mapping(address => bool) internal _initStatus;
-    mapping(address => string) internal _version;
+    //------------------ STATE VARIABLES ---------------------------------------
+    
+    // Maintain IMX integration data
+    address internal imx;
+    mapping(uint256 => bytes) internal blueprints;
 
-    // Maintain IMX integration variables
-    address internal _imx;
-    mapping(uint256 => bytes) internal _blueprints;
+    // Maintain ERC721 NFT and royalty data
+    string internal names;
+    string internal symbols;
+    string internal rootURI;
+    mapping(uint256 => address) internal owners;
+    mapping(address => uint256) internal balances;
+    mapping(uint256 => address) internal tokenApprovals;
+    mapping(address => mapping(address => bool)) internal operatorApprovals;
+    struct RoyaltyInfo { address receiver; uint96 royaltyFraction; }
+    RoyaltyInfo internal defaultRoyaltyInfo;
+    mapping(uint256 => RoyaltyInfo) internal tokenRoyaltyInfo;
 
-    // Maintain ERC721 NFT data
-    // Token name
-    string internal _name;
-    // Token symbol
-    string internal _symbol;
-    // NFT URI
-    string internal _rootURI;
-    // Mapping from token ID to owner address
-    mapping(uint256 => address) internal _owners;
-    // Mapping owner address to token count
-    mapping(address => uint256) internal _balances;
-    // Mapping from token ID to approved address
-    mapping(uint256 => address) internal _tokenApprovals;
-    // Mapping from owner to operator approvals
-    mapping(address => mapping(address => bool)) internal _operatorApprovals;
+    // Maintain proxy administration and routing data
+    address internal admin;
+    bool internal initializing;
+    mapping(address => bool) internal initialized;
+    mapping(address => address) internal callRouting;
+    mapping(address => string) internal version;
 
-    // Maintain generic implementation state variables
-    // Pattern used to allow expansion of state variables in future implementations
+    // Maintain generic state variables
+    // Pattern to allow expansion of state variables in future implementations
     // without risking storage-collision
-    mapping(string => address) internal _address;
-    mapping(string => uint) internal _uint;
-    mapping(string => int) internal _int;
-    mapping(string => bytes) internal _bytes;
-    mapping(string => string) internal _string;
-    mapping(string => bool) internal _bool;
-    mapping(string => bytes[]) internal _array;
-    mapping(string => mapping(string => bytes[])) internal _mapping;
+    mapping(string => address) internal address_;
+    mapping(string => uint) internal uint_;
+    mapping(string => int) internal int_;
+    mapping(string => bytes) internal bytes_;
+    mapping(string => string) internal string_;
+    mapping(string => bool) internal bool_;
+    mapping(string => bytes[]) internal array_;
+    mapping(string => mapping(string => bytes[])) internal mapping_;
 
 }
