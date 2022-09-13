@@ -25,6 +25,10 @@ contract FamiliarIMX is CommonStorage, ERC165, ERC721, Mintable {
             super.supportsInterface(interfaceId);
     }
 
+    function owner() public view returns (address) {
+        return admin;
+    }
+
     //-------------------- MUTATIVE FUNCTIONS ----------------------------------
 
     function _mintFor(address _to, uint256 _id, bytes memory _blueprint) internal override {

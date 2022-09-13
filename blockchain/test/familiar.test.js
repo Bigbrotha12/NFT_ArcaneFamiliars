@@ -227,6 +227,11 @@ contract("FamiliarIMX", (accounts) => {
     assert.equal(tx1, "03350555", "Blueprint setting error");
   });
 
+  it("returns the contract owner", async () => {
+    let owner = await proxyIMX.owner({from: accounts[1]});
+    assert.equal(owner, accounts[0], "Incorrect owner address returned");
+  });
+
 });
 
 contract("FamiliarLogic", (accounts) => {
@@ -273,6 +278,11 @@ contract("FamiliarLogic", (accounts) => {
     // For blueprint 03350555, expected value is "IPFS/sampleCID/Images/0335.png"
     let tx1 = await proxyLogic.tokenURI(5, {from: accounts[2]});
     assert.equal(tx1, "IPFS/sampleCID/Images/0335.png", "Incorrect URL received");
+  });
+
+  it("returns the contract owner", async () => {
+    let owner = await proxyIMX.owner({from: accounts[1]});
+    assert.equal(owner, accounts[0], "Incorrect owner address returned");
   });
 
 });

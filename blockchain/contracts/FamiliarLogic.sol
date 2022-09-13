@@ -46,6 +46,10 @@ contract FamiliarLogic is CommonStorage, ERC165, ERC721, ERC2981, IInitializable
         return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, "/Images/", familiarId, ".png")) : "";
     }
 
+    function owner() public view returns (address) {
+        return admin;
+    }
+
     function _baseURI() internal view override returns (string memory) {
         return rootURI;
     }
