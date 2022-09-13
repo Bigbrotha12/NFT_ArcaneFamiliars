@@ -1,59 +1,49 @@
-import { Typography, Collapse, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IconButton } from '@mui/material';
-import { AppConfig } from '../../../constants/AppConfig';
-import BasicTable from './StatTable';
+import { Typography, Box } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
+import FamiliarCard from './FamiliarCard';
 
 export default function Collection() {
-  const [expanded, setExpanded] = React.useState(false);
+  const myArray = [0, 1, 2, 3, 4];
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const duplicate = (times, element) => {
+    let result = new Array;
+    for(let i = 0; i < times; i++){
+      result.push(element);
+    }
+    return result;
   };
 
   return (
-      <Card sx={{ 
-        maxWidth: 345, 
-        marginTop: "10px", 
-        marginBottom: "10px"}}>
-        <CardHeader 
-        title="White Dog"
-        subheader="Light Familiar - Common" />
-        <CardMedia 
-        component="img"
-        height="150"
-        image={AppConfig.GameFiles.images + "0001.png"}
-        alt="White Dog"
-        />
-
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            This Familiar summoned from the plane of Light makes quick work of its enemies.
-            Its speed and attack power is almost unrivalled among familiars and, best of all,
-            makes for a great friend.
-          </Typography>
-        </CardContent>
-        
-        <CardActions sx={{display: "flex", justifyContent:"space-between"}}>
-          <Typography>List in Marketplace</Typography>
-          <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
-        
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <BasicTable />
-        </CardContent>
-      </Collapse>
-      </Card>
+    <Box sx={{flexGrow: 1, padding: 10}}>
+      <Typography variant="h4">My Familiar Collection</Typography>
+      <Grid container spacing={2}>
+        {myArray.map( (value) => {
+          return (
+            <Grid key={value} xs={4}>
+              <FamiliarCard familiarData={familiarData} familiarStats={familiarStats}/>
+            </Grid>
+          )
+        })}
+      </Grid>
+    </Box>
   )
 }
 
-const ExpandMore = ((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-});
+const familiarStats = {
+  hp: 300,
+  mp: 80,
+  atk: 76,
+  def: 11,
+  arc: 120,
+  spd: 66
+}
+
+const familiarData = {
+  name: "White Dog",
+  description: "This Familiar summoned from the plane of Light makes quick work of its enemies. Its speed and attack power is almost unrivalled among familiars and, best of all, makes for a great friend.",
+  familiarId: "0001",
+  affinity: "Light",
+  rarity: "Common"
+}
+
+

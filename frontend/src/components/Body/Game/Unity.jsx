@@ -2,11 +2,13 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { AppConfig } from "../../../constants/AppConfig";
 import { SidebarContext } from "../../../constants/AppContext";
 import { Button, CircularProgress } from "@mui/material";
+import { PlayArrow, Close } from "@mui/icons-material";
 import style from "../../../styles/Body.module.css";
 
 export default function UnityFrame() {
   const showSidebar = React.useContext(SidebarContext);
-  const { unityProvider, sendMessage, addEventListener, removeEventListener, unload } =
+  const [gameLaunch, setGameLaunch] = React.useState(false);
+  const { unityProvider, sendMessage, addEventListener, removeEventListener, unload, loadingProgression } =
     useUnityContext({
       loaderUrl: AppConfig.GameFiles.loader,
       dataUrl: AppConfig.GameFiles.data,
@@ -14,33 +16,33 @@ export default function UnityFrame() {
       codeUrl: AppConfig.GameFiles.code,
     });
 
-  const handleGameOver = React.useCallback((userName, score) => {
-    setIsGameOver(true);
-    setUserName(userName);
-    setScore(score);
-  }, []);
-
   const handleClose = async () => {
     await unload();
+    setGameLaunch(false);
     showSidebar(true);
   }
 
-  React.useEffect(() => {
+  const handleLaunch = () => {
     showSidebar(false);
-    addEventListener("GameOver", handleGameOver);
+    setGameLaunch(true);
+  }
+
+  React.useEffect(() => {
+    //addEventListener("GameOver", handleGameOver);
     return () => {
-      removeEventListener("GameOver", handleGameOver);
+      //removeEventListener("GameOver", handleGameOver);
     };
-  }, [addEventListener, removeEventListener, handleGameOver]);
+  }, [/*addEventListener, removeEventListener, handleGameOver*/]);
   
   return (
       <div className={style.unityContainer} >
         <div className={style.unityCanvas} >
-          <CircularProgress value={50} />
-          <Unity className={style.unity} unityProvider={unityProvider} />
+          {!gameLaunch && <Button variant="contained" onClick={handleLaunch} startIcon={<PlayArrow/>}>Launch Game</Button>}  
+          {gameLaunch && loadingProgression != 1 && <CircularProgress sx={{position: "absolute", margin: "auto"}} />}
+          {gameLaunch && <Unity className={style.unity} unityProvider={unityProvider} />}
         </div> 
         <div className={style.unityButton}>
-          <Button variant="contained" onClick={handleClose}>Close Game</Button>
+          <Button variant="contained" onClick={handleClose} startIcon={<Close/>}>Close Game</Button>
         </div>
       </div>
   );

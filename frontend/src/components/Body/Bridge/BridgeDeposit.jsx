@@ -1,5 +1,5 @@
 import style from "../../../styles/Body.module.css";
-import { Select, MenuItem, FormControl, InputLabel, Button, Typography, Input } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, Button,  Input } from '@mui/material';
 import { UserContext } from '../../../constants/AppContext';
 
 export default function BridgeDeposit() {
