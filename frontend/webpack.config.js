@@ -58,7 +58,8 @@ module.exports = {
         htmlPlugin,
         new webpack.ProvidePlugin({
             Buffer: [require.resolve("buffer/"), "Buffer"],
-            process: "process/browser"
+            process: "process/browser",
+            "React": 'react'
         })
     ],
     output: {

@@ -1,6 +1,5 @@
-import { Typography } from '@mui/material';
-import React from 'react';
 import style from '../../styles/Header.module.css';
+import { Typography } from '@mui/material';
 
 export default function Status() {
   const items = [
@@ -12,11 +11,6 @@ export default function Status() {
     {
         id: 1,
         label: "Familiars",
-        url: ""
-    },
-    {
-        id: 2,
-        label: "Rank",
         url: ""
     }
   ];

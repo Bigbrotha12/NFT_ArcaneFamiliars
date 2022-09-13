@@ -1,4 +1,3 @@
-import React from 'react';
 import style from '../../styles/Header.module.css';
 import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import { LinkContext, UserContext } from '../../constants/AppContext'; 

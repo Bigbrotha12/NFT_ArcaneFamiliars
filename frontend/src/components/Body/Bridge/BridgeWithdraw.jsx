@@ -1,38 +1,44 @@
-import React from 'react';
-import { Select, MenuItem, FormControl, InputLabel, TextField, Button, Typography } from '@mui/material';
-import { UserContext } from '../../constants/AppContext';
+import { Select, MenuItem, FormControl, InputLabel, Input, Button, Typography } from '@mui/material';
+import { UserContext } from '../../../constants/AppContext';
 
 export default function BridgeWithdraw() {
-    const [assetType, setAssetType] = React.useState("");
-    const [asset, setAsset] = React.useState(""); 
-    const [userAssets, setUserAsset] = React.useContext(UserContext);
+    const [userInfo, setUserInfo] = React.useContext(UserContext);
     
-
-    const handleChange = (event) => {
-        setAssetType(event.target.value);
-        console.log(event.target);
-    }
-
-    const handleAssetChange = (event) => {
-        setAsset(event.target.value);
-        console.log(event.target);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(event.target));
+        console.log(data);
     }
 
     return(
-        <div>
-         <Typography>Withdraw NFT to Ethereum</Typography>
+        <form onSubmit={handleSubmit}>
 
-         <FormControl fullWidth>
-         <InputLabel id="asset-type2">Asset Type</InputLabel>
-            <Select value={asset} labelId="asset-type2" label="Asset Type2" onChange={handleAssetChange}>
-                {userAssets.NFTs?.map(asset => (
-                    <MenuItem key={asset.tokenId} value={asset.name}>{asset.name}</MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+            <FormControl fullWidth>
+            <InputLabel id="asset-type">Asset Type</InputLabel>
+                <Select value="" labelId="asset-type" label="Asset Type">
+                    {userInfo.NFTs?.map(asset => (
+                        <MenuItem key={asset.tokenId} value={asset.name}>{asset.name}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
 
-        <Button variant="outlined">Deposit</Button>
+            <FormControl sx={{marginTop:'15px'}} fullWidth>
+                <InputLabel id="asset">Amount</InputLabel>
+                <Input 
+                name="amount" 
+                id="amount" 
+                type="number"
+                inputProps={{min:'0'}}
+                required
+                error={userInfo.balance < amount}  
+                onChange={event => setAmount(event.target.value)}
+                />
+            </FormControl>
 
-        </div>
+            <FormControl sx={{marginTop: '10px'}} fullWidth>
+                <Button variant="outlined">Withdraw</Button>
+            </FormControl>
+
+        </form>
     );
 }

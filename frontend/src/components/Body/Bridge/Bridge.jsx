@@ -1,5 +1,4 @@
-import React from 'react';
-import style from '../../styles/Body.module.css';
+import style from '../../../styles/Body.module.css';
 import { Card, Tab, Tabs, CardHeader, CardContent } from '@mui/material';
 import BridgeDeposit from './BridgeDeposit';
 import BridgeWithdraw from './BridgeWithdraw';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import SelectInput from '@mui/material/Select/SelectInput';
 

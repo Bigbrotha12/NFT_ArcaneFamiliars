@@ -1,7 +1,6 @@
 import { Typography, Collapse, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton } from '@mui/material';
-import React from 'react';
 import { AppConfig } from '../../../constants/AppConfig';
 import BasicTable from './StatTable';
 

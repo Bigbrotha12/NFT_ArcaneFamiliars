@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from '../styles/Body.module.css';
+import styles from '../../styles/Body.module.css';
 import { Outlet } from "react-router-dom";
 import { SidebarContext } from '../../constants/AppContext';
 

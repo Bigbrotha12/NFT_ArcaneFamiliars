@@ -1,9 +1,7 @@
-import React from 'react';
-import styles from '../styles/Header.module.css';
-
-import Title from './Title.jsx';
-import Status from './Status.jsx';
-import Login from './Login.jsx';
+import styles from '../../styles/Header.module.css';
+import Title from './Title';
+import Status from './Status';
+import Login from './Login';
 
 export default function Header() {
   return (

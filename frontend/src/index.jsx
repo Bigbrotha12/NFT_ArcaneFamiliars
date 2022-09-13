@@ -1,12 +1,12 @@
 import { createRoot } from 'react-dom/client';
-import {BrowserRouter,Routes,Route} from "react-router-dom";
-import App from "./App.jsx";
-import Bridge from './components/sidebarItems/Bridge.jsx';
-import Collection from './components/sidebarItems/Collection.jsx';
-import Unity from './components/sidebarItems/Unity.jsx';
-import Marketplace from './components/sidebarItems/Marketplace.jsx';
-import Minter from './components/sidebarItems/Minter.jsx';
-import Other from './components/sidebarItems/Other.jsx';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
+import Bridge from './components/Body/Bridge/Bridge';
+import Collection from './components/Body/Collection/Collection';
+import Unity from './components/Body/Game/Unity';
+import Marketplace from './components/Body/Market/Marketplace';
+import Minter from './components/Body/Minter/Minter';
+import Other from './components/Body/Minter/Other';
 
 const container = document.getElementById("root")
 const root = createRoot(container);
