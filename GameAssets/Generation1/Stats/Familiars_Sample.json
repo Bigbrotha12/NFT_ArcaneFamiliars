@@ -1,0 +1,15 @@
+{
+    "name": "string",
+    "type": ["Light", "Dark", "Fire", "Water", "Earth", "Air"],
+    "image": "string",
+    "stats": {
+        "HP": "number[0, 500]",
+        "MP": "number[0, 100]",
+        "Attack": "number[0, 100]",
+        "Defense": "number[0, 100]",
+        "Arcane": "number[0, 200]",
+        "Speed": "number[0, 100]"
+    },
+    "trait": ["string", "string", "string", "string"],
+    "rarity": ["Common", "Uncommon", "Rare", "Secret", "Legendary"]
+}

@@ -1,12 +1,25 @@
 {
-    "Name": "Familiar name",
-    "ID": "TokenId",
-    "Affinity": "Element",
-    "AssetID": "Familiar ID",
-    "Ability 1": "Passive 1",
-    "Ability 2": "Passive 2",
-    "Ability 3": "Passive 3",
-    "Ability 4": "Passive 4",
-    "Rarity": "rarity level",
-    "Generation": "Genesis"
+    "name": "[text - filter: false] Familiar name",
+    "description": "[text - filter: false] short familiar description",
+    "image_url": "[text - filter: false] URL of image to be displayed in thumbnail",
+    "image": "[text - filter: false] Alt-text",
+    "AssetId": "[discrete - filter: false] TokenId",
+    "Affinity": "[enum - filter: true] Element",
+    "FamiliarId": "[discrete - filter: true] Familiar ID",
+    "Statistics": {
+        "HP": 100,
+        "MP": 100,
+        "Attack": 100,
+        "Defense": 100,
+        "Arcane": 100,
+        "Speed": 100
+    },
+    "Abilities": {
+        "Passive 1": "[text - filter: false] Passive 1",
+        "Passive 2": "[text - filter: false] Passive 2",
+        "Passive 3": "[text - filter: false] Passive 3",
+        "Passive 4": "[text - filter: false] Passive 4"
+    },
+    "Rarity": "[enum - filter: true] rarity level",
+    "Generation": "[text - filter: false] Genesis"
 }

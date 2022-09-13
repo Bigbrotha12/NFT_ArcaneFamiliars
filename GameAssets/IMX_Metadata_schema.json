@@ -1,0 +1,105 @@
+{
+    "metadata": [
+        {
+            "name": "name",
+            "type": "text"
+        },
+        {
+            "name": "description",
+            "type": "text"
+        },
+        {
+            "name": "image_url",
+            "type": "text"
+        },
+        {
+            "name": "image",
+            "type": "text"
+        },
+        {
+            "name": "AssetId",
+            "type": "discrete",
+            "filterable": false
+        },
+        {
+            "name": "Affinity",
+            "type": "enum",
+            "filterable": true
+        },
+        {
+            "name": "FamiliarId",
+            "type": "discrete",
+            "filterable": true
+        },
+        {
+            "name": "Statistics",
+            "type": "discrete",
+            "filterable": false,
+            "children": [
+                {
+                    "name": "HP",
+                    "type": "discrete",
+                    "filterable": false
+                },
+                {
+                    "name": "MP",
+                    "type": "discrete",
+                    "filterable": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "discrete",
+                    "filterable": false
+                },
+                {
+                    "name": "Defense",
+                    "type": "discrete",
+                    "filterable": false
+                },
+                {
+                    "name": "Arcane",
+                    "type": "discrete",
+                    "filterable": false
+                },
+                {
+                    "name": "Speed",
+                    "type": "discrete",
+                    "filterable": false
+                }
+            ]
+        },
+        {
+            "name": "Abilities",
+            "type": "text",
+            "children": [
+                {
+                    "name": "Passive 1",
+                    "type": "text"
+                },
+                {
+                    "name": "Passive 2",
+                    "type": "text"
+                },
+                {
+                    "name": "Passive 3",
+                    "type": "text"
+                },
+                {
+                    "name": "Passive 4",
+                    "type": "text"
+                }
+
+            ]
+        },
+        {
+            "name": "Rarity",
+            "type": "enum",
+            "filterable": true
+        },
+        {
+            "name": "Generation",
+            "type": "discrete",
+            "filterable": true
+        }
+    ]
+}

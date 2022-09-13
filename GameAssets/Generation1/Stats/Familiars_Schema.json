@@ -1,15 +1,73 @@
 {
-    "name": "string",
-    "type": ["Light", "Dark", "Fire", "Water", "Earth", "Air"],
-    "image": "string",
-    "stats": {
-        "HP": "number[0, 500]",
-        "MP": "number[0, 100]",
-        "Attack": "number[0, 100]",
-        "Defense": "number[0, 100]",
-        "Arcane": "number[0, 200]",
-        "Speed": "number[0, 100]"
-    },
-    "trait": ["string", "string", "string", "string"],
-    "rarity": ["Common", "Uncommon", "Rare", "Secret", "Legendary"]
+    "Familiar": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "enum"
+        },
+        {
+            "name": "image",
+            "type": "string"
+        },
+        {
+            "name": "stats",
+            "type": "object",
+            "children": [
+                {
+                    "name": "HP",
+                    "type": "integer"
+                },
+                {
+                    "name": "MP",
+                    "type": "integer"
+                },
+                {
+                    "name": "Attack",
+                    "type": "integer"
+                },
+                {
+                    "name": "Defense",
+                    "type": "integer"
+                },
+                {
+                    "name": "Arcane",
+                    "type": "integer"
+                },
+                {
+                    "name": "Speed",
+                    "type": "integer"
+                }
+            ]
+        },
+        {
+            "name": "Abilities",
+            "type": "array",
+            "children": [
+                {
+                    "name": "Passive 1",
+                    "type": "text"
+                },
+                {
+                    "name": "Passive 2",
+                    "type": "text"
+                },
+                {
+                    "name": "Passive 3",
+                    "type": "text"
+                },
+                {
+                    "name": "Passive 4",
+                    "type": "text"
+                }
+
+            ]
+        },
+        {
+            "name": "Rarity",
+            "type": "enum"
+        }
+    ]
 }
