@@ -3,7 +3,6 @@ const FamiliarIMX = artifacts.require("FamiliarIMX");
 const FamiliarLogic = artifacts.require("FamiliarLogic");
 const FamiliarProxy = artifacts.require("FamiliarProxy");
 const truffleAssert = require('truffle-assertions');
-const { expectEvent } = require("@openzeppelin/test-helpers");
 
 contract("Proxy", (accounts) => {
   let famAdmin, famIMX, famLogic, famProxy, proxyAdmin, proxyIMX, proxyLogic;
@@ -37,33 +36,34 @@ contract("Proxy", (accounts) => {
     assert.equal(IMX, accounts[1], "IMX account not initialized correctly");
 
     // Routing initialization
-    expectEvent(adminRoute, "currentRouting", { role: admin, target: famAdmin.address });
-    expectEvent(IMXRoute, "currentRouting", { role: IMX, target: famIMX.address });
+    truffleAssert.eventEmitted(adminRoute, "currentRouting", (event) => { return event.role === admin && event.target === famAdmin.address });
+    truffleAssert.eventEmitted(IMXRoute, "currentRouting", (event) => { return event.role === IMX && event.target === famIMX.address });
   });
 
   it("changes admin successfully", async () => {
     // Admin calls to changeAdmin(address _newAdmin) should succeed except when
     // new admin address is address(0).
     let tx1 = await famProxy.changeAdmin(accounts[5], {from: accounts[0]});
-    expectEvent(tx1, "adminChanged", { prevAdmin: accounts[0], newAdmin: accounts[5] });
+    truffleAssert.eventEmitted(tx1, "adminChanged", (event) => { return event.prevAdmin === accounts[0] && event.newAdmin === accounts[5] });
     truffleAssert.fails(famProxy.changeAdmin(accounts[5], {from: accounts[0]}));
     
     let tx2 = await famProxy.changeAdmin(accounts[0], {from: accounts[5]});
-    expectEvent(tx2, "adminChanged", { prevAdmin: accounts[5], newAdmin: accounts[0] });
+    truffleAssert.eventEmitted(tx2, "adminChanged", (event) => { return event.prevAdmin === accounts[5] && event.newAdmin === accounts[0] });
     truffleAssert.fails(famProxy.changeAdmin(ZERO_ADDRESS, {from: accounts[0]}), "Proxy: Invalid admin address");
   });
 
-  it("changes routing successfully", async () => {
-    // Admin calls to changeRouting(address _role, address _target) should succeed except when
-    // new _role address is address(0) since this is default route which is maintained via upgradeInit.
-    let tx1 = await famProxy.changeRouting(accounts[1], famLogic.address, {from: accounts[0]});
-    expectEvent(tx1, "routingUpdated", { role: accounts[1], target: famLogic.address });
-    let tx2 = await famProxy.getRouting(accounts[1], {from: accounts[0]});
-    expectEvent(tx2, "currentRouting", { role: accounts[1], target: famLogic.address });
+  // function deprecated
+  // it("changes routing successfully", async () => {
+  //   // Admin calls to changeRouting(address _role, address _target) should succeed except when
+  //   // new _role address is address(0) since this is default route which is maintained via upgradeInit.
+  //   let tx1 = await famProxy.changeRouting(accounts[1], famLogic.address, {from: accounts[0]});
+  //   truffleAssert.eventEmitted(tx1, "routingUpdated", (event) => { return event.role === accounts[1] && event.target === famLogic.address });
+  //   let tx2 = await famProxy.getRouting(accounts[1], {from: accounts[0]});
+  //   truffleAssert.eventEmitted(tx2, "currentRouting", (event) => { return event.role === accounts[1] && event.target === famLogic.address });
 
-    await famProxy.changeRouting(accounts[1], famIMX.address, {from: accounts[0]});
-    truffleAssert.fails(famProxy.changeRouting(ZERO_ADDRESS, famAdmin.address, {from: accounts[0]}), "Proxy: Improper route change");
-  });
+  //   await famProxy.changeRouting(accounts[1], famIMX.address, {from: accounts[0]});
+  //   truffleAssert.fails(famProxy.changeRouting(ZERO_ADDRESS, famAdmin.address, {from: accounts[0]}), "Proxy: Improper route change");
+  // });
 
   it("checks for valid upgrade target and initializes", async () => {
     // State variables to check:
@@ -81,7 +81,7 @@ contract("Proxy", (accounts) => {
     ]
 
     let tx1 = await famProxy.upgradeInit(famLogic.address, initData, {from: accounts[0]});
-    expectEvent(tx1, "contractUpgraded", { version: _sha3("1.0.0"), target: famLogic.address });
+    truffleAssert.eventEmitted(tx1, "contractUpgraded", (event) => { return event.version === _sha3("1.0.0") && event.target === famLogic.address });
   });
 
   it("initializes upgraded contract correctly", async () => {
@@ -93,7 +93,7 @@ contract("Proxy", (accounts) => {
     // symbols  = "ARC"
     // rootURI  = "IPFS/sampleCID"
     let tx1 = await famProxy.getVersion({from: accounts[0]});
-    expectEvent(tx1, "currentVersion", { version: _sha3("1.0.0"), target: famLogic.address });
+    truffleAssert.eventEmitted(tx1, "currentVersion", (event) => { return event.version === _sha3("1.0.0") && event.target === famLogic.address });
 
     let names = await proxyLogic.name({from: accounts[2]});
     let symbols = await proxyLogic.symbol({from: accounts[2]});
@@ -157,9 +157,9 @@ contract("FamiliarAdmin", (accounts) => {
     // Admin can change royalty information displayed by 
     // royaltyInfo(uint256 _tokenId, uint256 _salePrice)
     let tx1 = await proxyAdmin.setDefaultRoyalty(accounts[0], 500);
-    expectEvent(tx1, "royaltyUpdated", { beneficiary: accounts[0], fee: "500", tokenId: "0" });
+    truffleAssert.eventEmitted(tx1, "royaltyUpdated", (event) => { return event.beneficiary === accounts[0] && event.fee == 500 && event.tokenId == 0 });
     let tx2 = await proxyAdmin.setTokenRoyalty(20, accounts[2], 200);
-    expectEvent(tx2, "royaltyUpdated", { beneficiary: accounts[2], fee: "200", tokenId: "20" });
+    truffleAssert.eventEmitted(tx2, "royaltyUpdated", (event) => { return event.beneficiary === accounts[2] && event.fee == 200 && event.tokenId == 20 });
 
     let defaultRoyalty = await proxyLogic.royaltyInfo(0, 10000);
     let customRoyalty = await proxyLogic.royaltyInfo(20, 10000);
@@ -172,9 +172,9 @@ contract("FamiliarAdmin", (accounts) => {
   it("allows deleting royalty information", async () => {
     // Deleting royalty information set fees and beneficiary to 0
     let tx1 = await proxyAdmin.deleteDefaultRoyalty();
-    expectEvent(tx1, "royaltyUpdated", { beneficiary: ZERO_ADDRESS, fee: "0", tokenId: "0" });
+    truffleAssert.eventEmitted(tx1, "royaltyUpdated", (event) => { return event.beneficiary === ZERO_ADDRESS && event.fee == 0 && event.tokenId == 0 });
     let tx2 = await proxyAdmin.resetTokenRoyalty(20);
-    expectEvent(tx2, "royaltyUpdated", { beneficiary: ZERO_ADDRESS, fee: "0", tokenId: "20" }); 
+    truffleAssert.eventEmitted(tx2, "royaltyUpdated", (event) => { return event.beneficiary === ZERO_ADDRESS && event.fee == 0, event.tokenId == 20 }); 
     
     let defaultRoyalty = await proxyLogic.royaltyInfo(0, 10000);
     let customRoyalty = await proxyLogic.royaltyInfo(20, 10000);
@@ -214,7 +214,7 @@ contract("FamiliarIMX", (accounts) => {
     // to create new NFT. Blob will contain token id 5 in formatted {0005}:{03350555}
     let blob = web3.utils.toHex("{0005}:{03350555}");
     let tx1 = await proxyIMX.mintFor(accounts[0], 1, blob, {from: accounts[1]});
-    expectEvent(tx1, "Transfer", { from: ZERO_ADDRESS, to: accounts[0], tokenId: "5"});
+    truffleAssert.eventEmitted(tx1, "Transfer", (event) => { return event.from === ZERO_ADDRESS && event.to === accounts[0] && event.tokenId == 5 });
 
     // Public queries should show account[0] as owner of tokenId 5
     let tx2 = await proxyLogic.ownerOf(5, {from: accounts[2]});
@@ -255,7 +255,7 @@ contract("FamiliarLogic", (accounts) => {
 
     // Correct init by admin
     let tx1 = await famProxy.upgradeInit(famLogic.address, initData, {from: accounts[0]});
-    expectEvent(tx1, "contractUpgraded");
+    truffleAssert.eventEmitted(tx1, "contractUpgraded", (event) => { return event.version === _sha3("1.0.0") && event.target === famLogic.address });
 
     // Additional init attempts will fail
     truffleAssert.fails(famProxy.upgradeInit(famLogic.address, initData, {from: accounts[0]}), "Proxy: Contract already initialized");
