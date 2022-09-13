@@ -1,6 +1,7 @@
 export const AppConfig = {
     IMXProvider: 'https://link.ropsten.x.immutable.com',
-    IMXMarket: "https://market.immutable.com/collections/0xee972ad3b8ac062de2e4d5e6ea4a37e36c849a11",
+    IMXMarket: "https://market.immutable.com/",
+    IMXMinter: "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
     Web3Provider: '',
     Collection: '',
     GameFiles: {

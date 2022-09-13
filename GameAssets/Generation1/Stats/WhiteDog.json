@@ -10,6 +10,6 @@
         "Arcane": 120,
         "Speed": 60
     },
-    "trait": ["Brave", "Sturdy", null, null],
+    "abilities": ["Brave", "Sturdy", null, null],
     "rarity": "Common"
 }
