@@ -1,7 +1,6 @@
-import style from '../../styles/lightStyles.module.css';
-import React from 'react'
-import { Card, Tab, Tabs, Typography, CardHeader, CardContent } from '@mui/material';
-import TabPanel from './TabPanel.jsx';
+import React from 'react';
+import style from '../../styles/Body.module.css';
+import { Card, Tab, Tabs, CardHeader, CardContent } from '@mui/material';
 import BridgeDeposit from './BridgeDeposit';
 import BridgeWithdraw from './BridgeWithdraw';
 
@@ -21,8 +20,8 @@ export default function Bridge() {
           </Tabs>
         } />
         <CardContent>
-          <TabPanel value={tabIndex} index={0}><BridgeDeposit /></TabPanel>
-          <TabPanel value={tabIndex} index={1}><BridgeWithdraw /></TabPanel>
+          {tabIndex === 0 && <BridgeDeposit />}
+          {tabIndex === 1 && <BridgeWithdraw />}
         </CardContent>
       </Card>
     </div>

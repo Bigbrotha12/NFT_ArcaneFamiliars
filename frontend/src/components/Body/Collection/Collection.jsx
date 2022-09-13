@@ -2,7 +2,7 @@ import { Typography, Collapse, Card, CardActionArea, CardActions, CardContent, C
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton } from '@mui/material';
 import React from 'react';
-import { AppConfig } from '../../constants/AppConfig';
+import { AppConfig } from '../../../constants/AppConfig';
 import BasicTable from './StatTable';
 
 export default function Collection() {

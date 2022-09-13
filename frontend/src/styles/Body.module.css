@@ -1,0 +1,39 @@
+.body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+}
+
+.bridgeContainer {
+    display: flex;
+}
+
+.unityContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.unityCanvas {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.unity {
+    height: 450px;
+    width: 800px;
+}
+
+.unityButton {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}

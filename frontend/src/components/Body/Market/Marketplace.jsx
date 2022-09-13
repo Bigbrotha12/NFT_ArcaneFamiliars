@@ -1,5 +1,5 @@
 import { Typography, Link } from '@mui/material';
-import { AppConfig } from '../../constants/AppConfig';
+import { AppConfig } from '../../../constants/AppConfig';
 import React from 'react'
 
 export default function Marketplace() {

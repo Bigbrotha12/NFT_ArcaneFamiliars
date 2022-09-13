@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from '../styles/lightStyles.module.css';
-import FooterNav from "./footerItems/FooterNav.jsx";
+import styles from '../styles/Footer.module.css';
+import FooterNav from "./FooterNav.jsx";
 
 export default function Footer() {
   const footerContent = [

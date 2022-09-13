@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '../styles/lightStyles.module.css';
+import styles from '../styles/Body.module.css';
 import { Outlet } from "react-router-dom";
-import { SidebarContext } from '../constants/AppContext';
+import { SidebarContext } from '../../constants/AppContext';
 
 export default function Body(props) {
   return (

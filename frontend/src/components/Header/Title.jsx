@@ -1,5 +1,5 @@
 import React from 'react';
-import style from '../../styles/lightStyles.module.css';
+import style from '../../styles/Header.module.css';
 import { Typography } from '@mui/material';
 
 export default function Title() {

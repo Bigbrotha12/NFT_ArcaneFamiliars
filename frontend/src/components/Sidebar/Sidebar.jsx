@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/lightStyles.module.css';
+import styles from '../styles/Sidebar.module.css';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Typography} from '@mui/material';
 import { Link } from "react-router-dom";
 
