@@ -1,4 +1,4 @@
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FamiliarCard from './FamiliarCard';
 
@@ -16,6 +16,7 @@ export default function Collection() {
   return (
     <Box sx={{flexGrow: 1, padding: 10}}>
       <Typography variant="h4">My Familiar Collection</Typography>
+      <Divider />
       <Grid container spacing={2}>
         {myArray.map( (value) => {
           return (

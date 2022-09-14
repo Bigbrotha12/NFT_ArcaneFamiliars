@@ -3,8 +3,12 @@ const defaultUserInfo = {
     balance: "",
     NFTs: [
         {
-            name: "",
+            name: "Monster 1",
             tokenId: 0,
+        },
+        {
+            name: "Monster 2",
+            tokenId: 1,
         }
     ]
 }

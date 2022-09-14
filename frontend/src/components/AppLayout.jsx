@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import Body from "./Body/Body";
 
 export default function AppLayout() {
-  const [showSidebar, setShowSidebar] = React.useState(true);
+  const sidebarState = React.useState(true);
 
   return (
     <>
@@ -14,8 +14,8 @@ export default function AppLayout() {
       </section>
       
       <section className={style.mainSection} >
-        {showSidebar && <Sidebar />}     
-          <Body setShowSidebar={setShowSidebar}/>
+        {sidebarState[0] && <Sidebar />}     
+          <Body setShowSidebar={sidebarState[1]}/>
       </section>
 
       <section className={style.footerSection}>

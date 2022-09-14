@@ -1,5 +1,6 @@
 import style from '../../styles/Header.module.css';
 import { Button, Menu, MenuItem, Typography } from '@mui/material';
+import DataSaverOffRoundedIcon from '@mui/icons-material/DataSaverOffRounded';
 import { LinkContext, UserContext } from '../../constants/AppContext'; 
 import { IMXLink } from '../../API/IMXLink';
 import web3Utils from 'web3-utils';
@@ -40,11 +41,13 @@ export default function Login() {
   return (
     <div className={style.headerLogin}>
         {userInfo.address ? 
-        <Button 
-        sx={{borderWidth: '2px', borderStyle: 'inset', borderColor: 'white', borderRadius: '10px'}}
-        onClick={openMenu}>
-          <Typography className={style.userAddress}>{shortAddress(userInfo.address)}</Typography>
-        </Button> : 
+        <div className={style.userAddressContainer}>
+          <DataSaverOffRoundedIcon sx={{paddingLeft: '5px', alignSelf: 'center', color: '#51e656'}}/>
+          <Button 
+          onClick={openMenu}>
+            <Typography className={style.userAddress}>{shortAddress(userInfo.address)}</Typography>
+          </Button>
+        </div> : 
         <Button 
         sx={{backgroundColor: '#16BDE2'}} 
         variant="contained"

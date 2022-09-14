@@ -42,7 +42,7 @@ export default function UnityFrame() {
           {gameLaunch && <Unity className={style.unity} unityProvider={unityProvider} />}
         </div> 
         <div className={style.unityButton}>
-          <Button variant="contained" onClick={handleClose} startIcon={<Close/>}>Close Game</Button>
+          {gameLaunch && <Button variant="contained" onClick={handleClose} startIcon={<Close/>}>Close Game</Button>}
         </div>
       </div>
   );
