@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 export default function Title() {
   return (
     <div className={style.headerTitle}>
-        <Typography variant="h4" >Arcane Familiars</Typography>
+        <Typography variant="h5" >Arcane Familiars</Typography>
     </div>
   )
 }

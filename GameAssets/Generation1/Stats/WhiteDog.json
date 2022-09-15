@@ -1,5 +1,6 @@
 {
     "name": "White Dog",
+    "description": "This is description",
     "type": "Light",
     "image": "Images/0001.png",
     "stats": {

@@ -5,7 +5,7 @@ export default function Status() {
   const items = [
     {
         id: 0,
-        label: "ETH Balance:",
+        label: "ETH:",
         data: 35
     },
     {
@@ -19,9 +19,9 @@ export default function Status() {
     <div className={style.headerStatus}>
         {items.map( item => {
           return (
-          <div className={style.headerStatusItem}>
-            <Typography key={item.id} variant="h6">{item.label}</Typography>
-            <Typography key={item.data} variant="h6">{item.data}</Typography>
+          <div key={item.id} className={style.headerStatusItem}>
+            <Typography variant="body1">{item.label}</Typography>
+            <Typography variant="body1">{item.data}</Typography>
           </div>)
         })}
     </div>

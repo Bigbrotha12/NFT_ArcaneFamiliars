@@ -1,21 +1,18 @@
+import style from '../../../styles/Body.module.css';
 import { Typography, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FamiliarCard from './FamiliarCard';
+import SearchBar from './Searchbar';
 
 export default function Collection() {
   const myArray = [0, 1, 2, 3, 4];
 
-  const duplicate = (times, element) => {
-    let result = new Array;
-    for(let i = 0; i < times; i++){
-      result.push(element);
-    }
-    return result;
-  };
-
   return (
-    <Box sx={{flexGrow: 1, padding: 10}}>
-      <Typography variant="h4">My Familiar Collection</Typography>
+    <Box className={style.collectionContainer} sx={{flexGrow: 1}}>
+      <div className={style.collectionHeader} >
+        <Typography variant="h5">My Familiar Collection</Typography>
+        <SearchBar />
+      </div>
       <Divider />
       <Grid container spacing={2}>
         {myArray.map( (value) => {

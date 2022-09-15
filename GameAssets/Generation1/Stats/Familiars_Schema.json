@@ -5,6 +5,10 @@
             "type": "string"
         },
         {
+            "name": "description",
+            "type": "string"
+        },
+        {
             "name": "type",
             "type": "enum"
         },
@@ -14,7 +18,7 @@
         },
         {
             "name": "stats",
-            "type": "object",
+            "type": "array",
             "children": [
                 {
                     "name": "HP",
@@ -62,7 +66,6 @@
                     "name": "Passive 4",
                     "type": "text"
                 }
-
             ]
         },
         {
