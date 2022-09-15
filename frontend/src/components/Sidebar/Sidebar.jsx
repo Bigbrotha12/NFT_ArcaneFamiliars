@@ -51,13 +51,13 @@ export default function Sidebar(props) {
                 </ListItemText>
               </ListItem>
               {section.content.map( (item) => (
-                <ListItem key={item.label}>
-                  <ListItemButton>
-                    <Link className={styles.link} to={item.link}>
-                      <Typography variant="body2">{item.label}</Typography>  
-                    </Link>
-                  </ListItemButton>
-                </ListItem>
+                <Link className={styles.link} to={item.link}>
+                  <ListItem key={item.label}>
+                    <ListItemButton>                 
+                        <Typography variant="body2">{item.label}</Typography>                  
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
               ))}
               <Divider />
             </div>
