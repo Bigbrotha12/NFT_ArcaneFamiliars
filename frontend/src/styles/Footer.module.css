@@ -1,0 +1,44 @@
+.footerIconContainer {
+    
+}
+
+.footerIcons {
+    padding: 3px;
+    height: 40px;
+    width: 40px;
+}
+
+.footerContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.footerCommunity {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    width: 30%;
+}
+
+.footerSections {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    width: 30%;
+}
+
+.footerFine {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 30%;
+}
+
+.footerIMX {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}

@@ -51,6 +51,10 @@ module.exports = {
             resolve: {
                 fullySpecified: false
             }
+        },
+        {
+            test: /\.png/,
+            type: 'asset/resource'
         }
         ]
     },
