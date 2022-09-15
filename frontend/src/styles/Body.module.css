@@ -43,6 +43,25 @@
     justify-content: center;
 }
 
+.collectionContainer {
+    padding: 40px;
+}
+
+.collectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collectionSearch {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border: 1px inset grey;
+    border-radius: 20px;
+    margin-bottom: 5px;
+}
+
 .minterStepperHead {
     margin-bottom: 30px;
 }
