@@ -1,5 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, Typography, Card } from '@mui/material';
-import SelectInput from '@mui/material/Select/SelectInput';
+import { Card } from '@mui/material';
 import Stepper from "./Stepper";
 
 export default function Minter() {

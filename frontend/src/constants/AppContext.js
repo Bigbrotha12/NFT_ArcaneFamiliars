@@ -3,17 +3,17 @@ const defaultUserInfo = {
     balance: "",
     NFTs: [
         {
-            name: "Monster 1",
+            name: "",
             tokenId: 0,
-        },
-        {
-            name: "Monster 2",
-            tokenId: 1,
         }
     ]
 }
 
+const defaultSiteState = {
+    showSideBar: true,
+    location: "/"
+}
 
-export const SidebarContext = React.createContext();
+export const SiteContext = React.createContext(defaultSiteState);
 export const LinkContext = React.createContext();
 export const UserContext = React.createContext(defaultUserInfo);

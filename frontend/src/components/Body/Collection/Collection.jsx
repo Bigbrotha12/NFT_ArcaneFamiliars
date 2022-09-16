@@ -10,7 +10,7 @@ export default function Collection() {
   return (
     <Box className={style.collectionContainer} sx={{flexGrow: 1}}>
       <div className={style.collectionHeader} >
-        <Typography variant="h5">My Familiar Collection</Typography>
+        <Typography variant="h5">Familiar Collection</Typography>
         <SearchBar />
       </div>
       <Divider />

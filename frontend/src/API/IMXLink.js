@@ -32,7 +32,7 @@ export const IMXLink = {
         return result;
     },
 
-    // Currently IMX only support ETH and whitelisted ERC20 tokens. No NFTs
+    // Currently IMX only support ETH and whitelisted ERC20 tokens.
     async prepareWithdraw(provider, amount){
         let link = new Link(provider);
         let result;
@@ -46,7 +46,7 @@ export const IMXLink = {
         return result;
     },
 
-    // Currently IMX only support ETH and whitelisted ERC20 tokens. No NFTs
+    // Currently IMX only support ETH and whitelisted ERC20 tokens.
     async completeWithdraw(provider, type, tokenId, tokenAddress){
         let link = new Link(provider);
         let result;
@@ -121,5 +121,7 @@ export const IMXLink = {
       // Catch and print out the error
       console.error(error)
     }
-  }
+  },
+
+  
 }

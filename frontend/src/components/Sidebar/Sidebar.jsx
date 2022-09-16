@@ -1,49 +1,13 @@
 import { Link } from "react-router-dom";
-import styles from '../../styles/Sidebar.module.css';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Typography} from '@mui/material';
+import style from '../../styles/Sidebar.module.css';
+import { List, ListItem, ListItemButton, ListItemText, Divider, Typography} from '@mui/material';
+import { AppConfig } from "../../constants/AppConfig";
 
-export default function Sidebar(props) {
-  const sidebarContent = [
-    {
-      label: "Familiars",
-      content: [
-        {
-          label: "Play Game",
-          link: "/game"
-        },
-        {
-          label: "My Collection",
-          link: "/collection"
-        },
-        {
-          label: "Marketplace",
-          link: "/marketplace"
-        },
-        {
-          label: "Mint",
-          link: "/minter"
-        }
-      ]
-    },
-    {
-      label: "Transactions",
-      content: [
-        {
-          label: "L1 Bridge",
-          link: "/bridge"
-        },
-        {
-          label: "Change Traits",
-          link: "/other"
-        }
-      ]
-    }
-  ];
-
+export default function Sidebar() {
   return (
-    <div className={styles.sidebar}>
+    <div className={style.sidebar}>
       <List>
-          {sidebarContent.map( (section) => (
+          {AppConfig.sidebarContent.map( (section) => (
             <div key={section.label}>
               <ListItem>
                 <ListItemText>
@@ -51,8 +15,11 @@ export default function Sidebar(props) {
                 </ListItemText>
               </ListItem>
               {section.content.map( (item) => (
-                <Link key={item.label} className={styles.link} to={item.link}>
-                  <ListItem>
+                <Link 
+                key={item.label} 
+                className={style.link}
+                to={item.link}>
+                  <ListItem className={style.link}>
                     <ListItemButton>                 
                         <Typography variant="body2">{item.label}</Typography>                  
                     </ListItemButton>

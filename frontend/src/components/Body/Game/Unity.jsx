@@ -1,12 +1,10 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { AppConfig } from "../../../constants/AppConfig";
-import { SidebarContext } from "../../../constants/AppContext";
 import { Button, CircularProgress } from "@mui/material";
 import { PlayArrow, Close } from "@mui/icons-material";
 import style from "../../../styles/Body.module.css";
 
 export default function UnityFrame() {
-  const showSidebar = React.useContext(SidebarContext);
   const [gameLaunch, setGameLaunch] = React.useState(false);
   const { unityProvider, sendMessage, addEventListener, removeEventListener, unload, loadingProgression } =
     useUnityContext({
@@ -19,11 +17,11 @@ export default function UnityFrame() {
   const handleClose = async () => {
     await unload();
     setGameLaunch(false);
-    showSidebar(true);
+    setSiteState(state => ({...state, showSideBar: true}));
   }
 
   const handleLaunch = () => {
-    showSidebar(false);
+    setSiteState(state => ({...state, showSideBar: false}));
     setGameLaunch(true);
   }
 
