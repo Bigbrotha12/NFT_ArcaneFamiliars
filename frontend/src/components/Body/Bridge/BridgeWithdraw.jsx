@@ -12,7 +12,11 @@ export default function BridgeWithdraw() {
 
     return(
         <form onSubmit={handleSubmit}>
-
+            <Typography sx={{maxWidth:"500px", marginBottom:"20px"}}>
+                You can withdraw ETH and Familiar NFTs from Layer 2 IMX to Ethereum. 
+                Note that this transaction will incur gas fees. Deposited assets are usually
+                available 24 hours after submission.
+            </Typography>
             <FormControl fullWidth>
             <InputLabel id="asset-type">Asset Type</InputLabel>
                 <Select value="" labelId="asset-type" label="Asset Type">

@@ -1,5 +1,5 @@
 import style from "../../../styles/Body.module.css";
-import { Select, MenuItem, FormControl, InputLabel, Button,  Input } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, Button,  Input, Typography } from '@mui/material';
 import { UserContext } from '../../../constants/AppContext';
 
 export default function BridgeDeposit() {
@@ -14,8 +14,13 @@ export default function BridgeDeposit() {
 
     return(
         <form onSubmit={handleSubmit}>
-
+            <Typography sx={{maxWidth:"500px", marginBottom:"20px"}}>
+                You can deposit ETH and Familiar NFTs from Layer 1 Ethereum into IMX. 
+                Note that this transaction will incur gas fees. Deposited assets are usually
+                available immediately in IMX.
+            </Typography>
             <FormControl fullWidth>
+                
                 <InputLabel id="asset-type">Asset Type</InputLabel>
                 <Select required value="" labelId="asset-type" label="Asset Type">
                     {userInfo.NFTs?.map(asset => (

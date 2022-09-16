@@ -29,12 +29,9 @@ export default function HStepper() {
         <div className={style.minterStepperHead}>
       <Stepper activeStep={activeStep}>
         {steps.map((label) => {
-          const stepProps = {};
-          const labelProps = {};
-
           return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
             </Step>
           );
         })}
@@ -53,7 +50,7 @@ export default function HStepper() {
       ) : (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          <MintingSteps />
+          <MintingSteps currentStep={activeStep} />
           
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
