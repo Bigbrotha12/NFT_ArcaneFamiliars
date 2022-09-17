@@ -85,11 +85,12 @@ img {
 .hook-upper {
     display: flex;
     background-color: #201f1f;
+    height: 200px;
 }
 
 .hook-image {
     display: flex;
-
+    
 }
 
 .hook-image-left {
@@ -97,7 +98,37 @@ img {
     width: 50%;
 }
 
-.hook-image-right {
+.action {
     display: flex;
-    width: 50%;
+    flex-direction: column;
+    background-color: #201f1f;
 }
+
+.team {
+    display: flex;
+    background-color: #201f1f;
+}
+
+.action-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.action-button {
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #242C40;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: #242C40;
+}
+
