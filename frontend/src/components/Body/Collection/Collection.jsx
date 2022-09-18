@@ -2,7 +2,7 @@ import style from '../../../styles/Body.module.css';
 import { Typography, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FamiliarCard from './FamiliarCard';
-import SearchBar from './Searchbar';
+import SearchBar from './SearchBar';
 
 export default function Collection() {
   const myArray = [0, 1, 2, 3, 4];
