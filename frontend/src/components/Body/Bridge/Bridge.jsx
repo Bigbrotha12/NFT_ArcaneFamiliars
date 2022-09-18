@@ -1,5 +1,5 @@
 import style from '../../../styles/Body.module.css';
-import { Card, Tab, Tabs, CardHeader, CardContent } from '@mui/material';
+import { Card, Tab, Tabs, CardHeader, CardContent, Typography, Divider } from '@mui/material';
 import BridgeDeposit from './BridgeDeposit';
 import BridgeWithdraw from './BridgeWithdraw';
 
@@ -11,6 +11,7 @@ export default function Bridge() {
 
   return (
     <div className={style.bridgeContainer}>
+      <div className={style.bridgeContainer}>
       <Card raised={true}>
         <CardHeader title={
           <Tabs value={tabIndex} onChange={handleChange}>
@@ -23,6 +24,14 @@ export default function Bridge() {
           {tabIndex === 1 && <BridgeWithdraw />}
         </CardContent>
       </Card>
+      </div>
+      <div>
+        <Card sx={{marginLeft:"15px", padding:"5px"}}>
+          <Typography variant="h6">Pending Transactions</Typography>
+          <Divider />
+          <Typography variant="body2">This is a pending tx...</Typography>
+        </Card>
+      </div>
     </div>
   )
 }

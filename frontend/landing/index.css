@@ -23,8 +23,8 @@ img {
 .welcome-msg {
     text-align: center;
     flex-wrap: wrap;
-    margin-left: 50px;
-    width: 180px;
+    margin-left: 30px;
+    width: 30%;
 }
 
 .intro-group-article {
@@ -41,7 +41,6 @@ img {
     font-family: Inter;
     color: white;
     width: 100%;
-    border: 1px solid black;
 }
 
 .rectangle-header {
@@ -49,22 +48,30 @@ img {
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    padding: 1em;
+    padding: 0.5em;
+    padding-right: 1em;
     background-color: #282a2b;
     mix-blend-mode: hard-light;
 }
 
-.rectangle-header a {
-    margin-right: 1em;
+.nav-items {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .imx-log-in {
     cursor: pointer;
+    text-align: center;
     padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
     border-radius: 5px;
-    background-color:rgb(79, 235, 235);
+    background-color:rgb(15, 184, 222);
+}
+
+.imx-log-in a {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
 }
 
 .hook {
@@ -73,19 +80,32 @@ img {
 }
 
 .monster1 {
-    height: 60px;
-    width: 90px;
+    margin-top: 20px;
+    position: relative;
+    height: 16;
+    width: 9;
 }
 
 .monster2 {
-    height: 60px;
-    width: 90px;
+    margin-top: 20px;
+    margin-left: 20px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 160px;
+    width: 160px;
 }
 
 .hook-upper {
     display: flex;
     background-color: #201f1f;
     height: 200px;
+}
+
+.hook-msg {
+    width: 60%;
+    padding-left: 30px;
+    padding-top: 30px;
 }
 
 .hook-image {
@@ -104,9 +124,43 @@ img {
     background-color: #201f1f;
 }
 
+.story {
+    margin-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 .team {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #201f1f;
+}
+
+.meet-the-team {
+    width: 100%;
+    text-align: center;
+}
+
+.team-cards-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+    padding-top: 0px;
+}
+
+.team-cards {
+    text-align: center;
+    width: 150px;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.team-image {
+    height: 120px;
+    width: 100px;
 }
 
 .action-button-container {
@@ -128,7 +182,35 @@ img {
 .footer {
     display: flex;
     justify-content: space-between;
-    color: white;
     background-color: #242C40;
 }
+
+.rectangle-community {
+    text-align: center;
+    padding: 20px;
+}
+
+.social-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.fine-print {
+    padding: 10px;
+    margin-right: 50px;
+}
+
+.powered-by {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+
+}
+
+.logo-immutable {
+    height: 60px;
+    width: 100px;
+}
+
 
