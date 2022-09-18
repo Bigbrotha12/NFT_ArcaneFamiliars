@@ -7,6 +7,41 @@ img {
     max-height: 100%;
 }
 
+
+.base {
+    display: flex;
+    font-family: Inter;
+    color: white;
+    width: 100%;
+}
+
+.rectangle-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0.5em;
+    padding-right: 1em;
+    background-color: #282a2b;
+    mix-blend-mode: hard-light;
+}
+
+.nav-items {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.imx-log-in {
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color:rgb(15, 184, 222);
+}
+
 .header-intro {
     background-image: url('public/doorway-1@2x.png');
     background-repeat: no-repeat;
@@ -36,43 +71,6 @@ img {
     mix-blend-mode: normal;
 }
 
-.base {
-    display: flex;
-    font-family: Inter;
-    color: white;
-    width: 100%;
-}
-
-.rectangle-header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    padding: 0.5em;
-    padding-right: 1em;
-    background-color: #282a2b;
-    mix-blend-mode: hard-light;
-}
-
-.nav-items {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.imx-log-in {
-    cursor: pointer;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px;
-    background-color:rgb(15, 184, 222);
-}
-
-.imx-log-in a {
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-}
 
 .hook {
     display: flex;
