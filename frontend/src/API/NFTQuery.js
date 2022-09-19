@@ -2,7 +2,9 @@ import Web3 from 'web3';
 import { Alchemy, Network } from 'alchemy-sdk';
 import { abi } from '../constants/FamiliarLogic.json';
 
-export const NFTQuery = {
+export const Web3Query = {
+
+  // Layer 1 frontend NFT queries
 
   // Contract methods
   // getTokenBlueprint(uint256 _tokenId)

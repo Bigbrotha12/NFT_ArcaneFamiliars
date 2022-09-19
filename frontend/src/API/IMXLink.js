@@ -2,6 +2,8 @@ import { Link } from '@imtbl/imx-sdk';
 
 export const IMXLink = {
 
+  // Layer 2 frontend NFT queries
+
     // Mainnet
     //const linkAddress = 'https://link.x.immutable.com';
     //const apiAddress = 'https://api.x.immutable.com/v1';
@@ -123,5 +125,62 @@ export const IMXLink = {
     }
   },
 
-  
+  // IMMUTABLE API
+
+  async getAssets() {
+    let result;
+    fetch('https://api.ropsten.x.immutable.com/v1/assets').then(res => {
+      result = res.json();
+    });
+
+    // query parameter: url/resource?parameter1=value1&parameter2=value2
+    // 'name' - name of asset to search
+    // 'page_size' - page size of results
+    // 'cursor' - number of page
+    // 'buy_orders' - fetch buy orders only
+    // 'sell_orders' - fetch sell orders only
+    // 'user' - address that owns these assets
+    // 'collection' - address of NFT contract
+
+  },
+
+  async getAssetDetail() {
+    let result;
+    fetch('https://api.ropsten.x.immutable.com/v1/assets/{token_address}/{token_id}').then(res => {
+      result = res.json();
+    })
+
+    // query parameter: url/resource/token_address/token_id
+    
+  },
+
+  async getAllTokenBalances() {
+    let result;
+    fetch('https://api.ropsten.x.immutable.com/v2/balances/{owner}').then(res => {
+      result = res.json();
+    })
+  },
+
+  async getERC20Balances() {
+    let result;
+    fetch('https://api.ropsten.x.immutable.com/v2/balances/{owner}/{address}').then(res => {
+      result = res.json();
+    })
+  },
+
+  async getUserDeposits() {
+    let result;
+    fetch('https://api.ropsten.x.immutable.com/v1/deposits').then(res => {
+      result = res.json();
+    })
+
+    // cursor
+    // status
+    // token_address
+    // token_id
+    // token_name
+    // token_name
+    // user address
+    // asset_id
+  }
 }
