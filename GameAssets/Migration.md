@@ -28,3 +28,10 @@
 - solidity language and themes
 - solidity visual developer
 - typescript react code snippet
+
+# Web Ext.
+- Metamask
+- Polkadot Wallet
+- Google Translate
+- LastPass
+- Beyond20
