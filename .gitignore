@@ -1,6 +1,7 @@
 
 # system files
 .DS_Store
+bin
 
 # outputs
 build

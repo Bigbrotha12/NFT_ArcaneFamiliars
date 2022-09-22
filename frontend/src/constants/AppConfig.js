@@ -1,6 +1,7 @@
 export const AppConfig = {
     IMXMainEndpoint: "https://api.x.immutable.com/v1",
     IMXTestEndpoint: "https://api.ropsten.x.immutable.com/v1",
+    IMXSandboxAPI: "https://api.sandbox.x.immutable.com",
     IMXProvider: 'https://link.ropsten.x.immutable.com',
     IMXMarket: "https://market.immutable.com/",
     IMXMinter: "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
@@ -41,12 +42,8 @@ export const AppConfig = {
           label: "Transactions",
           content: [
             {
-              label: "L1 Bridge",
+              label: "Bridge",
               link: "/bridge"
-            },
-            {
-              label: "Change Traits",
-              link: "/other"
             }
           ]
         }
