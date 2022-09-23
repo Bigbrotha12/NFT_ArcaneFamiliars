@@ -26,8 +26,8 @@ contract("Proxy", (accounts) => {
     // 5: owners            || 6: balances  || 7: tokenApprovals  || 8: operatorApprovals || 9: defaultRoyaltyInfo
     // 10: tokenRoyaltyInfo || 11: admin    || 12: initializing   || 13: initialized      || 14: callRouting
     // 15: version
-    let admin = web3.utils.toChecksumAddress(await web3.eth.getStorageAt(famProxy.address, 11));
-    let IMX = web3.utils.toChecksumAddress(await web3.eth.getStorageAt(famProxy.address, 0));
+    let admin = web3.eth.abi.decodeParameter('address', await web3.eth.getStorageAt(famProxy.address, 11));
+    let IMX = web3.eth.abi.decodeParameter('address', await web3.eth.getStorageAt(famProxy.address, 0));
     let adminRoute = await famProxy.getRouting(admin);
     let IMXRoute = await famProxy.getRouting(IMX);
 
