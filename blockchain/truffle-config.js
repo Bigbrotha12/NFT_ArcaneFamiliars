@@ -1,3 +1,5 @@
+const HDWallet = require("@truffle/hdwallet-provider");
+const signer = process.env.SIGNER;
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -33,6 +35,13 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+
+  api_keys: {
+    etherscan: process.env.ETHERSCAN_KEY
+  },
 
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -45,6 +54,30 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
+    },
+
+    ropsten: {
+      provider: () => new HDWallet({
+        privateKeys: [signer],
+        providerOrUrl: process.env.INFURA_ROPSTEN
+      }),     
+      network_id: "3",       
+    },
+
+    goerli: {
+      provider: () => new HDWallet({
+        privateKeys: [signer],
+        providerOrUrl: process.env.INFURA_GOERLI
+      }),       
+      network_id: "5",       
+    },
+
+    mainnet: {
+      provider: () => new HDWallet({
+        privateKeys: [signer],
+        providerOrUrl: process.env.INFURA_MAIN
+      }), 
+      network_id: "1", 
     }
     //
     // An additional network, but with some advanced options…
