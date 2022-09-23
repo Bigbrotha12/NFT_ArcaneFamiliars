@@ -1,5 +1,7 @@
 const HDWallet = require("@truffle/hdwallet-provider");
+require('dotenv').config();
 const signer = process.env.SIGNER;
+
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
