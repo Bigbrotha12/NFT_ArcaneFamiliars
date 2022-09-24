@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const mainRouter = require("./routes/main");
-const imxRouter = require("./routes/IMX");
+const imxRouter = require("./routes/api");
 
 app.use("/app", mainRouter);
 app.use("/api", imxRouter);
