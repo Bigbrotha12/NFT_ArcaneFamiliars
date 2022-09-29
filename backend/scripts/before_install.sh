@@ -1,2 +1,1 @@
-cd server
-npm install
+echo "Installing dependencies..."
