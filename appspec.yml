@@ -5,13 +5,13 @@ files:
     destination: /var/server/
 hooks:
   BeforeInstall:
-    - location: backend/scripts/install_dependencies
+    - location: backend/scripts/before_install
       timeout: 300
       runas: root
-    - location: backend/scripts/start_server
+    - location: backend/scripts/app_start
       timeout: 300
       runas: root
   ApplicationStop:
-    - location: backend/scripts/stop_server
+    - location: backend/scripts/app_stop
       timeout: 300
       runas: root
