@@ -23,8 +23,8 @@ os: linux
 #   "files" section altogether. A blank or incomplete "files" section
 #   may cause associated deployments to fail.
 files:
-  - source: /backend/src
-    destination: /server
+  - source: backend/src
+    destination: server
 
 # For each deployment lifecycle event, specify multiple "location" entries 
 #   if you want to run multiple scripts during that event.
@@ -50,18 +50,18 @@ files:
 #   in the script specified in "location" starting from the root of the 
 #   revision's file bundle.
   ApplicationStop:
-    - location: /backend/scripts/app_stop.sh
+    - location: backend/scripts/app_stop.sh
       timeout: 300
       
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   BeforeInstall:
-    - location: /backend/scripts/before_install.sh
+    - location: backend/scripts/before_install.sh
       timeout:300
  
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ApplicationStart:
-    - location: /backend/scripts/app_start.sh
+    - location: backend/scripts/app_start.sh
       timeout: 300
 
