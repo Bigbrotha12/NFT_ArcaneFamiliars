@@ -8,6 +8,7 @@ bin
 
 # outputs
 build
+public
 dist
 
 # modules
