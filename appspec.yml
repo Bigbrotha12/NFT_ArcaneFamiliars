@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /backend/src/
-    destination: /var/server/
+    destination: /server/
 hooks:
   BeforeInstall:
     - location: backend/scripts/before_install
