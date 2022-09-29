@@ -57,7 +57,7 @@ files:
 #   in the script specified in "location".
   BeforeInstall:
     - location: backend/scripts/before_install.sh
-      timeout:300
+      timeout: 300
  
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
