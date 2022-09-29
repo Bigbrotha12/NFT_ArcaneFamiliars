@@ -1,1 +1,1 @@
-pm2 stop server.js
+echo "application stopping..."
