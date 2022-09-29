@@ -1,1 +1,1 @@
-pm2 start server.js --watch
+echo "Application starting..."
