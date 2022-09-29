@@ -1,2 +1,3 @@
 #!/bin/bash
 echo "Installing dependencies..."
+npm install pm2 -g
