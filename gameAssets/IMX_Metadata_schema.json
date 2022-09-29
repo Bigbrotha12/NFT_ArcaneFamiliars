@@ -1,105 +1,91 @@
 {
-    "metadata": [
+    metadata: [
         {
-            "name": "name",
-            "type": "text"
+            name: "name",
+            type: MetadataTypes.Text
         },
         {
-            "name": "description",
-            "type": "text"
+            name: "description",
+            type: MetadataTypes.Text
         },
         {
-            "name": "image_url",
-            "type": "text"
+            name: "image_url",
+            type: MetadataTypes.Text
         },
         {
-            "name": "image",
-            "type": "text"
+            name: "image",
+            type: MetadataTypes.Text
         },
         {
-            "name": "assetId",
-            "type": "discrete",
-            "filterable": false
+            name: "assetId",
+            type: MetadataTypes.Discrete,
+            filterable: false
         },
         {
-            "name": "affinity",
-            "type": "enum",
-            "filterable": true
+            name: "affinity",
+            type: MetadataTypes.Enum,
+            filterable: true
         },
         {
-            "name": "familiarId",
-            "type": "discrete",
-            "filterable": true
+            name: "familiarId",
+            type: MetadataTypes.Discrete,
+            filterable: true
         },
         {
-            "name": "statistics",
-            "type": "discrete",
-            "filterable": false,
-            "children": [
-                {
-                    "name": "HP",
-                    "type": "discrete",
-                    "filterable": false
-                },
-                {
-                    "name": "MP",
-                    "type": "discrete",
-                    "filterable": false
-                },
-                {
-                    "name": "Attack",
-                    "type": "discrete",
-                    "filterable": false
-                },
-                {
-                    "name": "Defense",
-                    "type": "discrete",
-                    "filterable": false
-                },
-                {
-                    "name": "Arcane",
-                    "type": "discrete",
-                    "filterable": false
-                },
-                {
-                    "name": "Speed",
-                    "type": "discrete",
-                    "filterable": false
-                }
-            ]
+            name: "HP",
+            type: MetadataTypes.Discrete,
+            filterable: false
         },
         {
-            "name": "abilities",
-            "type": "text",
-            "children": [
-                {
-                    "name": "Passive 1",
-                    "type": "text"
-                },
-                {
-                    "name": "Passive 2",
-                    "type": "text"
-                },
-                {
-                    "name": "Passive 3",
-                    "type": "text"
-                },
-                {
-                    "name": "Passive 4",
-                    "type": "text"
-                }
-
-            ]
+            name: "MP",
+            type: MetadataTypes.Discrete,
+            filterable: false
         },
         {
-            "name": "rarity",
-            "type": "enum",
-            "filterable": true
+            name: "Attack",
+            type: MetadataTypes.Discrete,
+            filterable: false
         },
         {
-            "name": "generation",
-            "type": "discrete",
-            "filterable": true
+            name: "Defense",
+            type: MetadataTypes.Discrete,
+            filterable: false
+        },
+        {
+            name: "Arcane",
+            type: MetadataTypes.Discrete,
+            filterable: false
+        },
+        {
+            name: "Speed",
+            type: MetadataTypes.Discrete,
+            filterable: false
+        },
+        {
+            name: "ability 1",
+            type: MetadataTypes.Text,
+        },
+        {
+            name: "ability 2",
+            type: MetadataTypes.Text,
+        },
+        {
+            name: "ability 3",
+            type: MetadataTypes.Text,
+        },
+        {
+            name: "ability 4",
+            type: MetadataTypes.Text,
+        },
+        {
+            name: "rarity",
+            type: MetadataTypes.Enum,
+            filterable: true
+        },
+        {
+            name: "generation",
+            type: MetadataTypes.Discrete,
+            filterable: true
         }
     ]
 }
