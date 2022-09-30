@@ -1,16 +1,50 @@
-const express = require('express');
-const path = require('path');
+import * as dotenv from "dotenv";
+import helmet from "helmet";
+import express from "express";
+import { MongoClient } from "mongodb";
+import UsersDAO from "./dao/usersDAO.js";
+import MinterDAO from "./dao/minterDAO.js";
+import MinterController from "./routes/mint-controller";
+import mainRouter from "./routes/api-routes.js";
+
+
+dotenv.config();
+const port = process.env.PORT || 3000;
 const app = express();
 
+// Set-up middleware
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(helmet());
 
-const mainRouter = require("./routes/main");
-const imxRouter = require("./routes/api");
+// Set-up router
+app.use("/api", mainRouter);
 
-app.use("/app", mainRouter);
-app.use("/api", imxRouter);
+// 404 and error response
+app.use((req, res, next) => {res.status(404).send("Resource not found.")});
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Sorry, something went wrong.')
+  });
 
-app.listen(3000);
+// Connect MondoDB
+MongoClient.connect(process.env.MONGODB_URI,
+    {
+        useNewUrlParser: true,
+        wtimeoutMS: process.env.MONGODB_TIMEOUT
+    }
+).catch( error => {
+    console.error(error.stack);
+    process.exit(1);
+}).then( async client => {
+    await UsersDAO.injectDB(client);
+    await MinterDAO.injectDB(client);
+    MinterController.init(process.env.MINTER_KEY);
+    // start server
+    console.log(signature);
+    app.listen(port, console.log(`listening on port ${port}`));
+});
+
+
