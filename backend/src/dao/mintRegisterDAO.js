@@ -1,6 +1,6 @@
 let familiars;
 let templates;
-export default class MinterDAO {
+export default class MintRegisterDAO {
     static async injectDB(client) {
         if(familiars) {
             return
@@ -24,7 +24,7 @@ export default class MinterDAO {
         return cursor;
     }
 
-    static async mintFamiliar(blueprint) {
+    static async registerFamiliar(blueprint) {
         try {
             let template = await templates.findOne({ _id: blueprint.assetId});
             let nextTokenId = await familiars.count({});

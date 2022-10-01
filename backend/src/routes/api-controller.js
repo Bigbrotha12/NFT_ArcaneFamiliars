@@ -1,11 +1,13 @@
-import Minter from "../dao/minterDAO.js";
+import MintRegister from "../dao/mintRegisterDAO.js";
 import Users from "../dao/usersDAO.js";
+import IMXDAO from "../dao/imxDAO.js";
+import MinterController from "./mint-controller.js";
 import { validate } from "../utils/utils.js";
 
 export default class APIController {
     static async apiGetFamiliarByID(req, res, next) {
         const token_id = req.params.id;
-        const familiar = await Minter.getFamiliarByID(token_id);
+        const familiar = await MintRegister.getFamiliarByID(token_id);
         if(familiar) {
             res.status(200).json(familiar);
         } else {
@@ -16,7 +18,7 @@ export default class APIController {
     static async apiMintFamiliar(req, res, next) {
         if(validate(req)) {
             const token_params = req.body;
-            const { result } = await Minter.mintFamiliar(token_params);
+            const { result } = await MintRegister.registerFamiliar(token_params);
             if (result instanceof Error) {
                 res.status(500).json({error: error});
             } else {
@@ -24,7 +26,9 @@ export default class APIController {
                 if (resultTwo.result instanceof Error) {
                     res.status(500).json({message: result});
                 } else {
-                    res.status(200).json({message: result});
+                    let signedRequest = MinterController.setPayload(token_params);
+                    let mintResponse = await IMXDAO.mintToken(signedRequest, { restries: 3, backOff: 200 });
+                    res.status(200).json({mintResponse});
                 }
             }
         } else {
