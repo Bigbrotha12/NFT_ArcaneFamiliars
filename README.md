@@ -2,8 +2,12 @@
 
 # Overview
 
+Source code Arcane Familiar, a work-in-progress, NFT-based game integrated with IMX L2 marketplace.
+
+# Frontend
+
 Current working version:
-https://master.d2zr7k4b1xwxul.amplifyapp.com 
+https://master.d5fhcghim14p0.amplifyapp.com 
 
 # Blockchain
 
@@ -14,6 +18,10 @@ Deployed contracts
 | Ropsten | FamiliarAdmin | [0xBb91f367dD50cF80f55EF836c7A46E8dc0D79f55](0xBb91f367dD50cF80f55EF836c7A46E8dc0D79f55) |
 | Ropsten | FamiliarIMX | [0xfB1686D1993508019BbFef53c5065009874cd1a9](https://ropsten.etherscan.io/address/0xfB1686D1993508019BbFef53c5065009874cd1a9#code) |
 | Ropsten | FamiliarLogic | [0x6c755f9644E0ABa078450211aA1320bCbE2647AF](0x6c755f9644E0ABa078450211aA1320bCbE2647AF) |
+| Goerli | FamiliarProxy | [0xB7Eaa855Fa6432D0597F297BaCE4613c33a075d1](https://goerli.etherscan.io/address/0xB7Eaa855Fa6432D0597F297BaCE4613c33a075d1#code) |
+| Goerli | FamiliarAdmin | [0xfB1686D1993508019BbFef53c5065009874cd1a9](https://goerli.etherscan.io/address/0xfB1686D1993508019BbFef53c5065009874cd1a9#code) |
+| Goerli | FamiliarIMX | [0x6c755f9644E0ABa078450211aA1320bCbE2647AF](https://goerli.etherscan.io/address/0x6c755f9644E0ABa078450211aA1320bCbE2647AF#code) |
+| Goerli | FamiliarLogic | [0x2EF8390d0ED43fD98B785AE414Bb5dd5364d621B](https://goerli.etherscan.io/address/0x2EF8390d0ED43fD98B785AE414Bb5dd5364d621B#code) |
 
 # IMX Registration
 
