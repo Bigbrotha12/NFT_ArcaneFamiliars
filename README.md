@@ -2,8 +2,12 @@
 
 # Overview
 
+Source code Arcane Familiar, a work-in-progress, NFT-based game integrated with IMX L2 marketplace.
+
+# Frontend
+
 Current working version:
-https://master.d2zr7k4b1xwxul.amplifyapp.com 
+https://master.d5fhcghim14p0.amplifyapp.com 
 
 # Blockchain
 
