@@ -5,7 +5,7 @@
   "main": "index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --config webpack.config.js",
+    "start": "echo \"listening on port 8080\" && webpack serve --config webpack.config.js",
     "build": "webpack build --config webpack.config.js"
   },
   "keywords": [],
@@ -31,7 +31,8 @@
     "stream-http": "^3.2.0",
     "url": "^0.11.0",
     "util": "^0.12.4",
-    "web3": "^1.7.5"
+    "web3": "^1.7.5",
+    "web3-utils": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
