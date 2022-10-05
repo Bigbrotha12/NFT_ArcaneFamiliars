@@ -26,15 +26,19 @@ export class FamiliarsDAO {
         .catch(err => {console.error(err); return {}});
     }
 
-    static getPendingMint() {
-        familiars.find({"meta.status": "Pending"}, {
-            ability_1: 1, ability_2: 1, ability_3: 1, ability_4: 1, meta: 1
-        }).limit(process.env.BATCH_SIZE)
-        .then(result => {return result})
-        .catch(err => {console.error(err); return [{}]});
+    static async getPendingMint() {
+        try {
+            let result = await familiars.find({"meta.status": "Pending"}, {
+                ability_1: 1, ability_2: 1, ability_3: 1, ability_4: 1, meta: 1
+            }).limit(Number(process.env.BATCH_SIZE)).toArray();
+            return result;
+        } catch (error) {
+            console.error(error); return [{}]
+        }
     }
 
     static updatePendingMints(tokens) {
+        console.log(tokens);
         let operations = tokens.map(token => {
             return {
                 updateOne: {
@@ -43,6 +47,7 @@ export class FamiliarsDAO {
                 }
             }
         });
+        
         familiars.bulkWrite(operations, { ordered: false, writeConcern: "majority" })
         .then(result => {return result})
         .catch(err => {console.error(err); return {modifiedCount: 0}});

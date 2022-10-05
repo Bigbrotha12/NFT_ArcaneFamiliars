@@ -31,6 +31,7 @@ app.use((err, req, res, next) => {
 MongoClient.connect(process.env.MONGODB_URI,
     {
         useNewUrlParser: true,
+        wtimeoutMS: process.env.MONGODB_TIMEOUT
     }
 ).catch( error => {
     console.error(error.stack);

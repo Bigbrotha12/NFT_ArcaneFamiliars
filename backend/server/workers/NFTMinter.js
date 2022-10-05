@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv";
 import { MongoClient } from "mongodb";
-import MinterController from "./mint-controller";
-import { FamiliarsDAO } from "./familiarsDAO";
-import IMXDAO from "./imxDAO";
+import MinterController from "./mint-controller.js";
+import { FamiliarsDAO } from "./familiarsDAO.js";
+import IMXDAO from "./imxDAO.js";
 dotenv.config();
 
 // Connect MondoDB
@@ -36,17 +36,17 @@ async function runTask() {
     let bulkMints = MinterController.prepareBulkMint(tokenArray);
     let payload = MinterController.formatPayload(bulkMints);
     let request = MinterController.signPayload(payload);
-    
     let mintResult = await IMXDAO.mintToken([request], {
         retries: process.env.IMX_API_RETRIES, 
         backOff: process.env.IMX_API_BACKOFF});
     if(mintResult instanceof Error) {console.error(mintResult); process.exit(1)}
     console.log("Mint Successful");
-    console.log("Remaining Mint Balance: %d", mintResult.header.Mint_Remaining)
+    console.log(mintResult);
     
-    let update = await FamiliarsDAO.updatePendingMint(pendingMints);
-    console.log("Documents Modified: %d", update.modifiedCount);
+    let update = await FamiliarsDAO.updatePendingMints(pendingMints);
+    console.log(update);
     console.log("Minting task completed!");
+    process.exit(0);
 }
 
 

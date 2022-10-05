@@ -1,6 +1,6 @@
 import Accounts from "web3-eth-accounts";
 import utils from "web3-utils";
-import abilities from "./abilityTable.json"
+import abilities from "./abilityTable.js"
 
 let signer, collection, beneficiary, royalty;
 export default class MinterController {
@@ -13,7 +13,7 @@ export default class MinterController {
         }
         collection = collectionAddr;
         beneficiary = beneficiaryAddr;
-        royalty = royaltyFee;
+        royalty = Number(royaltyFee);
     }
 
     static formatPayload(bulk) {
@@ -34,13 +34,12 @@ export default class MinterController {
     static prepareBulkMint(tokensArr) {
       return tokensArr.map((token) => {
         return {
-          tokens: [
-            {
+          tokens:
+            [{
               blueprint: `${token.blueprint[0]+token.blueprint[1]+token.blueprint[2]+token.blueprint[3]}`,
               id: token.tokenId,
-            }
-          ],
-          user: token._id
+            }],
+          user: token.address
         }
       });
     }
