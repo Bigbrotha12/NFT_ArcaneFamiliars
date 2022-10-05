@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/v1/familiars/{id}": {
+      "name": "/v1/familiars/{id}",
+      "lambdaFunction": "getFamiliarById",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

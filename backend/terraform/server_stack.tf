@@ -15,6 +15,8 @@ provider "aws" {
 resource "aws_instance" "AFWebServer" {
   ami           = "ami-013066dc1f1a0259b"
   instance_type = "t2.micro"
+  availability_zone = "us-east-1"
+  security_groups = ""
   tags = {
     Name        = "AFWebServer"
     Environment = "Dev"
