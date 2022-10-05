@@ -20,15 +20,16 @@ Deployed contracts
 Environment: Ropsten
 Project ID: 200558
 Collection:
-{
-  "address": "0x2ef8390d0ed43fd98b785ae414bb5dd5364d621b",
-  "name": "Arcane Familiars",
-  "description": "",
-  "icon_url": "",
-  "collection_image_url": "",
-  "project_id": 200558,
-  "project_owner_address": "",
-  "metadata_api_url": "",
-  "created_at": "2022-09-25T12:47:20.183116Z",
-  "updated_at": "2022-09-25T12:47:20.183116Z"
-}
+
+    {
+      "address": "0x2ef8390d0ed43fd98b785ae414bb5dd5364d621b",
+      "name": "Arcane Familiars",
+      "description": "",
+      "icon_url": "",
+      "collection_image_url": "",
+      "project_id": 200558,
+      "project_owner_address": "",
+      "metadata_api_url": "",
+      "created_at": "2022-09-25T12:47:20.183116Z",
+      "updated_at": "2022-09-25T12:47:20.183116Z"
+    }
