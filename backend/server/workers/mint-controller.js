@@ -8,8 +8,8 @@ export default class MinterController {
         if(signer) return;
         const accounts = new Accounts('');
         signer = function(payload) {
-            const hash = utils.keccak256(utils.utf8ToHex(JSON.stringify(payload)));
-            return accounts.sign(hash, privKey);
+            const message = utils.keccak256((JSON.stringify(payload)));
+            return accounts.sign(message, privKey);
         }
         collection = collectionAddr;
         beneficiary = beneficiaryAddr;
@@ -19,14 +19,15 @@ export default class MinterController {
     static formatPayload(bulk) {
         let payload = 
         {
-            contract_address: collection,
-            royalties: [
-              {
-                percentage: royalty,
-                recipient: beneficiary
-              }
-            ],
-            users: bulk
+          auth_signature: "",
+          contract_address: collection,
+          royalties: [
+            {
+              percentage: royalty,
+              recipient: beneficiary
+            }
+          ],
+          users: bulk
         }
         return payload;
     }
@@ -37,7 +38,7 @@ export default class MinterController {
           tokens:
             [{
               blueprint: `${token.blueprint[0]+token.blueprint[1]+token.blueprint[2]+token.blueprint[3]}`,
-              id: token.tokenId,
+              id: `${token.tokenId}`,
             }],
           user: token.address
         }
@@ -62,6 +63,6 @@ export default class MinterController {
     static signPayload(payload) {
       let auth = signer(payload);
       payload.auth_signature = auth.signature;
-      return payload;
+      return [payload];
     }
 }

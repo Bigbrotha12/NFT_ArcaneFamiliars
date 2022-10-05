@@ -33,23 +33,26 @@ export class FamiliarsDAO {
             }).limit(Number(process.env.BATCH_SIZE)).toArray();
             return result;
         } catch (error) {
-            console.error(error); return [{}]
+            console.error(error); 
+            return {};
         }
     }
 
-    static updatePendingMints(tokens) {
-        console.log(tokens);
+    static async updatePendingMints(tokens) {
         let operations = tokens.map(token => {
             return {
                 updateOne: {
                     filter: { _id: token._id },
-                    update: { $set: { "meta.status": "Minted" }, $set: { "meta.mint_timestamp": Math.floor(Date().now/1000) } }
+                    update: { "$set": {"meta.status": "Minted", "meta.mint_timestamp": `${Math.floor(Date.now()/1000)}`}}
                 }
             }
         });
-        
-        familiars.bulkWrite(operations, { ordered: false, writeConcern: "majority" })
-        .then(result => {return result})
-        .catch(err => {console.error(err); return {modifiedCount: 0}});
+        try {
+            let result = await familiars.bulkWrite(operations, { ordered: false, writeConcern: "majority" });
+            return result;
+        } catch (error) {
+            console.error(error);
+            return {};
+        }
     }
 }

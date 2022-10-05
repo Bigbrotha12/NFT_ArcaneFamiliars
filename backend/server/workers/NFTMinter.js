@@ -32,21 +32,19 @@ MongoClient.connect(process.env.MONGODB_URI,
 async function runTask() {
     console.log("Starting minting task...");
     let pendingMints = await FamiliarsDAO.getPendingMint();
+    if(!pendingMints) {process.exit(1)};
     let tokenArray = MinterController.formatTokenArray(pendingMints);
     let bulkMints = MinterController.prepareBulkMint(tokenArray);
     let payload = MinterController.formatPayload(bulkMints);
     let request = MinterController.signPayload(payload);
-    let mintResult = await IMXDAO.mintToken([request], {
-        retries: process.env.IMX_API_RETRIES, 
-        backOff: process.env.IMX_API_BACKOFF});
-    if(mintResult instanceof Error) {console.error(mintResult); process.exit(1)}
-    console.log("Mint Successful");
-    console.log(mintResult);
+
+    let mintResult = await IMXDAO.mintToken(request, {
+         retries: process.env.IMX_API_RETRIES, 
+         backOff: process.env.IMX_API_BACKOFF});
+    if(!mintResult) {process.exit(1)};
     
     let update = await FamiliarsDAO.updatePendingMints(pendingMints);
-    console.log(update);
+    if(!update) {process.exit(1)};
+    console.log("Records modified: %d", update.result.nModified)
     console.log("Minting task completed!");
-    process.exit(0);
 }
-
-

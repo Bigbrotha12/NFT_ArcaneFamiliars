@@ -46,7 +46,7 @@ export default class FamiliarsDAO {
         .catch(handleError);
     }
 
-    static getMintStatus (tokenId) {
+    static getMintStatus(tokenId) {
         familiars.findOne({_id: tokenId}, {status: 1})
         .then(handleSuccess)
         .catch(handleError);
