@@ -22,14 +22,14 @@ module.exports = async function (deployer, network, accounts) {
     await deployer.deploy(FamiliarProxy, routeConfig);
   }
 
-  if(network == 'ropsten') {
+  if(network == 'goerli') {
     await deployer.deploy(FamiliarAdmin);
     await deployer.deploy(FamiliarIMX); 
     await deployer.deploy(FamiliarLogic);
     let routeConfig = [
       process.env.SIGNER_ADDRESS,
       (await FamiliarAdmin.deployed()).address,
-      process.env.IMX_ROPSTEN,
+      process.env.IMX_GOERLI,
       (await FamiliarIMX.deployed()).address
     ]
     // constructor(address[] memory _routingConfig) 

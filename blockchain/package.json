@@ -7,10 +7,12 @@
   },
   "scripts": {
     "ganache": "ganache -p 8545",
+    "truffle": "truffle console",
     "test": "truffle test --network development",
     "deploy_ropsten": "truffle migrate --network ropsten",
     "deploy_goerli": "truffle migrate --network goerli",
-    "deploy_mainnet": "truffle migrate --network mainnet"
+    "deploy_mainnet": "truffle migrate --network mainnet",
+    "verify": "truffle run verify"
   },
   "author": "",
   "license": "ISC",

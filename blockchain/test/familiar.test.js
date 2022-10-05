@@ -77,8 +77,9 @@ contract("Proxy", (accounts) => {
       web3.utils.utf8ToHex("1.0.0"),
       web3.utils.utf8ToHex("Arcane Familiars"),
       web3.utils.utf8ToHex("ARC"),
-      web3.utils.utf8ToHex("IPFS/sampleCID"),
+      web3.utils.utf8ToHex("http://my-unity-game.s3-website-us-east-1.amazonaws.com"),
     ]
+    //console.log(initData);
 
     let tx1 = await famProxy.upgradeInit(famLogic.address, initData, {from: accounts[0]});
     truffleAssert.eventEmitted(tx1, "contractUpgraded", (event) => { return event.version === _sha3("1.0.0") && event.target === famLogic.address });
@@ -91,7 +92,7 @@ contract("Proxy", (accounts) => {
     // version  = "1.0.0"
     // names    = "Arcane Familiars"
     // symbols  = "ARC"
-    // rootURI  = "IPFS/sampleCID"
+    // rootURI  = "http://my-unity-game.s3-website-us-east-1.amazonaws.com"
     let tx1 = await famProxy.getVersion({from: accounts[0]});
     truffleAssert.eventEmitted(tx1, "currentVersion", (event) => { return event.version === _sha3("1.0.0") && event.target === famLogic.address });
 
