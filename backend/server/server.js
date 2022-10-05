@@ -1,12 +1,10 @@
 import * as dotenv from "dotenv";
 import helmet from "helmet";
 import express from "express";
-import { MongoClient } from "mongodb";
-import UsersDAO from "./dao/usersDAO.js";
-import MinterDAO from "./dao/minterDAO.js";
-import MinterController from "./routes/mint-controller";
 import mainRouter from "./routes/api-routes.js";
-
+import FamiliarsDAO from "./dao/familiarsDAO.js";
+import UsersDAO from "./dao/usersDAO.js";
+import { MongoClient } from "mongodb";
 
 dotenv.config();
 const port = process.env.PORT || 3000;
@@ -33,17 +31,14 @@ app.use((err, req, res, next) => {
 MongoClient.connect(process.env.MONGODB_URI,
     {
         useNewUrlParser: true,
-        wtimeoutMS: process.env.MONGODB_TIMEOUT
     }
 ).catch( error => {
     console.error(error.stack);
     process.exit(1);
 }).then( async client => {
     await UsersDAO.injectDB(client);
-    await MinterDAO.injectDB(client);
-    MinterController.init(process.env.MINTER_KEY);
+    await FamiliarsDAO.injectDB(client);
     // start server
-    console.log(signature);
     app.listen(port, console.log(`listening on port ${port}`));
 });
 
