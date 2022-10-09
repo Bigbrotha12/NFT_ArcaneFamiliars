@@ -29,7 +29,6 @@ exports.handler = async (event, context) => {
     let response;
     let validation = Validator.validate(event.body, user[0]);
     if(validation.success) {
-        console.log("Validation Passed!");
         let session = client.startSession();
         let familiarToMint = await FamiliarFactory.generateNextFamiliar(user[0], db);
         if(!familiarToMint) {return {statusCode: 500, body: {message: "Database error"}}}
