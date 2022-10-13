@@ -28,8 +28,6 @@ exports.handler = async (event, context) => {
     if(!session.isActive || !Validator.validTimestamp(event) || !Validator.validSignature(event))
     {return {statusCode: 403, message: "Forbidden: Invalid signature"}}
     
-    
-
     /**
      *  Recognize which action is being requested
      *  by path and method.
@@ -59,8 +57,7 @@ exports.handler = async (event, context) => {
     if(event.path === "/v1/user") {
         if(event.httpMethod === "GET") {return await SessionManager.checkSession(connection, event)}}
     if(event.path === "/v1/user/save") {
-        if(event.httpMethod === "POST") {return await SessionManager.saveGame(connection, event, session)}
-        if(event.httpMethod === "PATCH") {return await SessionManager.updateProgress(connection, event, session)}}
+        if(event.httpMethod === "PATCH") {return await SessionManager.saveGame(connection, event, session)}}
     if(event.path === "/v1/user/load") {
         if(event.httpMethod === "GET") {return await SessionManager.loadGame(connection, event, session)}}
     if(event.path === "/v1/user/register") {

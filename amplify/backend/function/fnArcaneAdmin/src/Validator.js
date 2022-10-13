@@ -21,10 +21,17 @@ module.exports = class Validator {
         let now = Math.floor(Date.now()/1000);
         let result = await db.collection("session").find(
             {address: request.body.eth_address}).toArray();
+        let validGame = (request.body.game_hash === ethers.utils.hashMessage(result[0].login_timestamp));
         return {
-            isActive: now < result[0].expiration, 
+            isActive: now < result[0].expiration,
+            isGameValid: validGame,
+            timestamp: result[0].login_timestamp,
             expiration: result[0].expiration,
             max_expiration: result[0].max_expiration
         };
+    }
+
+    static async validGameRequest(conn, request) {
+
     }
 }

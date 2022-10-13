@@ -1,11 +1,9 @@
-const Validator = require("./Validator.js");
-
 module.exports = class SessionManager {
 
     static async checkSession(conn, event) {
         let [client, db] = conn;
         let result = await db.collection("session").find(
-            {address: event.body.eth_address}).toArray();
+            {address: event.body.eth_address}, {login_timestamp: 0}).toArray();
         return result[0]
     }
 
@@ -46,10 +44,10 @@ module.exports = class SessionManager {
             address: event.body.eth_address,
             session_id: event.body.eth_signature,
             login_timestamp: `${now}`,
-            expiration: `${now + (5 * 60 * 60)}`,        // set initial expiration for 5 hours
+            expiration: `${now + (5 * 60 * 60)}`,         // set initial expiration for 5 hours
             max_expiration: `${now + (24 * 60 * 60)}`}    // request user to re-login after 24 hours  
         }, {upsert: true});
-        return {statusCode: 200, result: result}
+        return {statusCode: 200, result: {...result, login_timestamp: `${now}`}}
     }
 
     // if user saves game or update game progress, session is extended up until max expiration
@@ -81,30 +79,30 @@ module.exports = class SessionManager {
     }
 
     static async saveGame(conn, event, session) {
-        let [client, db] = conn;
-        if(!session.isActive) 
+        if(!session.isActive && !session.isGameValid) 
         {return {statusCode: 401, message: "request authentication"}}
-        let result = await db.collection("users").updateOne({_id: event.body.eth_address},
-            {$set: {
-                "saveData.items": event.body.saveData.items,
-                "saveData.location": event.body.saveData.location,
-                "saveData.level": event.body.saveData.level
-            }});
-        await this.refreshSession(conn, event, session);
-        return {statusCode: 200, result: result}
-    }
 
-    static async updateProgress(conn, event, session) {
         let [client, db] = conn;
-        if(!session.isActive) 
-        {return {statusCode: 401, message: "request authentication"}}
-        let result = await db.collection("users").updateOne({
-            _id: event.body.eth_address,
-            "saveData.progress": "0"
-            },
-            {$set: {
-                "saveData.progress.$": `${Math.floor(Date.now()/1000)}` 
-            }});
+        let result;
+        if(event.body.saveData.progress) {
+            result = await db.collection("users").updateOne(
+                {_id: event.body.eth_address,
+                "saveData.progress": "0"},
+                {$set: {
+                    "saveData.items": event.body.saveData.items,
+                    "saveData.location": event.body.saveData.location,
+                    "saveData.level": event.body.saveData.level,
+                    "saveData.progress.$": `${Math.floor(Date.now()/1000)}`
+                }});
+        } else {
+            result = await db.collection("users").updateOne(
+                {_id: event.body.eth_address},
+                {$set: {
+                    "saveData.items": event.body.saveData.items,
+                    "saveData.location": event.body.saveData.location,
+                    "saveData.level": event.body.saveData.level
+                }});
+        }
         await this.refreshSession(conn, event, session);
         return {statusCode: 200, result: result}
     }
