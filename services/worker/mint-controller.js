@@ -1,15 +1,14 @@
-import Accounts from "web3-eth-accounts";
-import utils from "web3-utils";
+import ethers from "ethers";
 import abilities from "./abilityTable.js"
 
 let signer, collection, beneficiary, royalty;
 export default class MinterController {
-    static init(privKey, collectionAddr, beneficiaryAddr, royaltyFee) {
+    static async init(privKey, collectionAddr, beneficiaryAddr, royaltyFee) {
         if(signer) return;
-        const accounts = new Accounts('');
+        const wallet = new ethers.Wallet(privKey);
         signer = function(payload) {
-            const message = utils.keccak256((JSON.stringify(payload)));
-            return accounts.sign(message, privKey);
+            const message = ethers.utils.keccak256((JSON.stringify(payload)));
+            return wallet.signMessage(message);
         }
         collection = collectionAddr;
         beneficiary = beneficiaryAddr;
@@ -60,8 +59,8 @@ export default class MinterController {
       });
     }
 
-    static signPayload(payload) {
-      let auth = signer(payload);
+    static async signPayload(payload) {
+      let auth = await signer(payload);
       payload.auth_signature = auth.signature;
       return [payload];
     }
