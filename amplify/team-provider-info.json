@@ -19,11 +19,11 @@
         },
         "fnArcaneMint": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",
-          "s3Key": "amplify-builds/fnArcaneMint-5158516861784b476242-build.zip"
+          "s3Key": "amplify-builds/fnArcaneMint-39492b2f625056507a43-build.zip"
         },
         "fnArcaneAdmin": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",
-          "s3Key": "amplify-builds/fnArcaneAdmin-2f4c4667726e35487750-build.zip"
+          "s3Key": "amplify-builds/fnArcaneAdmin-51634a302b3969415454-build.zip"
         }
       },
       "api": {
