@@ -10,7 +10,7 @@ module.exports = class Validator {
     }
 
     static verifyCode(request) {
-        return "" === request.game_codehash;
+        return "" === request.game_codehash; 
     }
 
     static verifyStamp(dataStamps) {
