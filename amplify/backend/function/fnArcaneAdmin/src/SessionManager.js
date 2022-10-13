@@ -1,72 +1,111 @@
+const Validator = require("./Validator.js");
 
 module.exports = class SessionManager {
-    static async registerUser(conn, body) {
+
+    static async checkSession(conn, event) {
         let [client, db] = conn;
-        await db.collection("users").insertOne({
-            _id: body.eth_address,
-            total_minted: 0,
-            register_timestamp: Math.floor(Date.now()/1000),
-            last_active_timestamp: Math.floor(Date.now()/1000),
-            saveData: {
-                items: [],
-                location: "0000",
-                progress: ["0","0","0","0"],
-                level: "1"
-            },  
-            blacklist: false,
-            reason: "none"
-        });
-        return await this.loginUser(conn, body);
+        let result = await db.collection("session").find(
+            {address: event.body.eth_address}).toArray();
+        return result[0]
     }
 
-    static async loginUser(conn, body) {
+    static async isRegistered(conn, event) {
         let [client, db] = conn;
-        validateAttempt(body);
-        let result = await db.collection("session").insertOne({
-            address: body.eth_address,
-            login_timestamp: Math.floor(Date.now()/1000),
-            session_id: "",
-        });
+        let result = await db.collection("users").find(
+            {_id: event.body.eth_address}).toArray();
+        return result.length > 0;
+    }
+
+    static async registerUser(conn, event) {
+        if(!this.isRegistered(conn, event)) {
+            let [client, db] = conn;
+            let result = await db.collection("users").insertOne({
+                _id: event.body.eth_address,
+                total_minted: 0,
+                register_timestamp: `${Math.floor(Date.now()/1000)}`,
+                last_active_timestamp: `${Math.floor(Date.now()/1000)}`,
+                saveData: {
+                    items: [],
+                    location: "0000",
+                    progress: ["0","0","0","0"],
+                    level: "1"
+                },  
+                blacklist: false,
+                reason: "none"
+            });
+        }
+        return await this.loginUser(conn, event);
+    }
+
+    static async loginUser(conn, event) {
+        let [client, db] = conn;
+        let now = Math.floor(Date.now()/1000);
+        let result = await db.collection("session").updateOne(
+            {address: event.body.eth_address}, 
+            {$set: {
+            address: event.body.eth_address,
+            session_id: event.body.eth_signature,
+            login_timestamp: `${now}`,
+            expiration: `${now + (5 * 60 * 60)}`,        // set initial expiration for 5 hours
+            max_expiration: `${now + (24 * 60 * 60)}`}    // request user to re-login after 24 hours  
+        }, {upsert: true});
         return {statusCode: 200, result: result}
     }
 
-    static async logoutUser(conn, body) {
+    // if user saves game or update game progress, session is extended up until max expiration
+    static async refreshSession (conn, event, session) {
         let [client, db] = conn;
-        let result = await db.collection("session").deleteOne({address: body.eth_address});
+        let now = Math.floor(Date.now()/1000);
+        if(!session.isActive) 
+        {return {statusCode: 401, message: "request authentication"}}
+        let result = await db.collection("session").updateOne(
+            {address: event.body.eth_address},
+            {$set: {
+                expiration: `${Math.min(now + 5 * 60 * 60, session.max_expiration)}` //extend session for 5 hours
+        }});
+    }
+
+    static async logoutUser(conn, event) {
+        let [client, db] = conn;
+        let result = await db.collection("session").deleteOne({address: event.body.eth_address});
         return {statusCode: 200, result: result}
     }
 
-    static async loadGame(conn, body) {
+    static async loadGame(conn, event, session) {
         let [client, db] = conn;
-        let result = await db.collection("users").find({_id: body.eth_address}, 
+        if(!session.isActive) 
+        {return {statusCode: 401, message: "request authentication"}}
+        let result = await db.collection("users").find({_id: event.body.eth_address}, 
             {saveData: 1, _id: 0}).toArray();
         return {statusCode: 200, data: result[0]};
     }
 
-    static async saveGame(conn, body) {
+    static async saveGame(conn, event, session) {
         let [client, db] = conn;
-        let result = await db.collection("users").updateOne({_id: body.eth_address},
+        if(!session.isActive) 
+        {return {statusCode: 401, message: "request authentication"}}
+        let result = await db.collection("users").updateOne({_id: event.body.eth_address},
             {$set: {
-                saveData: {
-                    items: body.saveData.items,
-                    location: body.saveData.location,
-                    level: body.saveData.level
-                }
+                "saveData.items": event.body.saveData.items,
+                "saveData.location": event.body.saveData.location,
+                "saveData.level": event.body.saveData.level
             }});
+        await this.refreshSession(conn, event, session);
         return {statusCode: 200, result: result}
     }
 
-    static async updateProgress(conn, body) {
+    static async updateProgress(conn, event, session) {
         let [client, db] = conn;
+        if(!session.isActive) 
+        {return {statusCode: 401, message: "request authentication"}}
         let result = await db.collection("users").updateOne({
-            _id: body.eth_address,
+            _id: event.body.eth_address,
             "saveData.progress": "0"
             },
             {$set: {
-                saveData: {
-                    "progress.$": `${Math.floor(Date.now()/1000)}` 
-                }
+                "saveData.progress.$": `${Math.floor(Date.now()/1000)}` 
             }});
+        await this.refreshSession(conn, event, session);
         return {statusCode: 200, result: result}
     }
 }
