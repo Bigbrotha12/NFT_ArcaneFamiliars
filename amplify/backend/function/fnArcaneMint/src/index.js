@@ -1,6 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
-const Validator = require("./validator.js");
-const FamiliarFactory = require("./familiarFactory.js");
+const Validator = require("./Validator.js");
+const FamiliarFactory = require("./FamiliarFactory.js");
 require('dotenv').config();
 
 let cacheDB;
