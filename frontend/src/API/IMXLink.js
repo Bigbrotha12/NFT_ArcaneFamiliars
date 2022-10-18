@@ -1,4 +1,5 @@
 import { Link } from '@imtbl/imx-sdk';
+import { Description } from '@mui/icons-material';
 
 export const IMXLink = {
 
@@ -182,5 +183,14 @@ export const IMXLink = {
     // token_name
     // user address
     // asset_id
+  },
+
+  async getAuthentication() {
+    let now = Math.floor(Date.now()/1000);
+    let result = await link.sign({
+      message: `${now}`,
+      description: "Game Authentication Request"
+    });
+    return {...result, timestamp: now};
   }
 }

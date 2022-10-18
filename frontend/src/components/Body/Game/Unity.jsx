@@ -3,8 +3,11 @@ import { AppConfig } from "../../../constants/AppConfig";
 import { Button, CircularProgress } from "@mui/material";
 import { PlayArrow, Close } from "@mui/icons-material";
 import style from "../../../styles/Body.module.css";
+import { UserContext } from "../../../constants/AppContext";
+import { IMXLink } from "../../../API/IMXLink";
 
 export default function UnityFrame() {
+  const [userInfo, ] = React.useContext(UserContext);
   const [gameLaunch, setGameLaunch] = React.useState(false);
   const { unityProvider, sendMessage, addEventListener, removeEventListener, unload, loadingProgression } =
     useUnityContext({
@@ -18,19 +21,29 @@ export default function UnityFrame() {
     await unload();
     setGameLaunch(false);
     setSiteState(state => ({...state, showSideBar: true}));
-  }
+  };
 
   const handleLaunch = () => {
     setSiteState(state => ({...state, showSideBar: false}));
     setGameLaunch(true);
-  }
+  };
+
+  const requestAuthentication = React.useCallback(async () => {
+    let auth = await IMXLink.requestAuthentication();
+    let payload = {
+      eth_address: userInfo.address,
+      eth_timestamp: auth.timestamp,
+      eth_signature: auth.result
+    }
+    sendMessage("SessionManager", "SetUserAuth", JSON.stringify(payload));
+  });
 
   React.useEffect(() => {
-    //addEventListener("GameOver", handleGameOver);
+    addEventListener("requestAuth", requestAuthentication);
     return () => {
-      //removeEventListener("GameOver", handleGameOver);
+      removeEventListener("requestAuth", requestAuthentication);
     };
-  }, [/*addEventListener, removeEventListener, handleGameOver*/]);
+  }, [addEventListener, removeEventListener, requestAuthentication]);
   
   return (
       <div className={style.unityContainer} >
