@@ -24,9 +24,18 @@ exports.handler = async (event, context) => {
     context.callbackWaitsForEmptyEventLoop = false;
     let connection = await connectToDatabase();
 
+    /**
+     * Gate-keeping function
+     * Header data used for authentication
+     * headers: {
+     *  eth_address: string
+     *  eth_timestamp: string
+     *  eth_signature: string
+     * }
+     */
     let session = await Validator.validSession(connection, event);
-    if(!session.isActive || !Validator.validTimestamp(event) || !Validator.validSignature(event))
-    {return {statusCode: 403, message: "Forbidden: Invalid signature"}}
+    if(!session.isActive && (!Validator.validTimestamp(event) || !Validator.validSignature(event)))
+    {return {statusCode: 403, body: "Forbidden: Invalid signature"}}
     
     /**
      *  Recognize which action is being requested
@@ -34,10 +43,9 @@ exports.handler = async (event, context) => {
      *  "path": [
      *     "/v1/user"
      *          "httpMethod": [
-     *              "GET" - Check if user address is registered
+     *              "GET" - Check if user address is registered ]
      *     "/v1/user/save"
      *          "httpMethod": [
-     *              "POST" - Save game state
      *              "PATCH" - Update user progress ] 
      *      "/v1/user/load"
      *          "httpMethod": [
@@ -45,12 +53,12 @@ exports.handler = async (event, context) => {
      *      "/v1/user/register"
      *          "httpMethod": [
      *              "POST" - Register new user address ]
-     *      "/v1/user/login"
+     *      "/v1/user/login" [REMOVED]
      *          "httpMethod": [
      *              "POST" - Login user session ]
-     *      "/v1/user/logout": [
+     *      "/v1/user/logout"
      *          "httpMethod": [
-     *              "DELETE" - Logout user session ]
+     *              "DELETE" - Logout user session ]]
      *  */ 
 
     // Router configuration
@@ -62,8 +70,6 @@ exports.handler = async (event, context) => {
         if(event.httpMethod === "GET") {return await SessionManager.loadGame(connection, event, session)}}
     if(event.path === "/v1/user/register") {
         if(event.httpMethod === "POST") {return await SessionManager.registerUser(connection, event)}}
-    if(event.path === "/v1/user/login") {
-        if(event.httpMethod === "POST") {return await SessionManager.loginUser(connection, event)}}
     if(event.path === "/v1/user/logout") {
         if(event.httpMethod === "DELETE") {return await SessionManager.logoutUser(connection, event)}}
     return {statusCode: 400, body: "Bad Request"}

@@ -3,15 +3,15 @@ const ethers = require("ethers");
 module.exports = class Validator {
     // verifies the timestamp was signed by the address in the request
     static validSignature(request) {
-        let address = ethers.utils.verifyMessage(Number(request.body.timestamp), request.body.eth_signature);
-        return address === request.body.eth_address;
+        let address = ethers.utils.verifyMessage(Number(request.headers.eth_timestamp), request.headers.eth_signature);
+        return address === request.headers.eth_address;
     }
 
-    // validates that request timestamp is prior to expiration date
+    // validates that request timestamp is prior to expiration date and within 1 hour
     static validTimestamp(request) {
         let now = Math.floor(Date.now()/1000);
-        let intervalCheck = (now - request.body.timestamp) < (1 * 60);
-        let sanityCheck = request.body.timestamp < now;
+        let intervalCheck = (now - request.headers.eth_timestamp) < (1 * 60);
+        let sanityCheck = request.headers.eth_timestamp < now;
         return (sanityCheck && intervalCheck);
     }
 
@@ -20,8 +20,8 @@ module.exports = class Validator {
         let [client, db] = conn;
         let now = Math.floor(Date.now()/1000);
         let result = await db.collection("session").find(
-            {address: request.body.eth_address}).toArray();
-        let validGame = (request.body.game_hash === ethers.utils.hashMessage(result[0].login_timestamp));
+            {address: request.headers.eth_address}).toArray();
+        let validGame = (request.headers.eth_timestamp === result[0].login_timestamp);
         return {
             isActive: now < result[0].expiration,
             isGameValid: validGame,
