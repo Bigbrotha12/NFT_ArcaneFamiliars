@@ -7,16 +7,20 @@ module.exports = class FamiliarFactory {
         let transactionOptions = { 
             readPreference: "primary"
         };
-        let tokenId = await db.collection("counters").find({name: "token_ids"}).toArray();
          
         try {
             await session.withTransaction(async () => {
+                let tokenId = await db.collection("counters").findAndModify(
+                    {
+                        query: {name: "token_ids"}, 
+                        update: {$inc: {value: 1}}
+                    }, { session }).toArray();
                 await db.collection("familiars").insertOne({
                         ...template,
                         _id: tokenId[0].value,
                         meta: {
                             status: "Pending",
-                            mint_timestamp: 0,
+                            mint_timestamp: "0",
                             origin_owner: user._id
                         }
                     }, { session });
@@ -24,9 +28,6 @@ module.exports = class FamiliarFactory {
                     $inc: {total_minted: 1},
                     $set: {last_active_timestamp: `${Math.floor(Date.now()/1000)}`},
                     $set: {"saveData.progress": ["0", "0", "0", "0"]}
-                }, { session });
-                await db.collection("counters").updateOne({name: "token_ids"}, { 
-                    $inc: {value: 1}
                 }, { session });
                 await db.collection("templates").updateOne({name: template.name}, { 
                     $inc: {"meta.minted": 1}
