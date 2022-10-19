@@ -46,7 +46,7 @@ exports.handler = async (event, context) => {
      *              "GET" - Check if user address is registered ]
      *     "/v1/user/save"
      *          "httpMethod": [
-     *              "PATCH" - Update user progress ] 
+     *              "POST" - Update user progress ] 
      *      "/v1/user/load"
      *          "httpMethod": [
      *              "GET" - Load game state ]
@@ -65,7 +65,7 @@ exports.handler = async (event, context) => {
     if(event.path === "/v1/user") {
         if(event.httpMethod === "GET") {return await SessionManager.checkSession(connection, event)}}
     if(event.path === "/v1/user/save") {
-        if(event.httpMethod === "PATCH") {return await SessionManager.saveGame(connection, event, session)}}
+        if(event.httpMethod === "POST") {return await SessionManager.saveGame(connection, event, session)}}
     if(event.path === "/v1/user/load") {
         if(event.httpMethod === "GET") {return await SessionManager.loadGame(connection, event, session)}}
     if(event.path === "/v1/user/register") {
