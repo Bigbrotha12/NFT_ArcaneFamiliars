@@ -3,11 +3,12 @@ import { AppConfig } from "../../../constants/AppConfig";
 import { Button, CircularProgress } from "@mui/material";
 import { PlayArrow, Close } from "@mui/icons-material";
 import style from "../../../styles/Body.module.css";
-import { UserContext } from "../../../constants/AppContext";
+import { SiteContext, UserContext } from "../../../constants/AppContext";
 import { IMXLink } from "../../../API/IMXLink";
 
 export default function UnityFrame() {
-  const [userInfo, ] = React.useContext(UserContext);
+  const [userInfo, setUserInfo] = React.useContext(UserContext);
+  const [siteState, setSiteState] = React.useContext(SiteContext);
   const [gameLaunch, setGameLaunch] = React.useState(false);
   const { unityProvider, sendMessage, addEventListener, removeEventListener, unload, loadingProgression } =
     useUnityContext({
@@ -29,19 +30,24 @@ export default function UnityFrame() {
   };
 
   const requestAuthentication = React.useCallback(async () => {
-    let auth = await IMXLink.requestAuthentication();
+    
+    if(!userInfo.address) {
+      let result = await IMXLink.setupAccount(AppConfig.IMXProvider);
+      await setUserInfo(user => {return {...user, address: result.address}});
+    }
+    let auth = await IMXLink.getAuthentication();
     let payload = {
       eth_address: userInfo.address,
       eth_timestamp: auth.timestamp,
       eth_signature: auth.result
     }
-    sendMessage("SessionManager", "SetUserAuth", JSON.stringify(payload));
+    await sendMessage("APIHandler", "ReceiveAuthentication", JSON.stringify(payload));
   });
 
   React.useEffect(() => {
-    addEventListener("requestAuth", requestAuthentication);
+    addEventListener("RequestAuth", requestAuthentication);
     return () => {
-      removeEventListener("requestAuth", requestAuthentication);
+      removeEventListener("RequestAuth", requestAuthentication);
     };
   }, [addEventListener, removeEventListener, requestAuthentication]);
   
