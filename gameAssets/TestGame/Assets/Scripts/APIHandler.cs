@@ -4,10 +4,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using System.Runtime.InteropServices;
 
 public class APIHandler : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void RequestAuth();
     public TextMeshProUGUI output;
+    public UnityEvent requestAuth = new UnityEvent();
 
     public TMP_InputField uri;
     public TMP_Dropdown method;
@@ -16,7 +21,15 @@ public class APIHandler : MonoBehaviour
 
     private string[] availMethods = {"GET", "POST", "DELETE"};
     private string url = "https://j9fcxaqaqb.execute-api.ap-northeast-2.amazonaws.com/staging";
-   
+    
+    [System.Serializable]
+    public class UserAuth 
+    {
+        public string eth_address;
+        public string eth_timestamp;
+        public string eth_signature;
+    }
+    public UserAuth userData;
 
     public void Submit()
     {
@@ -48,12 +61,19 @@ public class APIHandler : MonoBehaviour
                 item.Substring(index+1)
             );
         }
+
+        if(userData.eth_address != null && userData.eth_timestamp != null && userData.eth_signature != null)
+        {
+            request.SetRequestHeader("eth_address", userData.eth_address);
+            request.SetRequestHeader("eth_timestamp", userData.eth_timestamp);
+            request.SetRequestHeader("eth_signature", userData.eth_signature);
+        }
+        
         return request;
     }
 
     public UnityWebRequest AttachBody(UnityWebRequest request, string data)
     {
-        
         byte[] payload = System.Text.Encoding.UTF8.GetBytes(data);
         UploadHandlerRaw uh = new UploadHandlerRaw(payload);
         uh.contentType = "application/json";
@@ -78,5 +98,20 @@ public class APIHandler : MonoBehaviour
             output.text = "Output: " + res;
         }
         request.Dispose();
+    }
+
+    // Request authentication data from browser
+    public void RequestAuthentication()
+    {
+        #if UNITY_WEBGL == true && UNITY_EDITOR == false
+        RequestAuth();
+        #endif
+    }
+
+    // Receive authentication data from browser
+    public void ReceiveAuthentication(string input)
+    {
+        userData = JsonUtility.FromJson<UserAuth>(input);
+        output.text = "Output: " + "Authentication data received.";
     }
 }
