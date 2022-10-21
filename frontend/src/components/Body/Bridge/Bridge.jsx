@@ -1,4 +1,4 @@
-import style from '../../../styles/Body.module.css';
+//import style from '../../../styles/Body.module.css';
 import { Card, Tab, Tabs, CardHeader, CardContent, Typography, Divider } from '@mui/material';
 import BridgeDeposit from './BridgeDeposit';
 import BridgeWithdraw from './BridgeWithdraw';
@@ -10,8 +10,8 @@ export default function Bridge() {
   }
 
   return (
-    <div className={style.bridgeContainer}>
-      <div className={style.bridgeContainer}>
+    <div /*className={style.bridgeContainer}*/>
+      <div /*className={style.bridgeContainer}*/>
       <Card raised={true}>
         <CardHeader title={
           <Tabs value={tabIndex} onChange={handleChange}>

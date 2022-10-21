@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import style from '../../styles/Sidebar.module.css';
+//import style from '../../styles/Sidebar.module.css';
 import { List, ListItem, ListItemButton, ListItemText, Divider, Typography} from '@mui/material';
 import { AppConfig } from "../../constants/AppConfig";
 
 export default function Sidebar() {
   return (
-    <div className={style.sidebar}>
+    <div /*className={style.sidebar}*/>
       <List>
           {AppConfig.sidebarContent.map( (section) => (
             <div key={section.label}>
@@ -17,9 +17,9 @@ export default function Sidebar() {
               {section.content.map( (item) => (
                 <Link 
                 key={item.label} 
-                className={style.link}
+                /*className={style.link}*/
                 to={item.link}>
-                  <ListItem className={style.link}>
+                  <ListItem /*className={style.link}*/>
                     <ListItemButton>                 
                         <Typography variant="body2">{item.label}</Typography>                  
                     </ListItemButton>

@@ -1,5 +1,6 @@
 import { Link } from '@imtbl/imx-sdk';
 import { Description } from '@mui/icons-material';
+import { AppConfig } from '../constants/AppConfig';
 
 export const IMXLink = {
 
@@ -186,6 +187,9 @@ export const IMXLink = {
   },
 
   async getAuthentication() {
+    // Initialize Link
+    let link = new Link(AppConfig.IMXProvider);
+    
     let now = Math.floor(Date.now()/1000);
     let result = await link.sign({
       message: `${now}`,

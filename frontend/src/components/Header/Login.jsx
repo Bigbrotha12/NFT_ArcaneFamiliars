@@ -1,4 +1,4 @@
-import style from '../../styles/Header.module.css';
+//import style from '../../styles/Header.module.css';
 import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import LoginIcon from '@mui/icons-material/DataSaverOffRounded';
 
@@ -39,12 +39,12 @@ export default function Login() {
   }, []);
 
   return (
-    <div className={style.headerLogin}>
+    <div /*className={style.headerLogin}*/>
         {userInfo.address ? 
-        <div className={style.userAddressContainer}>
+        <div /*className={style.userAddressContainer}*/>
           <LoginIcon sx={{paddingLeft: '5px', alignSelf: 'center', color: '#51e656'}}/>
           <Button onClick={openMenu}>
-            <Typography className={style.userAddress}>{shortAddress(userInfo.address)}</Typography>
+            <Typography /*className={style.userAddress}*/>{shortAddress(userInfo.address)}</Typography>
           </Button>
         </div> : 
         <Button 

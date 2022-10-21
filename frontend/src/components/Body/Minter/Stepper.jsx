@@ -5,7 +5,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MintingSteps from './MintingSteps';
-import style from "../../../styles/Body.module.css";
+//import style from "../../../styles/Body.module.css";
 
 const steps = ['Select NFT to Mint', 'Select Recipient Address', 'Sign Transaction'];
 
@@ -26,7 +26,7 @@ export default function HStepper() {
 
   return (
     <Box sx={{ width: '100%' }}>
-        <div className={style.minterStepperHead}>
+        <div /*className={style.minterStepperHead}*/>
       <Stepper activeStep={activeStep}>
         {steps.map((label) => {
           return (

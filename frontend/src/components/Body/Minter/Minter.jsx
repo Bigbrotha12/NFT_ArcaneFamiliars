@@ -1,10 +1,10 @@
 import { Card, Typography, Divider } from '@mui/material';
-import style from "../../../styles/Body.module.css";
+//import style from "../../../styles/Body.module.css";
 import Stepper from "./Stepper";
 
 export default function Minter() {
   return (
-    <div className={style.bridgeContainer}>
+    <div /*className={style.bridgeContainer}*/>
     <Card sx={{padding: '20px'}}>
       <Stepper />
     </Card>

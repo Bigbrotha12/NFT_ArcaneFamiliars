@@ -1,4 +1,4 @@
-import styles from '../../styles/Footer.module.css';
+//import styles from '../../styles/Footer.module.css';
 import Community from './Community';
 import FooterSections from "./FooterSections";
 import FinePrint from './FinePrint';

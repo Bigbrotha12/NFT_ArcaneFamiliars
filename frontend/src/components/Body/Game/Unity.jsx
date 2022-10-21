@@ -2,7 +2,7 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { AppConfig } from "../../../constants/AppConfig";
 import { Button, CircularProgress } from "@mui/material";
 import { PlayArrow, Close } from "@mui/icons-material";
-import style from "../../../styles/Body.module.css";
+//import style from "../../../styles/Body.module.css";
 import { SiteContext, UserContext } from "../../../constants/AppContext";
 import { IMXLink } from "../../../API/IMXLink";
 
@@ -52,13 +52,13 @@ export default function UnityFrame() {
   }, [addEventListener, removeEventListener, requestAuthentication]);
   
   return (
-      <div className={style.unityContainer} >
-        <div className={style.unityCanvas} >
+      <div /*className={style.unityContainer}*/ >
+        <div /*className={style.unityCanvas}*/ >
           {!gameLaunch && <Button variant="contained" onClick={handleLaunch} startIcon={<PlayArrow/>}>Launch Game</Button>}  
           {gameLaunch && loadingProgression != 1 && <CircularProgress sx={{position: "absolute", margin: "auto"}} />}
-          {gameLaunch && <Unity className={style.unity} unityProvider={unityProvider} />}
+          {gameLaunch && <Unity /*className={style.unity}*/ unityProvider={unityProvider} />}
         </div> 
-        <div className={style.unityButton}>
+        <div /*className={style.unityButton}*/>
           {gameLaunch && <Button variant="contained" onClick={handleClose} startIcon={<Close/>}>Close Game</Button>}
         </div>
       </div>
