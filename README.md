@@ -9,6 +9,11 @@ Source code Arcane Familiar, a work-in-progress, NFT-based game integrated with 
 Current working version:
 https://master.d5fhcghim14p0.amplifyapp.com 
 
+# API Endpoint
+
+Environment: Staging
+https://j9fcxaqaqb.execute-api.ap-northeast-2.amazonaws.com/staging
+
 # Blockchain
 
 Deployed contracts
