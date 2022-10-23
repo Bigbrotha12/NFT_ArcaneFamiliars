@@ -30,7 +30,7 @@ Deployed contracts
 
 # IMX Registration
 
-Environment: Ropsten
+Environment: Ropsten [DEPRECATED]
 Project ID: 200558
 Collection:
 
@@ -50,3 +50,16 @@ Collection:
  Environment: Goerli
  Project ID: 644
  Collection:
+ 
+    {
+        "address": "0xb7eaa855fa6432d0597f297bace4613c33a075d1",
+        "name": "Arcane Familiars",
+        "description": "A game of exploration and battles of wit. Summon your familiars.",
+        "icon_url": "http://getdrawings.com/free-icon-bw/flat-icon-com-10.png",
+        "collection_image_url": "https://www.dungeonsolvers.com/wp-content/uploads/2019/06/arcanist_800pxweb_by_olgadrebas-dbv455w.jpg",
+        "project_id": 644,
+        "project_owner_address": "",
+        "metadata_api_url": "https://j9fcxaqaqb.execute-api.ap-northeast-2.amazonaws.com/staging//v1/familiars",
+        "created_at": "2022-10-23T12:01:22.676717Z",
+        "updated_at": "2022-10-23T12:12:30.88838Z"
+    }
