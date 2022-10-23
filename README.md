@@ -59,7 +59,7 @@ Collection:
         "collection_image_url": "https://www.dungeonsolvers.com/wp-content/uploads/2019/06/arcanist_800pxweb_by_olgadrebas-dbv455w.jpg",
         "project_id": 644,
         "project_owner_address": "",
-        "metadata_api_url": "https://j9fcxaqaqb.execute-api.ap-northeast-2.amazonaws.com/staging//v1/familiars",
+        "metadata_api_url": "https://j9fcxaqaqb.execute-api.ap-northeast-2.amazonaws.com/staging/v1/familiars",
         "created_at": "2022-10-23T12:01:22.676717Z",
         "updated_at": "2022-10-23T12:12:30.88838Z"
     }
