@@ -41,3 +41,7 @@ Collection:
       "created_at": "2022-09-25T12:47:20.183116Z",
       "updated_at": "2022-09-25T12:47:20.183116Z"
     }
+ ----------------------------------------------------------------
+ Environment: Goerli
+ Project ID: 644
+ Collection:
