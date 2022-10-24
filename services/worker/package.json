@@ -4,15 +4,24 @@
   "description": "",
   "main": "NFTMinter.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "mocha ./build/Minter.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@imtbl/core-sdk": "^1.0.0-beta.3",
     "axios": "^1.1.2",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
     "mongodb": "^4.10.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.11.3",
+    "chai": "^4.3.6",
+    "mocha": "^10.1.0"
   }
 }
