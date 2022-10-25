@@ -1,76 +1,40 @@
-const MongoClient = require("mongodb").MongoClient;
-const SessionManager = require("./SessionManager.js");
-const Validator = require("./Validator.js");
-require('dotenv').config();
+const { Router } = require("./build/SessionManager");
+const { Database } = require("./DatabaseImplementation");
 
+// database caching to improve performance
 let cacheDB;
 async function connectToDatabase() {
   if (cacheDB) {
     return cacheDB;
   }
 
-  const client = await MongoClient.connect(process.env.MONGODB_URI, 
-    { useNewUrlParser: true, useUnifiedTopology: true, wtimeoutMS: process.env.MONGODB_TIMEOUT });
-  const db = await client.db("ArcaneFamiliars");
+  const DB = new Database();
+  await DB.init();
 
-  cacheDB = [client, db];
-  return [client, db];
+  if(DB.isInitialized()) {
+    cacheDB = DB;
+  } else {
+    throw new Error("Database connection failed");
+  }
 }
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event, context) => {
+  // maintain runtime environment for next call if possible
     context.callbackWaitsForEmptyEventLoop = false;
-    let connection = await connectToDatabase();
-
-    /**
-     * Gate-keeping function
-     * Header data used for authentication
-     * headers: {
-     *  eth_address: string
-     *  eth_timestamp: string
-     *  eth_signature: string
-     * }
-     */
-    let session = await Validator.validSession(connection, event);
-    if(!session.isActive && (!Validator.validTimestamp(event) || !Validator.validSignature(event)))
-    {return {statusCode: 403, body: "Forbidden: Invalid signature"}}
     
-    /**
-     *  Recognize which action is being requested
-     *  by path and method.
-     *  "path": [
-     *     "/v1/user"
-     *          "httpMethod": [
-     *              "GET" - Check if user address is registered ]
-     *     "/v1/user/save"
-     *          "httpMethod": [
-     *              "POST" - Update user progress ] 
-     *      "/v1/user/load"
-     *          "httpMethod": [
-     *              "GET" - Load game state ]
-     *      "/v1/user/register"
-     *          "httpMethod": [
-     *              "POST" - Register new user address ]
-     *      "/v1/user/login" [REMOVED]
-     *          "httpMethod": [
-     *              "POST" - Login user session ]
-     *      "/v1/user/logout"
-     *          "httpMethod": [
-     *              "DELETE" - Logout user session ]]
-     *  */ 
+    try {
+      // attempt connection to database
+      await connectToDatabase();
 
-    // Router configuration
-    if(event.path === "/v1/user") {
-        if(event.httpMethod === "GET") {return await SessionManager.checkSession(connection, event)}}
-    if(event.path === "/v1/user/save") {
-        if(event.httpMethod === "POST") {return await SessionManager.saveGame(connection, event, session)}}
-    if(event.path === "/v1/user/load") {
-        if(event.httpMethod === "GET") {return await SessionManager.loadGame(connection, event, session)}}
-    if(event.path === "/v1/user/register") {
-        if(event.httpMethod === "POST") {return await SessionManager.registerUser(connection, event)}}
-    if(event.path === "/v1/user/logout") {
-        if(event.httpMethod === "DELETE") {return await SessionManager.logoutUser(connection, event)}}
-    return {statusCode: 400, body: "Bad Request"}
+      // if successful, run process
+      return await Router(event, cacheDB);
+
+    } catch (error) {
+      // otherwise return to sender
+      let response = { statusCode: 500, status: "Internal Server Error", error: error }
+      return response;
+    }
 };
