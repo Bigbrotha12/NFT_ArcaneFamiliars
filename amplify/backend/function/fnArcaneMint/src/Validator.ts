@@ -1,8 +1,7 @@
+import { extractNumberEnvVar, extractStringEnvVar } from "./Environment";
+import { User, Request } from "./Definitions";
 import { verifyMessage } from '@ethersproject/wallet';
 import { hashMessage } from '@ethersproject/hash';
-import { User } from "./DatabaseInterface";
-import { extractNumberEnvVar, extractStringEnvVar } from "./Environment";
-import { Request } from "./MintRegister";
 
 // Abstract class validates user inputs
 export class Validator {
@@ -55,7 +54,7 @@ export class Validator {
      * @returns true if signature matches user's address
      */
     static verifySignature(request: Request): boolean {
-        const address: string = verifyMessage(request.body.game_data, request.body.eth_signature);
-        return request.body.eth_address === address;
+        const address: string = verifyMessage(request.body.game_data, request.headers.eth_signature);
+        return request.headers.eth_address === address;
     }
 }

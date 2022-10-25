@@ -1,14 +1,13 @@
-import { hashMessage } from '@ethersproject/hash';
-import { DBInterface, Familiar, User, Rarity } from "./DatabaseInterface";
-import { Database } from "./DatabaseImplementation";
-import { Validator } from './Validator';
 import { extractNumberEnvVar } from "./Environment";
-import { Request } from './MintRegister';
+import { Familiar, User, Rarity, Request } from "./Definitions";
+import { hashMessage } from '@ethersproject/hash';
+import { IDatabase } from "./DatabaseInterface";
+import { Validator } from './Validator';
 
 export class RegisterController {
-    DB: DBInterface;
+    DB: IDatabase;
 
-    constructor(cachedDB: Database) {
+    constructor(cachedDB: IDatabase) {
         this.DB = cachedDB;
     }
 
@@ -127,13 +126,13 @@ export class RegisterController {
      * NFT template to be selected. This approach should allow
      * simulation of NFTs per address, and validate whether user's
      * NFTs were generated correctly.
-     * @param userAddress address of user requesting mint
+     * @param address address of user requesting mint
      * @param total_minted running total of mints by user
      * @returns deterministic pseudo-random number
      */
-    static #generateNumber(userAddress: string, total_minted: number): number {
+    static #generateNumber(address: string, total_minted: number): number {
         let minted: string = total_minted.toString();
-        let seed: string = userAddress.concat(minted);
+        let seed: string = address.concat(minted);
         return parseInt(hashMessage(seed).slice(2, 8), 16);
     }  
 }

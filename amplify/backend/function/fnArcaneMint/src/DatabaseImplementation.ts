@@ -1,21 +1,13 @@
 import { extractStringEnvVar, extractNumberEnvVar } from "./Environment";
-import { DBInterface, Familiar, Rarity, User } from "./DatabaseInterface";
+import { Collections, Familiar, Rarity, User } from "./Definitions";
+import { IDatabase } from "./DatabaseInterface";
 import { 
     MongoClient, MongoClientOptions, Collection, AggregationCursor, 
     BulkWriteOptions, TransactionOptions,ReadPreference,
     ClientSession, Db, Document
 } from "mongodb";
 
-enum Collections {
-    Ability = "abilities",
-    Counter = "counters",
-    Familiar = "familiars",
-    Session = "session",
-    Template = "templates",
-    User = "users"
-}
-
-export class Database implements DBInterface {
+export class Database implements IDatabase {
     client: MongoClient | undefined;
     URI: string;
     namespace: string;
