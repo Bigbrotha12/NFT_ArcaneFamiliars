@@ -8,6 +8,7 @@ export default function Collection() {
   const myArray = [0, 1, 2, 3, 4];
 
   return (
+
     <Box /*className={style.collectionContainer}*/ sx={{flexGrow: 1}}>
       <div /*className={style.collectionHeader}*/ >
         <Typography variant="h5">Familiar Collection</Typography>
