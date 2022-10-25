@@ -1,35 +1,57 @@
-const ethers = require("ethers");
-
-module.exports = class Validator {
-    static validate(request, user) {
-        if(!this.verifyCode(request)) {return {success: false, error: new Error("Wrong code-hash")}}
-        if(!this.verifyStamp(user.saveData.progress)) {return {success: false, error: new Error("Invalid stamps")}}
-        if(!this.verifyData(request, user.saveData.progress)) {return {success: false, error: new Error("Invalid game data")}}
-        if(!this.verifySignature(request)) {return {success: false, error: new Error("Invalid signature")}}
-        return {success: true, error: null}
-    }
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Validator = void 0;
+const wallet_1 = require("@ethersproject/wallet");
+const hash_1 = require("@ethersproject/hash");
+const Environment_1 = require("./Environment");
+// Abstract class validates user inputs
+class Validator {
+    /**
+     * Verifies that provide game codehash matches canonical codehash.
+     * @param request mint request sent by user
+     * @param user user data document
+     * @returns true if game codehash is valid
+     */
     static verifyCode(request) {
-        return "" === request.game_codehash; 
+        const canon = (0, Environment_1.extractStringEnvVar)("CODEHASH");
+        return request.body.game_codehash === canon;
     }
-
-    static verifyStamp(dataStamps) {
-        dataStamps.reduce((preStamp, postStamp) => {
-            if((postStamp - preStamp) < (5 * 60 * 60)) {return false}
+    /**
+     * Checks that progress timestamps are at least 5 hours apart.
+     * @param user user data document
+     * @returns true if user's progress timestamps are valid
+     */
+    static verifyStamp(user) {
+        const stamps = user.saveData.progress;
+        const interval = (0, Environment_1.extractNumberEnvVar)("INTERVAL");
+        const required_hours = interval * 60 * 60;
+        let success = true;
+        stamps.reduce((prior, post) => {
+            if ((post - prior) < required_hours) {
+                success = false;
+            }
+            return post;
         });
-        return true;
+        return success;
     }
-
-    static verifyData(request, dataStamps) {
-        let valid = "";
-        dataStamps.map(flag => {
-            valid += flag;
-        })
-        return request.game_data === ethers.utils.hashMessage(valid);
+    /**
+     * Checks if progress data matches game's data.
+     * @param request mint request sent by user
+     * @param user user data document
+     * @returns true if progress timestamps match
+     */
+    static verifyData(request, user) {
+        const validData = user.saveData.progress.toString().replace(/,/g, "");
+        return request.body.game_data === (0, hash_1.hashMessage)(validData);
     }
-
+    /**
+     * Verifies that sender is in fact owner of user address.
+     * @param request mint request sent by user
+     * @returns true if signature matches user's address
+     */
     static verifySignature(request) {
-        let address = ethers.utils.verifyMessage(request.game_data, request.eth_signature);
-        return address === request.eth_address;
+        const address = (0, wallet_1.verifyMessage)(request.body.game_data, request.body.eth_signature);
+        return request.body.eth_address === address;
     }
 }
+exports.Validator = Validator;

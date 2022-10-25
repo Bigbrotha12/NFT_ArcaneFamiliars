@@ -1,49 +1,41 @@
-const MongoClient = require("mongodb").MongoClient;
-const Validator = require("./Validator.js");
-const FamiliarFactory = require("./FamiliarFactory.js");
-require('dotenv').config();
+const { Database } = require('./DatabaseImplementation');
+const { MintRegister } = require('./MintRegister');
 
+// database caching to improve performance
 let cacheDB;
 async function connectToDatabase() {
   if (cacheDB) {
     return cacheDB;
   }
 
-  const client = await MongoClient.connect(process.env.MONGODB_URI, 
-    { useNewUrlParser: true, useUnifiedTopology: true, wtimeoutMS: process.env.MONGODB_TIMEOUT });
-  const db = await client.db("ArcaneFamiliars");
+  const DB = new Database();
+  await DB.init();
 
-  cacheDB = [client, db];
-  return [client, db];
+  if(DB.isInitialized()) {
+    cacheDB = DB;
+  } else {
+    throw new Error("Database connection failed");
+  }
 }
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event, context) => {
-    let address = event.body.eth_address;
+    // maintain runtime environment for next call if possible
     context.callbackWaitsForEmptyEventLoop = false;
 
-    const [client, db] = await connectToDatabase();
-    const user = await db.collection("users").find({_id: address}).toArray();
-    let response;
-    let validation = Validator.validate(event.body, user[0]);
-    if(validation.success) {
-        let session = client.startSession();
-        let familiarToMint = await FamiliarFactory.generateNextFamiliar(user[0], db);
-        if(!familiarToMint) {return {statusCode: 500, body: {message: "Database error"}}}
-        await FamiliarFactory.registerFamiliar(familiarToMint, user[0], db, session);
+    try {
+      // attempt connection to database
+      await connectToDatabase();
 
-        response = {
-            statusCode: 200,
-            body: JSON.stringify(familiarToMint),
-        };
-    } else {
-        console.log("Validation failed!");
-        response = {
-            statusCode: 400,
-            body: JSON.stringify({message: validation.error.message}),
-        };
+      // if successful, run process
+      return await MintRegister(event, cacheDB);
+
+    } catch (error) {
+      // otherwise return to sender
+      let response = { statusCode: 500, status: "Internal Server Error", error: error }
+      return response;
     }
-    return response;
+  
 };

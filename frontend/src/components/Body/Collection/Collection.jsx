@@ -1,4 +1,4 @@
-import style from '../../../styles/Body.module.css';
+//import style from '../../../styles/Body.module.css';
 import { Typography, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import FamiliarCard from './FamiliarCard';
@@ -8,8 +8,9 @@ export default function Collection() {
   const myArray = [0, 1, 2, 3, 4];
 
   return (
-    <Box className={style.collectionContainer} sx={{flexGrow: 1}}>
-      <div className={style.collectionHeader} >
+
+    <Box /*className={style.collectionContainer}*/ sx={{flexGrow: 1}}>
+      <div /*className={style.collectionHeader}*/ >
         <Typography variant="h5">Familiar Collection</Typography>
         <SearchBar />
       </div>

@@ -1,4 +1,4 @@
-import style from '../../styles/Header.module.css';
+//import style from '../../styles/Header.module.css';
 import { Typography } from '@mui/material';
 
 export default function Status() {
@@ -16,10 +16,10 @@ export default function Status() {
   ];
 
   return (
-    <div className={style.headerStatus}>
+    <div /*className={style.headerStatus}*/>
         {items.map( item => {
           return (
-          <div key={item.id} className={style.headerStatusItem}>
+          <div key={item.id} /*className={style.headerStatusItem}*/>
             <Typography variant="body1">{item.label}</Typography>
             <Typography variant="body1">{item.data}</Typography>
           </div>)

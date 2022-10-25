@@ -12,18 +12,20 @@ export default function Marketplace() {
   }
 
   return (
-    <div>
-      <Typography>Welcome to the Marketplace</Typography>
-      <div style={{display: "flex"}}>
-        {myArray.map(item => {
-          return (
-          <Box key={item} onClick={() => handleClick(item)}>
-            <FamiliarCard familiarData={familiarData} familiarStats={familiarStats}/>
-          </Box>)
-        })}
-      </div>
-      {openModal && <MarketModal data={familiarData} stats={familiarStats}/>}
-    </div>
+    <p>Feature Coming Soon...</p>
+
+    // <div>
+    //   <Typography>Welcome to the Marketplace</Typography>
+    //   <div style={{display: "flex"}}>
+    //     {myArray.map(item => {
+    //       return (
+    //       <Box key={item} onClick={() => handleClick(item)}>
+    //         <FamiliarCard familiarData={familiarData} familiarStats={familiarStats}/>
+    //       </Box>)
+    //     })}
+    //   </div>
+    //   {openModal && <MarketModal data={familiarData} stats={familiarStats}/>}
+    // </div>
   )
 }
 

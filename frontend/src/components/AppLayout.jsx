@@ -1,4 +1,4 @@
-import style from '../styles/Global.module.css';
+//import style from '../styles/Global.module.css';
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
@@ -9,16 +9,16 @@ export default function AppLayout() {
 
   return (
     <>
-      <section className={style.headerSection}> 
+      <section /*className={style.headerSection}*/> 
         <Header />        
       </section>
       
-      <section className={style.mainSection} >
+      <section /*className={style.mainSection}*/ >
         {sidebarState[0] && <Sidebar />}     
           <Body setShowSidebar={sidebarState[1]}/>
       </section>
 
-      <section className={style.footerSection}>
+      <section /*className={style.footerSection}*/>
         <Footer />
       </section>
     </>

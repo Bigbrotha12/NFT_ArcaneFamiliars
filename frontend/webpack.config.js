@@ -27,24 +27,17 @@ module.exports = {
     module: {
         rules: [
         {
-            test: /\.jsx?$/,
+            test: /\.jsx?$/i,
             exclude: /node_modules/,
-            use: {
-                loader: "babel-loader"
-            }
+            use: ["babel-loader"]
         },
         {
-            test: /\.css$/,
-            use: [
-                { loader: "style-loader" },
-                { loader: "css-loader", options: { modules: true } }
-            ]
+            test: /\.css$/i,
+            use: ["style-loader", "css-loader", "postcss-loader"]
         },
         {
             test: /\.svg?$/,
-            use: {
-                loader: "svg-url-loader"
-            }
+            use: ["svg-url-loader"]
         },
         {
             test: /\.m?js/,
@@ -53,7 +46,7 @@ module.exports = {
             }
         },
         {
-            test: /\.png/,
+            test: /\.(png|gif|jpg|jpeg)$/i,
             type: 'asset/resource'
         }
         ]
