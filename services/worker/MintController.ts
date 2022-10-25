@@ -1,17 +1,17 @@
 import { extractStringEnvVar } from "./Environment";
+import { Familiar } from "./Definitions";
+import { IDatabase } from "./DatabaseInterface";
+import { IIMX } from "./IMXInterface";
 import { MintTokensResponse } from "@imtbl/core-sdk";
-import { IMXEndpoint } from "./IMXInterface";
-import { DBInterface, Familiar } from "./DatabaseInterface";
+import { AlchemyProvider } from "@ethersproject/providers";
+import { Wallet } from "@ethersproject/wallet";
 import { Database } from "./DatabaseImplementation";
 import { IMX_API } from "./IMXImplementation";
 
-import { AlchemyProvider } from "@ethersproject/providers";
-import { Wallet } from "@ethersproject/wallet";
-
 export class MinterController {
     signer: Wallet;
-    IMX: IMXEndpoint;
-    DB: DBInterface;
+    IMX: IIMX;
+    DB: IDatabase;
 
     constructor() {
         let network: string = extractStringEnvVar("ALCHEMY_NETWORK");

@@ -1,26 +1,14 @@
 import { extractNumberEnvVar, extractStringEnvVar } from "./Environment";
+import { Familiar, Stage1, Stage2 } from "./Definitions";
 import { Constants } from "./Constants";
-import { UnsignedMintRequest, MintTokensResponse, ImmutableX, ImmutableXConfiguration, Config } from "@imtbl/core-sdk";
-import { Familiar } from "./DatabaseInterface";
-import { IMXEndpoint } from "./IMXInterface";
-import ethers from "ethers";
+import { IIMX } from "./IMXInterface";
+import { 
+  UnsignedMintRequest, MintTokensResponse, 
+  ImmutableX, ImmutableXConfiguration, Config 
+} from "@imtbl/core-sdk";
+import { Signer } from "ethers";
 
-type Stage1 = {
-    tokenId: number,
-    address: string,
-    blueprint: Array<string>
-}
-
-type Stage2 = {
-    tokens:
-    [{
-        blueprint: string,
-        id: string,
-    }],
-    user: string
-}
-
-export class IMX_API implements IMXEndpoint {
+export class IMX_API implements IIMX {
     config: ImmutableXConfiguration;
     client: ImmutableX;
     collection: string;
@@ -37,7 +25,7 @@ export class IMX_API implements IMXEndpoint {
         this.client = new ImmutableX(this.config);
     }
    
-    mintToken(signer: ethers.Signer, request: UnsignedMintRequest): Promise<MintTokensResponse> {
+    mintToken(signer: Signer, request: UnsignedMintRequest): Promise<MintTokensResponse> {
         return this.client.mint(signer, request);    
     }
 
