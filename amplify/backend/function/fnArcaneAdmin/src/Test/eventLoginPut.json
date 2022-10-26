@@ -1,0 +1,22 @@
+{
+  "httpMethod": "PUT",
+  "path": "/v1/user/login",
+  "headers": {
+    "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
+    "eth_timestamp": "1666806273",
+    "eth_signature": "0x465d7a6308b4baaa58c3af7b9dc2dbac4750429bd08e26263f5a1d5eabbb2bb862f4a1614906693bd01120444a14ced4a834955e3429f1dd483ff5eb552d31391b"
+  },
+  "body": {
+    "game_codehash": "",
+    "game_savedata": {
+      "name": "Rafa",
+      "items": ["1", "2", "5"],
+      "locations": {
+        "hub": "555"
+      },
+      "level": "2",
+      "progress": [1000, 400, 200, 100]
+    },
+    "progress": true
+  }
+}

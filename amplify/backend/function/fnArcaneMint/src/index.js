@@ -1,5 +1,5 @@
-const { Database } = require('./DatabaseImplementation');
-const { MintRegister } = require('./MintRegister');
+const { Database } = require('./build/DatabaseImplementation');
+const { MintRegister } = require('./build/MintRegister');
 
 // database caching to improve performance
 let cacheDB;

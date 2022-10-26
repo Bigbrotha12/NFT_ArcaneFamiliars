@@ -1,11 +1,11 @@
-import ImmutableX from "@imtbl/core-sdk";
-import { Familiar } from "./DatabaseInterface";
+import { Familiar } from "./Definitions";
+import { EthSigner, UnsignedMintRequest, MintTokensResponse } from "@imtbl/core-sdk";
 
-export interface IMXEndpoint {
+export interface IIMX {
     mintToken(
-        signer: ImmutableX.EthSigner, 
-        request: ImmutableX.UnsignedMintRequest
-    ): Promise<ImmutableX.MintTokensResponse>;
+        signer: EthSigner, 
+        request: UnsignedMintRequest
+    ): Promise<MintTokensResponse>;
 
-    generateMintRequest(familiars: Array<Familiar>): ImmutableX.UnsignedMintRequest;
+    generateMintRequest(familiars: Array<Familiar>): UnsignedMintRequest;
 }

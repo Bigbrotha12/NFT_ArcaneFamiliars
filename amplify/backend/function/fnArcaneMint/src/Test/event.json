@@ -1,8 +1,11 @@
 {
-  "body": {
+  "headers": {
     "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
-    "eth_signature": "0xd4f142ad6d92619e903bbeab7953d9f2d3972c50d5c4486ca2fd15d137879265519b4862e51b6af780dd4ba41899c0fb8f953870c34c922921919e9cb709dc3d1c",
-    "game_data": "0xca460edf6622d8d77e095d2ffaa8c5e321ac68cb94c401e87b38c4177ece7abe",
+    "eth_timestamp": "1666796366",
+    "eth_signature": "0x6a3e569ecb09f1b85e25665e239bc411581174f9337e53536bc746dd37a6d85056e908334551a705bcd550b741b69ed5e6a5f3fd3c6850bd11599d3e0af0aa791c"
+  },
+  "body": {
+    "game_data": "0x18be50397affc23531141ae3b07c9a1d594c8e70a72a49b5010e507020fa57a3",
     "game_codehash": ""
   }
 }
