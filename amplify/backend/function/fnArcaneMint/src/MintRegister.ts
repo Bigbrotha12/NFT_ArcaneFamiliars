@@ -51,6 +51,7 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
 
     if(result) {
         response = Responses[200];
+        delete familiar.meta;
         response.body = familiar;
         return response;
     } else {

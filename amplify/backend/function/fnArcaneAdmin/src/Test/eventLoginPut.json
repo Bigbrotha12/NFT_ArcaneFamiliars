@@ -1,10 +1,10 @@
 {
-  "httpMethod": "POST",
-  "path": "/v1/user/save",
+  "httpMethod": "PUT",
+  "path": "/v1/user/login",
   "headers": {
     "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
-    "eth_timestamp": "1665648789",
-    "eth_signature": "0x0f64f07925497a4661c2732770ccc20ca4e8bdc53d9093f7e78f335c8d31b69f220412b6d6a1b370f44ba8c4b58b88e6a01b99fb40d5e2010e8b36fa96f1a6011c"
+    "eth_timestamp": "1666806273",
+    "eth_signature": "0x465d7a6308b4baaa58c3af7b9dc2dbac4750429bd08e26263f5a1d5eabbb2bb862f4a1614906693bd01120444a14ced4a834955e3429f1dd483ff5eb552d31391b"
   },
   "body": {
     "game_codehash": "",

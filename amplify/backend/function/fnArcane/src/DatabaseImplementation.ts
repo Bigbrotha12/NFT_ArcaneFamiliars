@@ -23,15 +23,15 @@ export class Database implements IDatabase {
             return undefined;
         }
 
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Familiar);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Familiar);
+        let cursor: AggregationCursor<Familiar>;
         try {
             cursor = collection.aggregate([
                 { "$match": { _id: tokenId }}
             ]);
 
             const documents: Array<Familiar> = await cursor.toArray();
-            const familiar: Familiar | undefined = documents.at(0);
+            const familiar: Familiar | undefined = documents.shift();
 
             // check is document is empty
             if(familiar === undefined || Object.keys(familiar).length === 0) {
@@ -58,15 +58,15 @@ export class Database implements IDatabase {
             console.error("ID or name required for query")
             return undefined;
         }
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Template);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Template);
+        let cursor: AggregationCursor<Familiar>;
         try {
             cursor = collection.aggregate([
                 { "$match": query }
             ]);
 
             const documents: Array<Familiar> = await cursor.toArray();
-            const familiar: Familiar | undefined = documents.at(0);
+            const familiar: Familiar | undefined = documents.shift();
 
             // check is document is empty
             if(familiar === undefined || Object.keys(familiar).length === 0) {
@@ -93,15 +93,15 @@ export class Database implements IDatabase {
             console.error("ID or name required for query")
             return undefined;
         }
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Ability);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<Ability> = this.client.db(this.namespace).collection<Ability>(Collections.Ability);
+        let cursor: AggregationCursor<Ability>;
         try {
             cursor = collection.aggregate([
                 { "$match": query }
             ]);
 
             const documents: Array<Ability> = await cursor.toArray();
-            const ability: Ability | undefined = documents.at(0);
+            const ability: Ability | undefined = documents.shift();
 
             // check is document is empty
             if(ability === undefined || Object.keys(ability).length === 0) {

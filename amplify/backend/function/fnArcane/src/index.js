@@ -1,5 +1,5 @@
 const { FamiliarManager } = require("./build/FamiliarManager");
-const { Database } = require("./DatabaseImplementation");
+const { Database } = require("./build/DatabaseImplementation");
 
 // database caching to improve performance
 let cacheDB;

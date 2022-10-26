@@ -13,25 +13,25 @@ export async function Router(event: Request, cachedDB: IDatabase): Promise<Respo
 
     switch(event.path) {
         case Path.REGISTER:
-            if(event.method === Method.POST) { 
+            if(event.httpMethod === Method.POST) { 
                 return await registration(event, controller) }
-            else if(event.method === Method.GET) { 
+            else if(event.httpMethod === Method.GET) { 
                 return await isRegistered(event, controller) }
             else { return Responses[405] }
         case Path.LOGIN:
-            if(event.method === Method.PUT) { 
+            if(event.httpMethod === Method.PUT) { 
                 return await userLogin(event, controller) }
             else { return Responses[405] }
         case Path.LOGOUT:
-            if(event.method === Method.DELETE) { 
+            if(event.httpMethod === Method.DELETE) { 
                 return await userLogout(event, controller) }
             else { return Responses[405] }
         case Path.SAVE:
-            if(event.method === Method.PATCH) { 
+            if(event.httpMethod === Method.PATCH) { 
                 return await saveGame(event, controller) }
             else { return Responses[405] }
         case Path.LOAD:
-            if(event.method === Method.GET) { 
+            if(event.httpMethod === Method.GET) { 
                 return await loadGame(event, controller) }
             else { return Responses[405] }
         default:
@@ -187,7 +187,7 @@ async function saveGame(event: Request, controller: SessionController): Promise<
     const validSession: boolean = controller.checkValidSession(event, session);
     if(!validSignature || !validGame || !validSession) {
         console.error("Invalid request data");
-        response = Responses[400];
+        response = Responses[401];
         return response;
     }
 

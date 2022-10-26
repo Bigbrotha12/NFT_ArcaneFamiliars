@@ -29,7 +29,7 @@ export type Familiar = {
     generation: number
     meta?: {
         status?: string,
-        mint_timestamp?: string,
+        mint_timestamp?: number,
         origin_owner?: string,
         minted?: number,
         limit?: number
@@ -39,8 +39,8 @@ export type Familiar = {
 export type User = {
     _id: string,
     total_minted: number,
-    register_timestamp: string,
-    last_active_timestamp: string,
+    register_timestamp: number,
+    last_active_timestamp: number,
     saveData: {
         name: string,
         level: number,

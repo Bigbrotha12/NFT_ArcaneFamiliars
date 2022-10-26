@@ -25,7 +25,7 @@ export class Validator {
     static verifyTimestamp(request: Request): boolean {
         const now: number = Math.floor(Date.now()/1000);
         const stamp: number = Number(request.headers.eth_timestamp);
-        return (now - stamp) < (1 * 60);
+        return (now - stamp) < (1 * 60 * 60);
     }
 
     /**

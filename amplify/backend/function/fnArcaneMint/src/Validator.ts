@@ -54,7 +54,9 @@ export class Validator {
      * @returns true if signature matches user's address
      */
     static verifySignature(request: Request): boolean {
-        const address: string = verifyMessage(request.body.game_data, request.headers.eth_signature);
-        return request.headers.eth_address === address;
+        const messageHash: string = hashMessage(request.headers.eth_timestamp);
+        const address: string = verifyMessage(messageHash, request.headers.eth_signature);
+        const result = request.headers.eth_address === address;
+        return result;
     }
 }

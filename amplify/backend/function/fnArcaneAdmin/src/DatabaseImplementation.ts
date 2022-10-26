@@ -29,15 +29,15 @@ export class Database implements IDatabase {
             return undefined;
         }
 
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Session);
+        const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
         let cursor: AggregationCursor<any>;
         try {
             cursor = collection.aggregate([
                 { "$match": { address: address }}
             ]);
 
-            const result: Array<Session> | undefined = await cursor.toArray();
-            const document: Session | undefined = result?.shift();
+            const result: Array<Session> = await cursor.toArray();
+            const document: Session | undefined = result.shift();
 
             // check if query returned no documents
             if(document === undefined){
@@ -62,15 +62,15 @@ export class Database implements IDatabase {
             return undefined;
         }
 
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.User);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
+        let cursor: AggregationCursor<User>;
         try {
             cursor = collection.aggregate([
                 { "$match": { _id: address }}
             ]);
 
-            const result: Array<User> | undefined = await cursor.toArray();
-            const document: User | undefined = result?.shift();
+            const result: Array<User> = await cursor.toArray();
+            const document: User | undefined = result.shift();
 
             // check if query returned no documents
             if(document === undefined){
@@ -106,7 +106,7 @@ export class Database implements IDatabase {
                 name: address,
                 level: 1,
                 items: [],
-                locations: "0001",
+                locations: { hub: "0001" },
                 progress: [0, 0, 0, 0]
             },
             blacklist: false,
@@ -156,7 +156,7 @@ export class Database implements IDatabase {
             max_expiration: now + (extractNumberEnvVar("MAX_EXPIRATION") * 60 * 60)
         }
         const options: UpdateOptions = { upsert: true};
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Session);
+        const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
         let result: UpdateResult;
         try {
             result = await collection.updateOne(
@@ -166,7 +166,7 @@ export class Database implements IDatabase {
             );
 
             // check if update was successful
-            if(result.modifiedCount === 0){
+            if(!(result.upsertedCount === 1 || result.modifiedCount === 1)){
                 console.info("Session creation failed");
                 return undefined;
             }
@@ -188,7 +188,7 @@ export class Database implements IDatabase {
             return undefined;
         }
     
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Session);
+        const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
         let result: UpdateResult;
         try {
             result = await collection.updateOne(
@@ -220,7 +220,7 @@ export class Database implements IDatabase {
         }
 
         const now: number = Math.floor(Date.now()/1000);
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Session);
+        const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
         let result: UpdateResult;
         try {
             result = await collection.updateOne(
@@ -266,7 +266,7 @@ export class Database implements IDatabase {
             "saveData.items": gameData.items,
             "saveData.locations": gameData.locations
         }
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.User);
+        const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
         let result: UpdateResult;
         try {
             result = await collection.updateOne(

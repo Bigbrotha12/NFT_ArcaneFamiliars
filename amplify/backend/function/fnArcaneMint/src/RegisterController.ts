@@ -19,10 +19,10 @@ export class RegisterController {
      * @returns true if request is valid, otherwise return failure reason
      */
     verifyRequest(request: Request, user: User): boolean | string {
+        if(!Validator.verifySignature(request)){return "BAD_SIGNATURE"};
         if(!Validator.verifyCode(request)){return "BAD_CODEHASH"};
         if(!Validator.verifyStamp(user)){return "BAD_INTERVALS"};
         if(!Validator.verifyData(request, user)){return "BAD_STAMPS"};
-        if(!Validator.verifySignature(request)){return "BAD_SIGNATURE"};
         return true;
     }
 

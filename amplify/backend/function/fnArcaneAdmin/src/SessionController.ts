@@ -17,11 +17,11 @@ export class SessionController {
      */
     verifyAuthentication(request: Request): boolean {
         if(!Validator.verifyTimestamp(request)) {
-            console.error("Invalid timestamps: %n", request.headers.eth_timestamp);
+            console.error("Invalid timestamps: ", request.headers.eth_timestamp);
             return false;
         }
         if(!Validator.verifySignature(request)) {
-            console.error("Unable to recover address from: %s", request.headers.eth_address);
+            console.error("Unable to recover address from: ", request.headers.eth_address);
             return false;
         }
         return true;

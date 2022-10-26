@@ -1,5 +1,5 @@
 const { Router } = require("./build/SessionManager");
-const { Database } = require("./DatabaseImplementation");
+const { Database } = require("./build/DatabaseImplementation");
 
 // database caching to improve performance
 let cacheDB;

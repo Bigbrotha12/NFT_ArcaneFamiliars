@@ -1,6 +1,9 @@
 {
-  "httpMethod": "POST",
-  "path": "/v1/user/save",
+  "httpMethod": "GET",
+  "path": "/v1/familiars",
+  "pathParameters": {
+    "id": 3
+  },
   "headers": {
     "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
     "eth_timestamp": "1665648789",

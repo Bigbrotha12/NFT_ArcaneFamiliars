@@ -3,8 +3,7 @@ import { Collections, Familiar, Rarity, User } from "./Definitions";
 import { IDatabase } from "./DatabaseInterface";
 import { 
     MongoClient, MongoClientOptions, Collection, AggregationCursor, 
-    BulkWriteOptions, TransactionOptions,ReadPreference,
-    ClientSession, Db, Document
+    TransactionOptions,ReadPreference, ClientSession, Db, Document
 } from "mongodb";
 
 export class Database implements IDatabase {
@@ -50,15 +49,15 @@ export class Database implements IDatabase {
             return undefined;
         }
 
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Familiar);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Familiar);
+        let cursor: AggregationCursor<Familiar>;
         try {
             cursor = collection.aggregate([
                 { "$match": { _id: tokenId }}
             ]);
 
-            const result: Array<Familiar> | undefined = await cursor.toArray();
-            const document: Familiar | undefined = result?.shift();
+            const result: Array<Familiar> = await cursor.toArray();
+            const document: Familiar | undefined = result.shift();
 
             // check if query returned no documents
             if(document === undefined){
@@ -71,113 +70,7 @@ export class Database implements IDatabase {
             return Database.handleDBError(error);
         }
     }
-
-    /**
-     * Core logic for IMX Minting workflow. Gets all NFTs marked as pending
-     * for signing and sending to IMX L2.
-     * @returns Array of Familiar to be minted
-     */
-    async getPendingMints(): Promise<Familiar[] | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
-        }
-
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Familiar);
-        let cursor: AggregationCursor<any>;
-        try {
-            cursor = collection.aggregate([
-                { '$match': { 'meta.status': 'Pending' }}
-            ]);
-            const result: Array<Familiar> | undefined = await cursor.toArray();
-
-            // check if query returned no documents
-            let test: Familiar | undefined = result?.at(0);
-            if(test === undefined || Object.keys(test).length === 0){
-                console.info("Query returned no documents");
-                return undefined;
-            }
-
-            return result;
-        } catch (error: any) {
-            return Database.handleDBError(error);
-        }
-    }
-
-    /**
-     * Function checking mint status of specific token id.
-     * @param tokenId id of token to be checked
-     * @returns return string status either "Minted" or "Pending"
-     */
-    async getMintStatus(tokenId: number): Promise<string | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
-        }
-
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Familiar);
-        const batchSize: number = extractNumberEnvVar("BATCH_SIZE");
-        let cursor: AggregationCursor<any>;
-        try {
-            cursor = collection.aggregate([
-                { "$match": { _id: tokenId }},
-                { "$project": { meta: 1 }},
-                { "$limit": { batchSize }}
-            ]);
-
-            let result: Array<Familiar> | undefined = await cursor.toArray();
-            let document: Familiar | undefined = result?.shift();
-                
-            // check if query returned no documents
-            if(document === undefined){
-                console.info("Query returned no documents");
-                return undefined;
-            }
-            
-            return document.meta?.status;
-        } catch (error: any) {
-            return Database.handleDBError(error);
-        }
-    }
     
-    /**
-     * Updater function for IMX Minting workflow. Marks NFT as 
-     * minted after successful response from IMX.
-     * @param tokens Array of Familiar to be marked as "Minted"
-     * @returns Promise resolving to true on successful update
-     */
-    async updatePendingMints(tokens: Familiar[]): Promise<boolean | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
-        }
-
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Familiar);
-        const options: BulkWriteOptions = { ordered: false };
-        const operations = tokens.map(token => {
-            return {
-                updateOne: {
-                    filter: { _id: token._id },
-                    update: 
-                    { 
-                        "$set": 
-                        {
-                            "meta.status": "Minted", 
-                            "meta.mint_timestamp": Math.floor(Date.now()/1000) 
-                        }
-                    }
-                }
-            }
-        });
-
-        try {
-            await collection.bulkWrite(operations, options);
-            return true;
-        } catch (error: any) {
-            return Database.handleDBError(error);
-        }
-    }
-
     /**
      * Core logic for Familiar registration workflow. Update process must be 
      * atomic in order to maintain data integrity. Records are labeled as "Pending"
@@ -194,9 +87,9 @@ export class Database implements IDatabase {
     
         // Prepare for transaction    
         const session: ClientSession = this.client.startSession();
-        const familiarsCol: Collection = this.client.db(this.namespace).collection(Collections.Familiar);
-        const templatesCol: Collection = this.client.db(this.namespace).collection(Collections.Template);
-        const userCol: Collection = this.client.db(this.namespace).collection(Collections.User);
+        const familiarsCol: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Familiar);
+        const templatesCol: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Template);
+        const userCol: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
         const db: Db = this.client.db(this.namespace);
         const transactionOptions: TransactionOptions | any = { 
             readPreference: ReadPreference.PRIMARY
@@ -210,7 +103,7 @@ export class Database implements IDatabase {
                 {
                     findAndModify: Collections.Counter,
                     query: { name: "token_ids" },
-                    update: { $inc: { value: 1 }}
+                    update: { "$inc": { value: 1 }}
                 }, { session });
 
                 // stage 2: Update template mint count
@@ -267,21 +160,25 @@ export class Database implements IDatabase {
         }
 
         const generation: number = extractNumberEnvVar("CURRENT_GENERATION");
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.Template);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Template);
+        let cursor: AggregationCursor<Familiar>;
         
         try {
             cursor = collection.aggregate([
-            {
-                rarity: { "$in": tier },
-                generation: generation,
-                "$expr": { "$lt": [ "$meta.minted", "$meta.limit" ]}
-            }]);
+                {
+                  '$match': 
+                  { 
+                    'rarity': { '$in': tier }, 
+                    'generation': generation, 
+                    '$expr': { '$lt': ['$meta.minted', '$meta.limit']}
+                  }
+                }
+              ]);
         
-            const result: Array<Familiar> | undefined = await cursor.toArray();
+            const result: Array<Familiar> = await cursor.toArray();
 
             // check if query returned no documents
-            let test: Familiar | undefined = result?.at(0);
+            let test: Familiar | undefined = result[0];
             if(test === undefined || Object.keys(test).length === 0){
                 console.info("Query returned no documents");
                 return undefined;
@@ -304,15 +201,15 @@ export class Database implements IDatabase {
             return undefined;
         }
 
-        const collection: Collection = this.client.db(this.namespace).collection(Collections.User);
-        let cursor: AggregationCursor<any>;
+        const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
+        let cursor: AggregationCursor<User>;
 
         try {
             cursor = collection.aggregate([
                 { "$match": { _id: address }}
             ]);
 
-            const result: Array<User> | undefined = await cursor.toArray();
+            const result: Array<User> = await cursor.toArray();
             const document: User | undefined = result?.shift();
             // check if query returned no documents
             if(document === undefined){

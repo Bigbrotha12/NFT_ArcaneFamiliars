@@ -79,7 +79,7 @@ export enum Rarity {
 
 export type Request = {
     path: Path,
-    method: Method,
+    httpMethod: Method,
     headers: {
         eth_address: string,
         eth_timestamp: string,
