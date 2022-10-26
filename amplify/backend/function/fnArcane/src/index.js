@@ -1,36 +1,38 @@
-const MongoClient = require("mongodb").MongoClient;
-require('dotenv').config();
+const { FamiliarManager } = require("./build/FamiliarManager");
+const { Database } = require("./DatabaseImplementation");
 
-let cachedDb;
+// database caching to improve performance
+let cacheDB;
 async function connectToDatabase() {
-  if (cachedDb) {
-    return cachedDb;
+  if (cacheDB) {
+    return cacheDB;
   }
 
-  const client = await MongoClient.connect(process.env.MONGODB_URI, 
-    { useNewUrlParser: true, useUnifiedTopology: true, wtimeoutMS: process.env.MONGODB_TIMEOUT });
-  const db = await client.db("ArcaneFamiliars");
+  const DB = new Database();
+  await DB.init();
 
-  cachedDb = db;
-  return db;
+  if(DB.isInitialized()) {
+    cacheDB = DB;
+  } else {
+    throw new Error("Database connection failed");
+  }
 }
 
 exports.handler = async (event, context) => {
-  let param = Number(event.pathParameters.id);
+  // maintain runtime environment for next call if possible
   context.callbackWaitsForEmptyEventLoop = false;
+    
+  try {
+    // attempt connection to database
+    await connectToDatabase();
 
-  const db = await connectToDatabase();
-  const familiars = await db.collection("familiars").find({_id: param}).toArray();
-  delete familiars[0].meta;
-  
-  const response = {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*"
-    }, 
-    body: JSON.stringify(familiars[0]),
-  };
+    // if successful, run process
+    const tokenId = Number(event.pathParameters.id);
+    return await FamiliarManager(tokenId, cacheDB);
 
-  return response;
+  } catch (error) {
+    // otherwise return to sender
+    let response = { statusCode: 500, status: "Internal Server Error", error: error }
+    return response;
+  }
 };

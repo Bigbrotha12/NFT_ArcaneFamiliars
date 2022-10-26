@@ -22,7 +22,7 @@ async function connectToDatabase() {
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event, context) => {
-  // maintain runtime environment for next call if possible
+    // maintain runtime environment for next call if possible
     context.callbackWaitsForEmptyEventLoop = false;
     
     try {
