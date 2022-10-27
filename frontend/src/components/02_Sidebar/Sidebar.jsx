@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 //import style from '../../styles/Sidebar.module.css';
 import { List, ListItem, ListItemButton, ListItemText, Divider, Typography} from '@mui/material';
-import { AppConfig } from "../../constants/AppConfig";
+import { AppConfig } from "../../app/constants/AppConfig";
 
 export default function Sidebar() {
   return (

@@ -1,13 +1,14 @@
+import React from "react";
 //import style from '../../../styles/Body.module.css';
-import { Card, Tab, Tabs, CardHeader, CardContent, Typography, Divider } from '@mui/material';
-import BridgeDeposit from './BridgeDeposit';
-import BridgeWithdraw from './BridgeWithdraw';
+// import { Card, Tab, Tabs, CardHeader, CardContent, Typography, Divider } from '@mui/material';
+// import BridgeDeposit from './BridgeDeposit';
+// import BridgeWithdraw from './BridgeWithdraw';
 
 export default function Bridge() {
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const handleChange = (event, value) => {
-    setTabIndex(value);
-  }
+  // const [tabIndex, setTabIndex] = React.useState(0);
+  // const handleChange = (event, value) => {
+  //   setTabIndex(value);
+  // }
 
   return (
 

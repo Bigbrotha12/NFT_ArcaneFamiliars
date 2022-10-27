@@ -1,0 +1,82 @@
+{
+    "API": {
+      "IMX": {
+        "Sandbox": "https://api.sandbox.x.immutable.com",
+        "Mainnet": "https://api.x.immutable.com"
+      },
+      "Link": {
+        "Sandbox": "https://link.sandbox.x.immutable.com",
+        "Mainnet": "https://link.x.immutable.com"
+      },
+      "Ethereum": {
+        "Sandbox": {
+          "name": "Ethereum Goerli",
+          "chainId": 5,
+          "rpc": "https://goerli.infura.io/v3/28b12f61dabf41379c84687973179f02",
+          "wss": "ws://goerli.infura.io/v3/28b12f61dabf41379c84687973179f02",
+          "explorer": "https://goerli.etherscan.io"
+        },
+        "Mainnet": {
+          "name": "Ethereum Mainnet",
+          "chainId": 1,
+          "rpc": "https://mainnet.infura.io/v3/28b12f61dabf41379c84687973179f02",
+          "wss": "ws://mainnet.infura.io/v3/28b12f61dabf41379c84687973179f02",
+          "explorer": "https://etherscan.io"
+        }
+      }
+    },
+    "Unity": {
+      "loader": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.loader.js",
+      "framework": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.framework.js",
+      "code": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.wasm",
+      "data": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.data"
+    },
+    "Blockchain": {
+      "IMX": {
+        "Sandbox": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+        "Mainnet": ""
+      },
+      "Collection": {
+        "Sandbox": "",
+        "Mainnet": ""
+      }
+    },
+    "SiteContent": {
+      "hyperlinks": {
+        "IMX": "https://market.immutable.com"
+      },
+      "sidebar": [
+        {
+          "title": "Familiars",
+          "content": [
+            {
+              "label": "Play Game",
+              "link": "/game"
+            },
+            {
+              "label": "Collection",
+              "link": "/collection"
+            },
+            {
+              "label": "Marketplace",
+              "link": "/marketplace"
+            },
+            {
+              "label": "Mint",
+              "link": "/minter"
+            }
+          ]
+        },
+        {
+          "title": "Blockchain",
+          "content": [
+            {
+              "label": "Bridge",
+              "link": "/bridge"
+            }
+          ]
+        }
+      ]
+    }
+  }
+   

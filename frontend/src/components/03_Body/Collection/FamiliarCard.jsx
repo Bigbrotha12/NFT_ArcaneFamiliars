@@ -1,4 +1,4 @@
-import { AppConfig } from '../../../constants/AppConfig';
+import { AppConfig } from '../../../app/constants/AppConfig';
 import { Typography, IconButton, Collapse, Card, CardActions, CardContent, CardHeader, CardMedia, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomTable from './CustomTable';

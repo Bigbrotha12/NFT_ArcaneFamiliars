@@ -1,6 +1,6 @@
 import { Link } from '@imtbl/imx-sdk';
 import { Description } from '@mui/icons-material';
-import { AppConfig } from '../constants/AppConfig';
+import { AppConfig } from '../app/constants/AppConfig';
 
 export const IMXLink = {
 

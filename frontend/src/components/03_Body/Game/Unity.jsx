@@ -1,9 +1,9 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
-import { AppConfig } from "../../../constants/AppConfig";
+import { AppConfig } from "../../../app/constants/AppConfig";
 import { Button, CircularProgress } from "@mui/material";
 import { PlayArrow, Close } from "@mui/icons-material";
 //import style from "../../../styles/Body.module.css";
-import { SiteContext, UserContext } from "../../../constants/AppContext";
+import { SiteContext, UserContext } from "../../../state/Context";
 import { IMXLink } from "../../../API/IMXLink";
 
 export default function UnityFrame() {

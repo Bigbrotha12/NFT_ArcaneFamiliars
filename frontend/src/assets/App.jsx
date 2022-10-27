@@ -1,6 +1,6 @@
 import AppLayout from './components/AppLayout';
-import { AppConfig } from './constants/AppConfig';
-import { LinkContext, UserContext, SiteContext } from './constants/AppContext';
+import { AppConfig } from './app/constants/AppConfig';
+import { LinkContext, UserContext, SiteContext } from './app/constants/AppContext';
 
 export default function App() {
     const linkProvider = AppConfig.IMXProvider;

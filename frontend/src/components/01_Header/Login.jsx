@@ -2,9 +2,9 @@
 import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import LoginIcon from '@mui/icons-material/DataSaverOffRounded';
 
-import { LinkContext, UserContext } from '../../constants/AppContext'; 
+import { LinkContext, UserContext } from '../../state/Context'; 
 import { IMXLink } from '../../API/IMXLink';
-import { shortAddress, isAddress } from '../../utils/shortAddress';
+import { shortAddress, isAddress } from '../../app/utils/shortAddress';
 
 export default function Login() {
   const [menuOpen, setMenuOpen] = React.useState({open: false});
