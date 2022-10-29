@@ -11,7 +11,7 @@ module.exports = {
     entry: path.resolve(__dirname, "./src/index.tsx"),
     mode: "development",
     resolve: {
-        extensions: [".js", ".jsx", ".json", "ts", "tsx", ".css"],
+        extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".css"],
         fallback: {
             os: require.resolve("os-browserify"),
             https: require.resolve("https-browserify"),

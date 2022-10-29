@@ -1,28 +1,28 @@
-import { UserInfo } from './app/Definitions';
+import { IController, UserInfo } from './app/Definitions';
 import React, { useEffect } from 'react';
 import Layout from './Layout';
-import { defaultUser, UserContext } from './state/Context';
+import { defaultUser, UserContext, ControllerContext } from './state/Context';
 import { AppController } from './app/AppController';
 
-// Handles state management via context
+// Handles state management and caching
 export default function App() {
-    const [userInfo, setUserInfo] = React.useState({} as UserInfo);
+    const [userInfo, setUserInfo] = React.useState(defaultUser);
+    const controller: IController = new AppController();
 
     useEffect(() => {
-      const defaultInfo: UserInfo = defaultUser;
-      const controller: AppController = new AppController();
       const info: UserInfo | null = controller.getUserData();
-      
-      info ? setUserInfo(info) : setUserInfo(defaultInfo);
-      
+      if(info) {setUserInfo(info)};
+
+      return controller.storeUserData(userInfo);
     },[]);
 
     return (
-        <React.StrictMode>
-                <UserContext.Provider value={[userInfo, setUserInfo]}>
-                  <Layout />
-                  <h1 className='flex'></h1>
-                </UserContext.Provider> 
-        </React.StrictMode>
+      <React.StrictMode>
+        <ControllerContext.Provider value={controller}>
+          <UserContext.Provider value={[userInfo, setUserInfo]}>
+            <Layout />
+          </UserContext.Provider> 
+        </ControllerContext.Provider>
+      </React.StrictMode>
     ) 
 }
