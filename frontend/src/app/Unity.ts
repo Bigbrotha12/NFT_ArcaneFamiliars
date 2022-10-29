@@ -5,7 +5,7 @@ export class Unity implements IUnity {
         throw new Error("Method not implemented.");
     }
     receiveMessage(message: string): void {
-        throw new Error("Method not implemented.");
+        throw new Error(message);
     }
     
 }

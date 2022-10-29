@@ -1,5 +1,6 @@
 import React from "react"
 
+
 export type UserInfo = {
     address: string,
     balance: {
@@ -9,9 +10,15 @@ export type UserInfo = {
     },
     isConnected: boolean,
     preferences: {
-        theme: "light" | "dark"
-    },
-    NFTs: Array<Familiar>
+        darkTheme: boolean
+    }
+}
+
+export interface IController {
+    connectIMX(): Promise<UserInfo | string>,
+    getUserData(): UserInfo | null,
+    storeUserData(data: UserInfo): void,
+    formatAddress(address: string): string
 }
 
 export type UserContextType = [UserInfo, React.Dispatch<React.SetStateAction<UserInfo>>]

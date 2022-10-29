@@ -1,9 +1,13 @@
-import { UserInfo } from "./Definitions";
+import { UserInfo, IController } from "./Definitions";
 
-export class AppController {
+export class AppController implements IController {
 
     constructor() {
 
+    }
+
+    connectIMX(): Promise<string | UserInfo> {
+        throw new Error("Method not implemented.");
     }
 
     storeUserData(value: UserInfo): void {
@@ -27,5 +31,9 @@ export class AppController {
             return null
         }
         return info;
+    }
+
+    formatAddress(address: string): string {
+        return address.slice(0, 5);
     }
 }
