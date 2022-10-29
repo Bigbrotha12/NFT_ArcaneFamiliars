@@ -51,18 +51,22 @@
           "content": [
             {
               "label": "Play Game",
+              "icon": "Cards 2.png",
               "link": "/game"
             },
             {
               "label": "Collection",
+              "icon": "Grimoire 3.png",
               "link": "/collection"
             },
             {
               "label": "Marketplace",
+              "icon": "Runes 3.png",
               "link": "/marketplace"
             },
             {
               "label": "Mint",
+              "icon": "Tower 2.png",
               "link": "/minter"
             }
           ]
@@ -72,6 +76,7 @@
           "content": [
             {
               "label": "Bridge",
+              "icon": "Tower 3.png",
               "link": "/bridge"
             }
           ]

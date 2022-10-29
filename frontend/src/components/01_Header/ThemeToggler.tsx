@@ -18,7 +18,7 @@ export default function ThemeToggler(): JSX.Element {
         <div className="flex align-middle justify-center">
             
             <Switch sx={{margin: "auto"}} color="warning" checked={dark} onChange={handleChange} />
-            <DarkModeIcon color="error" sx={{margin: "auto"}} />
+            <DarkModeIcon color="warning" sx={{margin: "auto"}} />
             
         </div>
     );
