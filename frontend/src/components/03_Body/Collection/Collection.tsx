@@ -40,10 +40,10 @@ export default function Collection() {
   return (
     <div className="h-full w-full">
       <SearchBar />
-      <Grid sx={{margin: "0px", padding: "4px", height: "100%"}} container spacing={1}>
+      <Grid sx={{margin: "0px", padding: "4px", height: "100%", width: "100%"}} container spacing={1}>
           {userAssets ?
           createCards(sampleAssets) : 
-          <p>No Familiars to show</p>}
+          <p className="m-auto">No Familiars to show</p>}
       </Grid>
     </div>
   //   <Box /*className={style.collectionContainer}*/ sx={{flexGrow: 1}}>

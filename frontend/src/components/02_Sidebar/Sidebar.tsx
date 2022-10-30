@@ -41,7 +41,7 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="b-2 w-1/5 h-screen relative left-0 shadow-[0_8px_6px_-6px_rgba(0,0,0,0.8)]">
+    <div className="b-2 w-1/5 h-screen fixed left-0 shadow-[0_8px_6px_-6px_rgba(0,0,0,0.8)]">
       <List>
         {createSections()}
       </List>
