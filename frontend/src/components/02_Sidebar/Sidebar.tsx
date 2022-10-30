@@ -2,11 +2,12 @@ import React from "react";
 import Config from "../../app/constants/AppConfig.json"
 import { Link } from "react-router-dom";
 import { List, ListItemText, ListItem, Divider, ListItemIcon } from '@mui/material';
-import Cards from "../../assets/icons/Cards 2.png";
-import Grimoire from "../../assets/icons/Grimoire 3.png";
-import Runes from "../../assets/icons/Runes 3.png";
-import Tower1 from "../../assets/icons/Tower 2.png";
-import Tower2 from "../../assets/icons/Tower 3.png";
+
+const Cards = `${Config.SiteContent.assets.images}Cards 2.png`;
+const Grimoire = `${Config.SiteContent.assets.images}Grimoire 3.png`;
+const Runes = `${Config.SiteContent.assets.images}Runes 3.png`;
+const Tower1 = `${Config.SiteContent.assets.images}Tower 2.png`;
+const Tower2 = `${Config.SiteContent.assets.images}Tower 3.png`;
 
 export default function Sidebar() {
   const icons: Array<string> = [Tower1, Grimoire, Runes, Cards, Tower2];
