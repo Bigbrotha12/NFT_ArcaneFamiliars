@@ -42,6 +42,7 @@
     "@mui/base": "^5.0.0-alpha.103",
     "@types/react": "^18.0.23",
     "@types/react-dom": "^18.0.7",
+    "typescript": "3.9.10",
     "autoprefixer": "^10.4.12",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.2.5",
