@@ -1,81 +1,88 @@
 import React from "react";
-import { IController, UserContextType } from "../../app/Definitions";
+import { UserContextType } from "../../app/Definitions";
+import { IController } from "../../app/IController";
 import { UserContext, ControllerContext } from "../../state/Context";
-import { Button } from "@mui/material";
+import { Button, ClickAwayListener, Menu, MenuItem } from "@mui/material";
+import Formatter from "../../app/Formatter";
 
 export default function Login() {
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [userInfo, ] = React.useContext<UserContextType>(UserContext);
-  const controller: IController = React.useContext(ControllerContext);
+  const [userInfo, setUserInfo] = React.useContext<UserContextType>(UserContext);
+  const controller: IController = React.useContext<IController>(ControllerContext);
+  const [menu, setMenu] = React.useState<{anchor: HTMLElement | null, open: boolean}>
+    ({ anchor: null, open: false});
 
-  async function connect() {
-    //const info: UserInfo | string = await controller.connectIMX();
-    // if(typeof info === "string") {
-    //   // Report error message to user
-    //   return;
-    // }
-
-    // controller.storeUserData(info);
-    // setUserInfo(info);
-    console.log("Connect was clicked");
+  function openMenu(event: React.MouseEvent<HTMLElement>): void {
+    setMenu({anchor: event.currentTarget, open: true});
   }
 
-  // function handleDisconnect() {
-  //   localStorage.removeItem('address');
-  //   setUserInfo(current => ({...current, address: null}));
-  //   setMenuOpen({...menuOpen, open:false});
-  // }
+  function closeMenu(): void {
+    setMenu((menu) => {return {...menu, open: false}});
+  }
 
-  // function openMenu(event) {
-  //   setMenuOpen({anchor: event.currentTarget, open: true});
-  // }
+  async function connect(): Promise<void | null> {
+    const userAddress: string | null = await controller.connectIMX();
+    
+    if(userAddress === null) {
+       return null;
+    }
 
-  // function closeMenu() {
-  //   setMenuOpen({...menuOpen, open:false});
-  // }
+    setUserInfo((user) => { return {
+      ...user,
+      address: userAddress,
+      isIMXConnected: true
+    }});
+  }
 
-  // React.useEffect( () => {
-  //   let address = localStorage.getItem('address');
-  //   if(isAddress(address)){
-  //       setUserInfo(current => ({...current, address: address}));
-  //   } 
-  // }, []);
+  function disconnect() {
+    controller.deleteUserData();
+
+    setUserInfo((info) => { return {...info, address: null}});
+    closeMenu();
+  }
+
+  React.useEffect(() => {
+    if(userInfo.isIMXConnected) {
+      controller.storeUserData(userInfo);
+    }
+  }, [userInfo.address]);
   
   return (
     <div className="flex align-middle justify-center px-8 text">
-      {userInfo.isConnected 
-      ?
-      <Button
-        sx={{
-          backgroundColor: "white"
-        }}
-        variant="outlined"
-        onClick={() => setMenuOpen(true)}
-      >
-        {controller.formatAddress(userInfo.address)}
-      </Button>
-      : 
-      <Button 
-        sx={{
-          margin: "auto",
-          height: "2.5rem",
-          width: "8rem",
-          backgroundColor: "#F9CF00",
-          color: "black"
-        }}
-        variant="contained"
-        onClick={connect}>
-        Connect
-      </Button>}
+      <ClickAwayListener onClickAway={closeMenu}>
+        <>
+        {userInfo.address ?
+        <Button
+          sx={{
+            backgroundColor: "rgba(0,0,0,0)",
+            border: "none",
+            color: "white",
+            fontWeight: "bold"
+          }}
+          variant="outlined"
+          onClick={(event) => openMenu(event)}
+        >
+          {Formatter.formatAddress(userInfo.address)}
+        </Button> : 
+        <Button 
+          sx={{
+            margin: "auto",
+            height: "2.5rem",
+            width: "8rem",
+            backgroundColor: "#F9CF00",
+            color: "black"
+          }}
+          variant="contained"
+          onClick={connect}>
+          Connect
+        </Button>}
 
-      {menuOpen 
-      ?
-      <div>
-        Disconnect
-      </div>
-      :
-      null
-      }
+        {menu ?
+          <Menu anchorEl={menu.anchor} open={menu.open} onClose={closeMenu}>
+            <MenuItem onClick={disconnect}>Disconnect</MenuItem>
+          </Menu>
+        : null}
+        </>
+      </ClickAwayListener>
         {/* {userInfo.address ? 
         <div >
           <LoginIcon sx={{paddingLeft: '5px', alignSelf: 'center', color: '#51e656'}}/>
@@ -91,6 +98,7 @@ export default function Login() {
         <Menu anchorEl={menuOpen?.anchor} open={menuOpen.open} onClose={closeMenu}>
             <MenuItem onClick={handleDisconnect}>Disconnect</MenuItem>
         </Menu> */}
+         
     </div>
   )
 }
