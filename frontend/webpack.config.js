@@ -28,8 +28,20 @@ module.exports = {
     module: {
         rules: [
         {
-            test: /\.(ts|tsx)$/,
-            loader: "awesome-typescript-loader"
+            test: /\.tsx?$/,
+            loader: "awesome-typescript-loader",
+            options: 
+            {
+                useCache: true,
+                useBabel: true,
+                babelOptions: {
+                    babelrc: false,
+                    presets: [
+                        ["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }]
+                    ]
+                },
+                babelCore: "@babel/core", // needed for Babel v7
+            }
         },
         // {
         //     enforce: "pre",

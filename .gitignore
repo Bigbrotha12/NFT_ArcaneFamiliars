@@ -3,13 +3,14 @@
 .terraform
 bin
 .vscode
+.awcache
 
 # environment
 .env
 
 # outputs
-build
 public/app
+build
 dist
 
 # modules
