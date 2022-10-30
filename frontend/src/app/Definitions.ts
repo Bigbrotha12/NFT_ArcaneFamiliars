@@ -1,25 +1,20 @@
 import React from "react"
 
-
 export type UserInfo = {
-    address: string,
+    address: string | null,
     balance: {
         imx: number,
         preparing: number,
         withdrawable: number
     },
-    isConnected: boolean,
+    isIMXConnected: boolean,
+    isWeb3Connected: boolean,
     preferences: {
         darkTheme: boolean
     }
 }
 
-export interface IController {
-    connectIMX(): Promise<UserInfo | string>,
-    getUserData(): UserInfo | null,
-    storeUserData(data: UserInfo): void,
-    formatAddress(address: string): string
-}
+
 
 export type UserContextType = [UserInfo, React.Dispatch<React.SetStateAction<UserInfo>>]
 

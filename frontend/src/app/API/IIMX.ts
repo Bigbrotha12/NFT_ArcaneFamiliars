@@ -1,8 +1,8 @@
-import { Familiar, UserInfo } from "./Definitions";
+import { Familiar, UserInfo } from "../Definitions";
 
 export interface IIMX {
     // Initialization
-    init(): Promise<void>,
+    setupUserAccount(): Promise<string>,
     // Getters
     getNFTAssets(address: string, collection: string): Promise<Array<Familiar>>,
     getMetadata(id: number, collection: string): Promise<Familiar>,
