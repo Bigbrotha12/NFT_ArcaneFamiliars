@@ -9,7 +9,7 @@ bin
 .env
 
 # outputs
-public/app
+frontend/public/app/*
 build
 dist
 
@@ -110,12 +110,3 @@ Assets/AddressableAssetsData/*/*.bin*
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-frontend/public/app/4e543d8db28b8a20bb5a.png
-frontend/public/app/9c180adae1ac283141ec.png
-frontend/public/app/46fae110717389b8c5b4.png
-frontend/public/app/519e7c598f8fbfee8499.png
-frontend/public/app/bundle.js
-frontend/public/app/bundle.js.LICENSE.txt
-frontend/public/app/bundle.js.map
-frontend/public/app/dca2f1b0b044f1b78c10.png
-frontend/public/app/index.html
