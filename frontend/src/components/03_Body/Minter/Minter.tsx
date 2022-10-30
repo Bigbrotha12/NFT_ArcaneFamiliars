@@ -1,10 +1,12 @@
-import { Card, Typography, Divider } from '@mui/material';
+import React from 'react';
+//import { Card, Typography, Divider } from '@mui/material';
 //import style from "../../../styles/Body.module.css";
-import Stepper from "./Stepper";
+//import Stepper from "./Stepper";
+import ComingSoon from '../../Common/ComingSoon';
 
 export default function Minter() {
   return (
-    <p>Feature Coming Soon...</p>
+    <ComingSoon />
 
   //   <div /*className={style.bridgeContainer}*/>
   //   <Card sx={{padding: '20px'}}>

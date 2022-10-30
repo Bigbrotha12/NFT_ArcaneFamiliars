@@ -1,4 +1,5 @@
 import React from "react";
+import ComingSoon from "../../Common/ComingSoon";
 //import style from '../../../styles/Body.module.css';
 // import { Card, Tab, Tabs, CardHeader, CardContent, Typography, Divider } from '@mui/material';
 // import BridgeDeposit from './BridgeDeposit';
@@ -12,7 +13,7 @@ export default function Bridge() {
 
   return (
 
-    <p>Feature Coming Soon...</p>
+    <ComingSoon />
     // <div /*className={style.bridgeContainer}*/>
     //   <div /*className={style.bridgeContainer}*/>
     //   <Card raised={true}>
