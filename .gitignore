@@ -9,7 +9,7 @@ bin
 
 # outputs
 build
-public
+public/app
 dist
 
 # modules
