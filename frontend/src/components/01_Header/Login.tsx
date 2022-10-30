@@ -2,7 +2,7 @@ import React from "react";
 import { UserContextType } from "../../app/Definitions";
 import { IController } from "../../app/IController";
 import { UserContext, ControllerContext } from "../../state/Context";
-import { Button, ClickAwayListener, Menu, MenuItem } from "@mui/material";
+import Material from "../../assets/Material";
 import Formatter from "../../app/Formatter";
 
 export default function Login() {
@@ -48,10 +48,10 @@ export default function Login() {
   
   return (
     <div className="flex align-middle justify-center px-8 text">
-      <ClickAwayListener onClickAway={closeMenu}>
+      <Material.ClickAwayListener onClickAway={closeMenu}>
         <>
         {userInfo.address ?
-        <Button
+        <Material.Button
           sx={{
             backgroundColor: "rgba(0,0,0,0)",
             border: "none",
@@ -62,8 +62,8 @@ export default function Login() {
           onClick={(event) => openMenu(event)}
         >
           {Formatter.formatAddress(userInfo.address)}
-        </Button> : 
-        <Button 
+        </Material.Button> : 
+        <Material.Button 
           sx={{
             margin: "auto",
             height: "2.5rem",
@@ -74,31 +74,15 @@ export default function Login() {
           variant="contained"
           onClick={connect}>
           Connect
-        </Button>}
+        </Material.Button>}
 
         {menu ?
-          <Menu anchorEl={menu.anchor} open={menu.open} onClose={closeMenu}>
-            <MenuItem onClick={disconnect}>Disconnect</MenuItem>
-          </Menu>
+          <Material.Menu anchorEl={menu.anchor} open={menu.open} onClose={closeMenu}>
+            <Material.MenuItem onClick={disconnect}>Disconnect</Material.MenuItem>
+          </Material.Menu>
         : null}
         </>
-      </ClickAwayListener>
-        {/* {userInfo.address ? 
-        <div >
-          <LoginIcon sx={{paddingLeft: '5px', alignSelf: 'center', color: '#51e656'}}/>
-          <Button onClick={openMenu}>
-            <Typography className={style.userAddress}>{shortAddress(userInfo.address)}</Typography>
-          </Button>
-        </div> : 
-        <Button 
-        sx={{backgroundColor: '#16BDE2'}} 
-        variant="contained"
-        onClick={handleLogin}
-        >IMX Login</Button>}
-        <Menu anchorEl={menuOpen?.anchor} open={menuOpen.open} onClose={closeMenu}>
-            <MenuItem onClick={handleDisconnect}>Disconnect</MenuItem>
-        </Menu> */}
-         
+      </Material.ClickAwayListener>
     </div>
   )
 }

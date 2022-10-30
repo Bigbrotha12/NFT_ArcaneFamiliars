@@ -1,6 +1,5 @@
 import React from "react";
-import SearchIcon from '@mui/icons-material/Search';
-import { Input, Pagination, Stack } from '@mui/material';
+import Material from "../../../assets/Material";
 
 export default function SearchBar() {
   return (
@@ -9,9 +8,9 @@ export default function SearchBar() {
       <div className="pt-2">
         <Search />
       </div>
-      <Stack sx={{paddingTop: "1rem", paddingLeft: "1rem"}}>
-        <Pagination count={5} color="secondary" />
-      </Stack>
+      <Material.Stack sx={{paddingTop: "1rem", paddingLeft: "1rem"}}>
+        <Material.Pagination count={5} color="secondary" />
+      </Material.Stack>
     </div>
   );
 }
@@ -28,9 +27,9 @@ function Search() {
   return (
     <div className="flex flex-row bg-[#D9D9D9] rounded-[12px] p-1 w-60">
       <div className="mx-4 my-auto">
-        <SearchIcon />
+        <Material.SearchIcon />
       </div>
-      <Input placeholder="Search…" />
+      <Material.Input placeholder="Search…" />
     </div>
   );
 }

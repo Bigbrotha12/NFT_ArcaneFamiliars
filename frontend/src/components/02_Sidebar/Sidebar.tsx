@@ -1,7 +1,7 @@
 import React from "react";
 import Config from "../../app/constants/AppConfig.json"
 import { Link } from "react-router-dom";
-import { List, ListItemText, ListItem, Divider, ListItemIcon } from '@mui/material';
+import Material from "../../assets/Material";
 
 const Cards = `${Config.SiteContent.assets.images}Cards 2.png`;
 const Grimoire = `${Config.SiteContent.assets.images}Grimoire 3.png`;
@@ -16,12 +16,12 @@ export default function Sidebar() {
     return Config.SiteContent.sidebar.map( section => {
       return (
         <div key={section.title} >
-          <ListItem>
-            <ListItemText>
+          <Material.ListItem>
+            <Material.ListItemText>
               {section.title}
-            </ListItemText>
-          </ListItem>
-          <Divider />
+            </Material.ListItemText>
+          </Material.ListItem>
+          <Material.Divider />
           {createItems(section)}
         </div>)
     })
@@ -31,21 +31,21 @@ export default function Sidebar() {
       return section.content.map((item: any) => {
         return (
         <div key={item.label}>
-          <ListItem>
-            <ListItemIcon>
+          <Material.ListItem>
+            <Material.ListItemIcon>
               <img className="rounded-[50%] m-auto h-[30px]" src={icons.shift()} width="30px" height="30px"></img>
-            </ListItemIcon>
+            </Material.ListItemIcon>
             <Link to={item.link}>{item.label}</Link>
-          </ListItem>
+          </Material.ListItem>
         </div>)
       })
   }
 
   return (
     <div className="b-2 w-1/5 h-screen fixed left-0 shadow-[0_8px_6px_-6px_rgba(0,0,0,0.8)]">
-      <List>
+      <Material.List>
         {createSections()}
-      </List>
+      </Material.List>
     </div>
   )
 }

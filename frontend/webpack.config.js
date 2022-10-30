@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require("webpack");
 
 const htmlPlugin = new HtmlWebpackPlugin({
@@ -30,12 +32,14 @@ module.exports = {
         {
             test: /\.tsx?$/,
             loader: "awesome-typescript-loader",
+            exclude: /node_modules/,
             options: 
             {
                 useCache: true,
                 useBabel: true,
                 babelOptions: {
                     babelrc: false,
+                    plugins: ['lodash'],
                     presets: [
                         ["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }]
                     ]
@@ -79,7 +83,12 @@ module.exports = {
             Buffer: [require.resolve("buffer/"), "Buffer"],
             process: "process/browser",
             "React": 'react'
-        })
+        }),
+        new LodashModuleReplacementPlugin({
+            'collections': true,
+            'paths': true
+        }),
+        new BundleAnalyzerPlugin()
     ],
     output: {
         path: path.resolve(__dirname, "dist"),

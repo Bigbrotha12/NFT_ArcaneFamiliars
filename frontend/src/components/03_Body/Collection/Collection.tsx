@@ -1,12 +1,9 @@
 import React from "react";
 import { Affinity, Familiar, Rarity } from "../../../app/Definitions";
 import { ControllerContext, UserContext } from "../../../state/Context";
-// import { Typography, Box, Divider } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Material from "../../../assets/Material";
 import FamiliarCard from './FamiliarCard';
 import SearchBar from "./SearchBar";
-// import SearchBar from './SearchBar';
-//import ComingSoon from "../../Common/ComingSoon";
 
 export default function Collection() {
   const controller = React.useContext(ControllerContext);
@@ -40,11 +37,11 @@ export default function Collection() {
   return (
     <div className="h-full w-full">
       <SearchBar />
-      <Grid sx={{margin: "auto", padding: "4px", height: "100%", width: "100%"}} container spacing={1}>
+      <Material.Grid sx={{margin: "auto", padding: "4px", height: "100%", width: "100%"}} container spacing={1}>
           {userAssets ?
           createCards(sampleAssets) : 
           <p className="m-auto">No Familiars to show</p>}
-      </Grid>
+      </Material.Grid>
     </div>
   //   <Box /*className={style.collectionContainer}*/ sx={{flexGrow: 1}}>
   //     <div /*className={style.collectionHeader}*/ >

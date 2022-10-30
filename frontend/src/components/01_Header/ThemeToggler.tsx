@@ -1,8 +1,7 @@
 import React from "react";
 import { UserContextType } from "../../app/Definitions";
 import { UserContext } from "../../state/Context";
-import DarkModeIcon from '@mui/icons-material/DarkModeRounded';
-import { Switch } from "@mui/material";
+import Material from "../../assets/Material";
 
 export default function ThemeToggler(): JSX.Element {
     const [userInfo, setUserInfo] = React.useContext<UserContextType>(UserContext);
@@ -17,8 +16,8 @@ export default function ThemeToggler(): JSX.Element {
     return (
         <div className="flex align-middle justify-center">
             
-            <Switch sx={{margin: "auto"}} color="warning" checked={dark} onChange={handleChange} />
-            <DarkModeIcon color="warning" sx={{margin: "auto"}} />
+            <Material.Switch sx={{margin: "auto"}} color="warning" checked={dark} onChange={handleChange} />
+            <Material.DarkModeIcon color="warning" sx={{margin: "auto"}} />
             
         </div>
     );

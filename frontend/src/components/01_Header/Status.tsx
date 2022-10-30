@@ -1,6 +1,5 @@
 import React from "react";
-import { List, ListItem, ListItemText, ListItemIcon, ClickAwayListener } from "@mui/material";
-import {ExpandLessRounded, ExpandMoreRounded } from '@mui/icons-material';
+import Material from "../../assets/Material";
 
 export default function Status() {
   const [open, setOpen] = React.useState(false);
@@ -12,26 +11,26 @@ export default function Status() {
 
   return (
     <div className="text-white w-54 h-full flex align-middle justify-center">
-      <ClickAwayListener onClickAway={() => setOpen(false)}>
-        <List disablePadding={true} sx={{marginTop: "4px"}} >
-          <ListItem onClick={toggleDrawer} >
-            <ListItemText primary="Balance: 32 ETH" />
-            <ListItemIcon sx={{display: "flex", justifyContent: "center"}}>
-              {open ? <ExpandLessRounded /> : <ExpandMoreRounded />}
-            </ListItemIcon>
-          </ListItem>
+      <Material.ClickAwayListener onClickAway={() => setOpen(false)}>
+        <Material.List disablePadding={true} sx={{marginTop: "4px"}} >
+          <Material.ListItem onClick={toggleDrawer} >
+            <Material.ListItemText primary="Balance: 32 ETH" />
+            <Material.ListItemIcon sx={{display: "flex", justifyContent: "center"}}>
+              {open ? <Material.ExpandLessRounded /> : <Material.ExpandMoreRounded />}
+            </Material.ListItemIcon>
+          </Material.ListItem>
           {open ?
           <div className="bg-[#0B022D]">
-          <ListItem >
-            <ListItemText primary="Preparing: 16 ETH" />
-          </ListItem> 
-          <ListItem>
-            <ListItemText primary="Withdrawable: 8 ETH" />
-          </ListItem>
+          <Material.ListItem >
+            <Material.ListItemText primary="Preparing: 16 ETH" />
+          </Material.ListItem> 
+          <Material.ListItem>
+            <Material.ListItemText primary="Withdrawable: 8 ETH" />
+          </Material.ListItem>
           </div> : null
           }
-        </List>
-      </ClickAwayListener>
+        </Material.List>
+      </Material.ClickAwayListener>
     </div>
   )
 }
