@@ -40,7 +40,7 @@ export default function Collection() {
   return (
     <div className="h-full w-full">
       <SearchBar />
-      <Grid sx={{margin: "0px", padding: "4px", height: "100%", width: "100%"}} container spacing={1}>
+      <Grid sx={{margin: "auto", padding: "4px", height: "100%", width: "100%"}} container spacing={1}>
           {userAssets ?
           createCards(sampleAssets) : 
           <p className="m-auto">No Familiars to show</p>}

@@ -8,6 +8,7 @@ import { defaultUser, UserContext, ControllerContext } from './state/Context';
 import Layout from './Layout';
 import ComingSoon from './components/Common/ComingSoon';
 import Collection from './components/03_Body/Collection/Collection';
+import Welcome from './components/03_Body/Welcome/Welcome';
 
 // Handles global state management, caching, and client-side routing
 export default function App() {
@@ -29,7 +30,8 @@ export default function App() {
           <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route path="game" element={<ComingSoon />} />
+                    <Route index element={<Welcome />} />
+                    <Route path="game" element={<Welcome />} />
                     <Route path="collection" element={<Collection />} />
                     <Route path="marketplace" element={<ComingSoon />} />
                     <Route path="minter" element={<ComingSoon />} />
