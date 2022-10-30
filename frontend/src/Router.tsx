@@ -2,7 +2,7 @@
 // import Footer from "./components/04_Footer/Footer";
 import React from "react";
 // import Header from "./components/01_Header/Header";
-// import Sidebar from "./components/02_Sidebar/Sidebar";
+//import Sidebar from "./components/02_Sidebar/Sidebar";
 // import Body from "./components/03_Body/Body";
 import ComingSoon from "./components/Common/ComingSoon";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

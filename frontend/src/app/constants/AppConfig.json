@@ -2,7 +2,8 @@
     "API": {
       "IMX": {
         "Sandbox": "https://api.sandbox.x.immutable.com",
-        "Mainnet": "https://api.x.immutable.com"
+        "Mainnet": "https://api.x.immutable.com",
+        "CacheExpiration": 10
       },
       "Link": {
         "Sandbox": "https://link.sandbox.x.immutable.com",
@@ -37,8 +38,9 @@
         "Mainnet": ""
       },
       "Collection": {
-        "Sandbox": "",
-        "Mainnet": ""
+        "Sandbox": "0xb7eaa855fa6432d0597f297bace4613c33a075d1",
+        "Mainnet": "",
+        "Images": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/images/"
       }
     },
     "SiteContent": {

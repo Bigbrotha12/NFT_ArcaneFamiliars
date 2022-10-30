@@ -1,15 +1,20 @@
-import { IController, UserInfo } from './app/Definitions';
-import React, { useEffect } from 'react';
-import Layout from './Layout';
-import { defaultUser, UserContext, ControllerContext } from './state/Context';
+import React from 'react';
+import { UserInfo } from './app/Definitions';
+import { IController } from './app/IController';
 import { AppController } from './app/AppController';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { defaultUser, UserContext, ControllerContext } from './state/Context';
 
-// Handles state management and caching
+import Layout from './Layout';
+import ComingSoon from './components/Common/ComingSoon';
+import Collection from './components/03_Body/Collection/Collection';
+
+// Handles global state management, caching, and client-side routing
 export default function App() {
     const [userInfo, setUserInfo] = React.useState(defaultUser);
     const controller: IController = new AppController();
 
-    useEffect(() => {
+    React.useEffect(() => {
       const info: UserInfo | null = controller.getUserData();
       if(info) {setUserInfo(info)};
 
@@ -20,7 +25,21 @@ export default function App() {
       <React.StrictMode>
         <ControllerContext.Provider value={controller}>
           <UserContext.Provider value={[userInfo, setUserInfo]}>
-            <Layout />
+          
+          <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route path="game" element={<ComingSoon />} />
+                    <Route path="collection" element={<Collection />} />
+                    <Route path="marketplace" element={<ComingSoon />} />
+                    <Route path="minter" element={<ComingSoon />} />
+                    <Route path="bridge" element={<ComingSoon />} />
+                    <Route path="other" element={<ComingSoon />} />
+                    <Route path="*" element={<ComingSoon />} />
+                </Route>
+            </Routes>
+          </BrowserRouter>
+
           </UserContext.Provider> 
         </ControllerContext.Provider>
       </React.StrictMode>

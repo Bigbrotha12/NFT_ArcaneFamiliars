@@ -21,7 +21,8 @@ module.exports = {
             url: require.resolve("url/"),
             assert: require.resolve("assert/"),
             crypto: require.resolve("crypto-browserify"),
-            buffer: require.resolve('buffer/')
+            buffer: require.resolve('buffer/'),
+            zlib: false
         }
     },
     module: {
@@ -30,11 +31,11 @@ module.exports = {
             test: /\.(ts|tsx)$/,
             loader: "awesome-typescript-loader"
         },
-        {
-            enforce: "pre",
-            test: /\.js$/,
-            loader: "source-map-loader",
-        },
+        // {
+        //     enforce: "pre",
+        //     test: /\.js$/,
+        //     loader: "source-map-loader",
+        // },
         {
             test: /\.jsx?$/i,
             exclude: /node_modules/,
