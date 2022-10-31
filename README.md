@@ -8,7 +8,7 @@ Source code Arcane Familiar, a work-in-progress, NFT-based game integrated with 
 
 Current working version:
 
-[Arcane Familiar Site](https://frolicking-cheesecake-005297.netlify.app/)
+[Arcane Familiar Site](https://arcane-familiars.netlify.app/)
 
 # API Endpoint
 
