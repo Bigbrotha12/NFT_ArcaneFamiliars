@@ -19,12 +19,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Input from "@mui/material/Input";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import ExpandLessRounded from "@mui/icons-material/ExpandLessRounded";
 import ExpandMoreRounded from "@mui/icons-material/ExpandMoreRounded";
 import DarkModeIcon from '@mui/icons-material/DarkModeRounded';
 import SearchIcon from '@mui/icons-material/Search';
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import Close from "@mui/icons-material/Close";
 
+import styled from '@mui/material/styles/styled';
 
 export default {
     Button,
@@ -48,9 +55,17 @@ export default {
     Input,
     Pagination,
     Stack,
+    Box,
+    Paper,
+    Chip,
+    CircularProgress,
 
     ExpandMoreRounded,
     ExpandLessRounded,
     DarkModeIcon,
-    SearchIcon
+    SearchIcon,
+    PlayArrow,
+    Close,
+
+    styled
 }

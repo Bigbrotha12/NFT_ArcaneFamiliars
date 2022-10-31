@@ -1,6 +1,7 @@
 import { IIMX } from "./IIMX";
-import { Familiar } from "../Definitions";
+import { Authentication, Familiar, UserInfo } from "../Definitions";
 import Config from "../constants/AppConfig.json";
+import { hashMessage } from '@ethersproject/hash';
 import { Link } from "@imtbl/imx-sdk";
 import axios, { Axios } from "axios";
 
@@ -18,12 +19,31 @@ export class IMX implements IIMX {
     }
 
     // Link API call
-    async setupUserAccount(): Promise<string> {
+    async setupUserAccount(): Promise<UserInfo["address"]> {
         try {
             const userInfo = await this.link.setup({});
             return userInfo.address;
         } catch (error) {
             throw new Error("Connection attempt failed");
+        }
+    }
+
+    async authenticate(address: string): Promise<Authentication> {
+        try {
+            const now: string = Math.floor(Date.now()/1000).toString();
+            const message: string = hashMessage(now);
+            const signature: { result: string } = await this.link.sign({ 
+                message: message, 
+                description: "Authentication Request"});
+            const auth: Authentication = {
+                eth_address: address,
+                eth_timestamp: Number(now),
+                eth_signature: signature.result
+            }
+            return auth;
+
+        } catch (error) {
+            throw new Error("Authentication Error");
         }
     }
 

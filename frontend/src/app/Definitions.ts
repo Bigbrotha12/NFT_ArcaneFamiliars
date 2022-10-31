@@ -14,9 +14,13 @@ export type UserInfo = {
     }
 }
 
-
-
 export type UserContextType = [UserInfo, React.Dispatch<React.SetStateAction<UserInfo>>]
+
+export type Authentication = {
+    eth_address: string,
+    eth_timestamp: number,
+    eth_signature: string
+}
 
 export type Familiar = {
     _id: number,

@@ -1,4 +1,4 @@
-import { UserInfo, Familiar } from "./Definitions";
+import { UserInfo, Familiar, Authentication } from "./Definitions";
 import { IController } from "./IController";
 import { IIMX } from './API/IIMX';
 import { IMX } from "./API/IMX";
@@ -22,13 +22,26 @@ export class AppController implements IController {
 
     /**
      * Sets up user account connection with IMX Link
+     * @returns eth address of user
      */
-    async connectIMX(): Promise<string | null> {
+    async connectIMX(): Promise<UserInfo["address"] | null> {
 
         try {
-            const userAddress: string = await this.IMX.setupUserAccount();
+            const userAddress: UserInfo["address"] = await this.IMX.setupUserAccount();
             return userAddress;
         } catch (error) {
+            return null;
+        }
+    }
+
+    async getAuthentication(address: UserInfo["address"]): Promise<Authentication | null> {
+        if(!address) {return null}
+
+        try {
+            const authentication: Authentication = await this.IMX.authenticate(address);
+            return authentication;
+        } catch (error) {
+            console.error("Could not obtain authentication data");
             return null;
         }
     }
@@ -39,14 +52,16 @@ export class AppController implements IController {
      * @returns array of familiars the user owns
      */
     async getUserFamiliars(address: UserInfo["address"]): Promise<Array<Familiar> | null> {
-        if(address === null) {return null};
+        if(!address) {return null};
 
         const now = Math.floor(Date.now()/1000);
         if(this.cache && now < this.cache?.assets.expiration) {
+            console.log("Returning data from cache");
             return this.cache.assets.data;
         } 
 
         try {
+            console.log("Fetching data from IMX");
             const familiars = await this.IMX.getNFTAssets(address, Config.Blockchain.Collection.Sandbox);
             this.cache = {
                 assets: {
