@@ -22,9 +22,8 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
         return response;
     }
 
-    const validation: boolean | string = controller.verifyRequest(event, user);
-    if(typeof validation === 'string') {
-        console.error("Failed validation: %s", validation);
+    const validation: boolean = controller.verifyRequest(event, user);
+    if(!validation) {
         console.info("Invalid request from %s", event.headers.eth_address);
         response = Responses[401]; 
         response.error = { message: "Data verification failed" };
