@@ -122,8 +122,11 @@ export class Database implements IDatabase {
                 updateOne: {
                     filter: { _id: token._id },
                     update: { "$set": 
-                        {"meta.status": "Minted", 
-                        "meta.mint_timestamp": `${Math.floor(Date.now()/1000)}`}}
+                        {
+                            "meta.status": "Minted", 
+                            "meta.mint_timestamp": Math.floor(Date.now()/1000)
+                        }
+                    }
                 }
             }
         });
