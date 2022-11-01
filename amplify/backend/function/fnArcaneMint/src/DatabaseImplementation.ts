@@ -130,6 +130,7 @@ export class Database implements IDatabase {
                     {
                         ...template,
                         _id: counter.value.value,
+                        familiarId: template._id,
                         meta: 
                         {
                             status: "Pending",
