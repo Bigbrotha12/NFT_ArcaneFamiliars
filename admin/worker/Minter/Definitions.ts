@@ -29,7 +29,7 @@ export type Familiar = {
     generation: number
     meta: {
         status: string,
-        mint_timestamp: string,
+        mint_timestamp: number,
         origin_owner: string
     }
 }
