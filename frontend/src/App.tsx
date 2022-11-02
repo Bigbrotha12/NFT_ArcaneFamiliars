@@ -9,7 +9,7 @@ import Layout from './Layout';
 import ComingSoon from './components/Common/ComingSoon';
 import Collection from './components/03_Body/Collection/Collection';
 import Welcome from './components/03_Body/Welcome/Welcome';
-import UnityFrame from './components/03_Body/Game/UnityFrame';
+import Frame from './components/03_Body/Game/Frame';
 
 // Handles global state management, caching, and client-side routing
 export default function App() {
@@ -32,7 +32,7 @@ export default function App() {
               <Routes>
                   <Route path="/" element={<Layout />}>
                       <Route index element={<Welcome />} />
-                      <Route path="game" element={<UnityFrame />} />
+                      <Route path="game" element={<Frame />} />
                       <Route path="collection" element={<Collection />} />
                       <Route path="marketplace" element={<ComingSoon />} />
                       <Route path="minter" element={<ComingSoon />} />

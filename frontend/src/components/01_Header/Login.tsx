@@ -3,7 +3,7 @@ import { UserContextType } from "../../app/Definitions";
 import { IController } from "../../app/IController";
 import { UserContext, ControllerContext } from "../../state/Context";
 import Material from "../../assets/Material";
-import Formatter from "../../app/Formatter";
+import Formatter from "../../app/utils/Formatter";
 
 export default function Login() {
   const [userInfo, setUserInfo] = React.useContext<UserContextType>(UserContext);
