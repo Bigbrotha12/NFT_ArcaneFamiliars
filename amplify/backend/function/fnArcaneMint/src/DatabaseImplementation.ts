@@ -22,7 +22,7 @@ export class Database implements IDatabase {
      * Initializes connection to MongoDB server. Must be run prior
      * to any database query.
      */
-    async init(): Promise<void | undefined> {
+    async init(): Promise<void> {
         try {
             this.client = await MongoClient.connect(this.URI, this.options);
         } catch (error: any) {
@@ -43,10 +43,9 @@ export class Database implements IDatabase {
      * @param tokenId id of token being queried
      * @returns Familiar document for token id
      */
-    async getFamiliarByID(tokenId: number): Promise<Familiar | undefined> {
+    async getFamiliarByID(tokenId: number): Promise<Familiar> {
         if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+            throw new Error("Database not initialized");
         }
 
         const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Familiar);
@@ -60,9 +59,8 @@ export class Database implements IDatabase {
             const document: Familiar | undefined = result.shift();
 
             // check if query returned no documents
-            if(document === undefined){
-                console.info("Query returned no documents");
-                return undefined;
+            if(!document){
+                throw new Error("Query returned no documents");
             }
 
             return document;
@@ -79,10 +77,9 @@ export class Database implements IDatabase {
      * @param user User who will receive NFT
      * @returns Promise resolving to true on successful registration
      */
-    async registerNewFamiliar(template: Familiar, user: User): Promise<boolean | undefined> {
+    async registerNewFamiliar(template: Familiar, user: User): Promise<boolean> {
         if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+            throw new Error("Database not initialized");
         }
     
         // Prepare for transaction    
@@ -96,7 +93,8 @@ export class Database implements IDatabase {
         };
      
         try {
-            await session.withTransaction(async () => {
+            let result = await session.withTransaction(async () => {
+
                 // stage 1: Get and Update token id counter
                 // command returns { value: original_document }
                 const counter: Document = await db.command(
@@ -106,7 +104,7 @@ export class Database implements IDatabase {
                     update: { "$inc": { value: 1 }}
                 }, { session });
 
-                // stage 2: Update template mint count
+                // // stage 2: Update template mint count
                 await templatesCol.updateOne(
                     { name: template.name }, 
                     { "$inc": { "meta.minted": 1 }}, 
@@ -125,7 +123,7 @@ export class Database implements IDatabase {
                     },
                     { session });
 
-                // stage 4: Create new familiar record based on template
+                // // stage 4: Create new familiar record based on template
                 await familiarsCol.insertOne(
                     {
                         ...template,
@@ -140,12 +138,15 @@ export class Database implements IDatabase {
                     },
                     { session });
             }, transactionOptions);
+
+            if(!result) {return false}
         } catch (error) {
             return Database.handleDBError(error);
         } finally {
             await session.endSession();
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -154,10 +155,9 @@ export class Database implements IDatabase {
      * @param tier Array of rarities to choose familiar from
      * @returns Promise resolving to array of Familiar templates
      */
-    async getTemplatesByTier(tier: Rarity[]): Promise<Array<Familiar> | undefined> {
+    async getTemplatesByTier(tier: Rarity[]): Promise<Array<Familiar>> {
         if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+            throw new Error("Database not initialized");
         }
 
         const generation: number = extractNumberEnvVar("CURRENT_GENERATION");
@@ -179,10 +179,9 @@ export class Database implements IDatabase {
             const result: Array<Familiar> = await cursor.toArray();
 
             // check if query returned no documents
-            let test: Familiar | undefined = result[0];
-            if(test === undefined || Object.keys(test).length === 0){
-                console.info("Query returned no documents");
-                return undefined;
+            let test: Familiar = result[0];
+            if(!test || Object.keys(test).length === 0){
+                throw new Error("Query returned no documents");
             }
             return result;
         }
@@ -196,10 +195,9 @@ export class Database implements IDatabase {
      * @param address eth address of user requesting mint
      * @returns user data document
      */
-    async getUserByAddress(address: string): Promise<User | undefined> {
+    async getUserByAddress(address: string): Promise<User> {
         if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+            throw new Error("Database not initialized");
         }
 
         const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
@@ -213,9 +211,8 @@ export class Database implements IDatabase {
             const result: Array<User> = await cursor.toArray();
             const document: User | undefined = result?.shift();
             // check if query returned no documents
-            if(document === undefined){
-                console.info("Query returned no documents");
-                return undefined;
+            if(!document){
+                throw new Error("Query returned no documents");
             }
             return document;
 
@@ -229,8 +226,8 @@ export class Database implements IDatabase {
      * @param error unknown error thrown by MongoDB driver
      * @returns undefined value to be handled by higher-level functions
      */
-    static handleDBError(error: any): undefined {
+    static handleDBError(error: any): any {
         console.error(error.stack);
-        return undefined;
+        throw new Error(error.message);
     }
 }

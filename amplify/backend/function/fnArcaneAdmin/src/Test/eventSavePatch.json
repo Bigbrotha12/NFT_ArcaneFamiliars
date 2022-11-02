@@ -3,8 +3,8 @@
   "path": "/v1/user/save",
   "headers": {
     "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
-    "eth_timestamp": "1666806273",
-    "eth_signature": "0x465d7a6308b4baaa58c3af7b9dc2dbac4750429bd08e26263f5a1d5eabbb2bb862f4a1614906693bd01120444a14ced4a834955e3429f1dd483ff5eb552d31391b"
+    "eth_timestamp": "1667424079",
+    "eth_signature": "0x28a8a4665551f6b19c157523b86ff15a57a41af3fa2e9834096bab8ea7dfbd0a02b678ed02258064faf6e5a5b014bb5bf1fe3afe7348311ce8e4f8be8c5715df1b"
   },
   "body": {
     "game_codehash": "",
@@ -14,7 +14,7 @@
       "locations": {
         "hub": "555"
       },
-      "level": "2",
+      "level": 2,
       "progress": [1000, 400, 200, 100]
     },
     "progress": true

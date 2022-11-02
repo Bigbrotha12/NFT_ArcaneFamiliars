@@ -31,18 +31,24 @@ export class RegisterController {
      * @param address eth address of user requesting mint
      * @returns user data document
      */
-    async getUserData(address: string): Promise<User | undefined> {
-        // Initialize database connection
-        if(!this.DB.isInitialized) {
-            await this.DB.init();
-        }
+    async getUserData(address: string): Promise<User | null> {
 
-        const user: User | undefined = await this.DB.getUserByAddress(address);
-        if(user === undefined) {
-            console.error("Error: Unable to get user data");
-            return undefined;
+        try {
+            // Initialize database connection
+            if(!this.DB.isInitialized) {
+                await this.DB.init();
+            }
+
+            const user: User = await this.DB.getUserByAddress(address);
+            if(!user) {
+                console.error("Error: Unable to get user data");
+                return null;
+            }
+            return user;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        return user;
     }
 
     /**
@@ -51,30 +57,34 @@ export class RegisterController {
      * @param address eth address of user requesting mint
      * @returns Promise resolving to Familiar template to mint
      */
-    async generateNextFamiliar(user: User): Promise<Familiar | undefined> {
-        // Initialize database connection
-        if(!this.DB.isInitialized) {
-            await this.DB.init();
+    async generateNextFamiliar(user: User): Promise<Familiar | null> {
+
+        try {
+           // Initialize database connection
+            if(!this.DB.isInitialized) {
+                await this.DB.init();
+            }
+            
+            // Calculate user's tier
+            const tiers: Array<Rarity> = RegisterController.#calculateTiers(user.total_minted);
+
+            // Generate list of available NFTs based on tier
+            const availableTemplates: Array<Familiar> = await this.DB.getTemplatesByTier(tiers);
+
+            // Generate pseudo-random number to select one template
+            const selector: number = RegisterController.#generateNumber(user._id, user.total_minted);
+
+            // Select one template
+            const index: number = selector % availableTemplates.length;
+            const selectedFamiliar: Familiar = availableTemplates[index];
+
+            // Trim metadata and return
+            delete selectedFamiliar.meta;
+            return selectedFamiliar;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        
-        // Calculate user's tier
-        const tiers: Array<Rarity> = RegisterController.#calculateTiers(user.total_minted);
-
-        // Generate list of available NFTs based on tier
-        const availableTemplates: Array<Familiar> | undefined = await this.DB.getTemplatesByTier(tiers);
-        if(availableTemplates === undefined) {
-            console.error("Error: Unable to get available templates");
-            return undefined;
-        }
-
-        // Generate pseudo-random number to select one template
-        const selector: number = RegisterController.#generateNumber(user._id, user.total_minted);
-
-        // Select one template
-        const index: number = selector % availableTemplates.length;
-        const selectedFamiliar: Familiar = availableTemplates[index];
-
-        return selectedFamiliar;
     }
 
     /**
@@ -84,20 +94,22 @@ export class RegisterController {
      * @param user user data document
      * @returns true if successfully registered familiar
      */
-    async registerFamiliar(template: Familiar, user: User): Promise<boolean | undefined> {
+    async registerFamiliar(template: Familiar, user: User): Promise<boolean | null> {
         if(user._id === "TEST") {return true};
 
-        // Initialize database connection
-        if(!this.DB.isInitialized) {
-            await this.DB.init();
-        }
+        try {
+            // Initialize database connection
+            if(!this.DB.isInitialized) {
+                await this.DB.init();
+            }
 
-        const success: boolean | undefined = await this.DB.registerNewFamiliar(template, user);
-        if(success === undefined) {
-            console.error("Registration transaction failed");
-            return undefined;
+            const success: boolean = await this.DB.registerNewFamiliar(template, user);
+            return success;
+
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        return success;
     }
 
     /**

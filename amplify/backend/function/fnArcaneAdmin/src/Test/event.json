@@ -14,7 +14,7 @@
       "locations": {
         "hub": "555"
       },
-      "level": "2",
+      "level": 2,
       "progress": [1000, 400, 200, 100]
     },
     "progress": true

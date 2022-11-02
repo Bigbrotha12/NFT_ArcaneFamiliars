@@ -12,8 +12,8 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
     let response: Response;
     const controller: RegisterController = new RegisterController(cachedDB);
 
-    const user: User | undefined = await controller.getUserData(event.headers.eth_address);
-    if(user === undefined) {
+    const user: User | null = await controller.getUserData(event.headers.eth_address);
+    if(!user) {
         console.error("No such user registered");
         console.info("Invalid request from %s", event.headers.eth_address);
         response = Responses[400]; 
@@ -30,8 +30,8 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
         return response;
     } 
 
-    const familiar: Familiar | undefined = await controller.generateNextFamiliar(user);
-    if(familiar === undefined) {
+    const familiar: Familiar | null = await controller.generateNextFamiliar(user);
+    if(!familiar) {
         console.error("Failed to generate familiar");
         console.info("Valid but failed request from %s", event.headers.eth_address);
         response = Responses[500]; 
@@ -39,8 +39,8 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
         return response;
     }
 
-    const result: boolean | undefined = await controller.registerFamiliar(familiar, user);
-    if(result === undefined) {
+    const result: boolean | null = await controller.registerFamiliar(familiar, user);
+    if(!result) {
         console.error("Failed to register familiar");
         console.info("Valid but failed request from %s", event.headers.eth_address);
         response = Responses[500];
@@ -58,4 +58,5 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
         response.error = { message: "Unknown Error" }
         return response;
     }
+    
 }

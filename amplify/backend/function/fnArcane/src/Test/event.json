@@ -2,7 +2,7 @@
   "httpMethod": "GET",
   "path": "/v1/familiars",
   "pathParameters": {
-    "id": 3
+    "id": 8
   },
   "headers": {
     "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
@@ -17,7 +17,7 @@
       "locations": {
         "hub": "555"
       },
-      "level": "2",
+      "level": 2,
       "progress": [1000, 400, 200, 100]
     },
     "progress": true
