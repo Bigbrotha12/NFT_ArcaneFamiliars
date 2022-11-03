@@ -8,10 +8,10 @@ const htmlPlugin = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-    entry: path.resolve(__dirname, "./src/index.jsx"),
+    entry: path.resolve(__dirname, "./src/index.tsx"),
     mode: "development",
     resolve: {
-        extensions: [".js", ".jsx", ".css"],
+        extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".css"],
         fallback: {
             os: require.resolve("os-browserify"),
             https: require.resolve("https-browserify"),
@@ -21,11 +21,21 @@ module.exports = {
             url: require.resolve("url/"),
             assert: require.resolve("assert/"),
             crypto: require.resolve("crypto-browserify"),
-            buffer: require.resolve('buffer/')
+            buffer: require.resolve('buffer/'),
+            zlib: false
         }
     },
     module: {
         rules: [
+        {
+            test: /\.(ts|tsx)$/,
+            loader: "awesome-typescript-loader"
+        },
+        // {
+        //     enforce: "pre",
+        //     test: /\.js$/,
+        //     loader: "source-map-loader",
+        // },
         {
             test: /\.jsx?$/i,
             exclude: /node_modules/,
