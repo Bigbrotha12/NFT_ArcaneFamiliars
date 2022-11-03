@@ -15,7 +15,7 @@
       "function": {
         "fnArcane": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",
-          "s3Key": "amplify-builds/fnArcane-74612b6b315a6877736f-build.zip"
+          "s3Key": "amplify-builds/fnArcane-3569592b72514a736c70-build.zip"
         },
         "fnArcaneMint": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",

@@ -8,30 +8,36 @@ export class FamiliarController {
         this.DB = cachedDB;
     }
 
-    async getMetadata(id: number): Promise<Familiar | undefined> {
-        const metadata: Familiar | undefined = await this.DB.getTokenMetadata(id);
-        if(metadata === undefined) {
+    async getMetadata(id: number): Promise<Familiar | null> {
+
+        try {
+            const metadata: Familiar = await this.DB.getTokenMetadata(id);
+            return metadata;
+        } catch (error) {
             console.error("Token data not found");
-            return undefined;
+            return null;
         }
-        return metadata;
     }
 
-    async getFamiliar(query: Query): Promise<Familiar | undefined> {
-        const familiar: Familiar | undefined = await this.DB.getFamiliar(query);
-        if(familiar === undefined) {
-            console.error("No such familiar");
-            return undefined;
+    async getFamiliar(query: Query): Promise<Familiar | null> {
+
+        try {
+            const familiar: Familiar = await this.DB.getFamiliar(query);
+            return familiar;
+        } catch (error) {
+            console.error("Familiar not found");
+            return null;
         }
-        return familiar;
     }
 
-    async getAbility(query: Query): Promise<Ability | undefined> {
-        const ability: Ability | undefined = await this.DB.getAbility(query);
-        if(ability === undefined) {
+    async getAbility(query: Query): Promise<Ability | null> {
+
+        try {
+            const ability: Ability | undefined = await this.DB.getAbility(query);
+            return ability;
+        } catch (error) {
             console.error("No such familiar");
-            return undefined;
+            return null;
         }
-        return ability;
     }
 }

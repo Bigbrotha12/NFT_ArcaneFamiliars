@@ -17,10 +17,14 @@ export class Database implements IDatabase {
         this.options = { w: "majority" };
     }
 
-    async getTokenMetadata(tokenId: number): Promise<Familiar | undefined> {
+    /**
+     * Token ID Metadata
+     * @param tokenId token ID being queried
+     * @returns Metadata for given token ID as well as mint status
+     */
+    async getTokenMetadata(tokenId: number): Promise<Familiar> {
         if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+            throw new Error("Database not initialized");
         }
 
         const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Familiar);
@@ -34,30 +38,33 @@ export class Database implements IDatabase {
             const familiar: Familiar | undefined = documents.shift();
 
             // check is document is empty
-            if(familiar === undefined || Object.keys(familiar).length === 0) {
-                console.error("Nonexistent token id");
-                return undefined;
+            if(!familiar || Object.keys(familiar).length === 0) {
+                throw new Error("Nonexistent token id");
             }
 
             return familiar;
-        } catch (error) {
-            return Database.handleDBError(error);
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 
-    async getFamiliar(q: Query): Promise<Familiar | undefined> {
+    /**
+     * Getter for Familiar descriptions
+     * @param q Query parameter be either Familiar template ID or name
+     * @returns Familiar template data
+     */
+    async getFamiliar(q: Query): Promise<Familiar> {
         if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+            throw new Error("Database not initialized");
         }
 
         let query;
         if(q.id) { query = { _id: q.id };} else 
         if (q.name) { query = { name: q.name };} else 
         { 
-            console.error("ID or name required for query")
-            return undefined;
+            throw new Error("ID or name required for query")
         }
+
         const collection: Collection<Familiar> = this.client.db(this.namespace).collection<Familiar>(Collections.Template);
         let cursor: AggregationCursor<Familiar>;
         try {
@@ -69,30 +76,33 @@ export class Database implements IDatabase {
             const familiar: Familiar | undefined = documents.shift();
 
             // check is document is empty
-            if(familiar === undefined || Object.keys(familiar).length === 0) {
-                console.error("Nonexistent token id");
-                return undefined;
+            if(!familiar || Object.keys(familiar).length === 0) {
+                throw new Error("Nonexistent token id");
             }
 
             return familiar;
-        } catch (error) {
-            return Database.handleDBError(error);
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 
-    async getAbility(q: Query): Promise<Ability | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    /**
+     * Getter for ability descriptions.
+     * @param q Query parameter can be either ability number ID or ability string name
+     * @returns Ability descriptions
+     */
+    async getAbility(q: Query): Promise<Ability> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         let query;
         if(q.id) { query = { _id: q.id };} else 
         if (q.name) { query = { name: q.name };} else 
         { 
-            console.error("ID or name required for query")
-            return undefined;
+            throw new Error("ID or name required for query");
         }
+
         const collection: Collection<Ability> = this.client.db(this.namespace).collection<Ability>(Collections.Ability);
         let cursor: AggregationCursor<Ability>;
         try {
@@ -104,14 +114,13 @@ export class Database implements IDatabase {
             const ability: Ability | undefined = documents.shift();
 
             // check is document is empty
-            if(ability === undefined || Object.keys(ability).length === 0) {
-                console.error("Nonexistent token id");
-                return undefined;
+            if(!ability || Object.keys(ability).length === 0) {
+                throw new Error("Nonexistent Ability");
             }
 
             return ability;
-        } catch (error) {
-            return Database.handleDBError(error);
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 
@@ -119,11 +128,11 @@ export class Database implements IDatabase {
      * Initializes connection to MongoDB server. Must be run prior
      * to any database query.
      */
-    async init(): Promise<void | undefined> {
+    async init(): Promise<void> {
         try {
             this.client = await MongoClient.connect(this.URI, this.options);
         } catch (error: any) {
-            Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -133,15 +142,5 @@ export class Database implements IDatabase {
      */
     isInitialized(): boolean {
         return this.client !== undefined;
-    }
-
-    /**
-     * Helper function for logging database error.
-     * @param error unknown error thrown by MongoDB driver
-     * @returns undefined value to be handled by higher-level functions
-     */
-    static handleDBError(error: any): undefined {
-        console.error(error.stack);
-        return undefined;
     }
 }
