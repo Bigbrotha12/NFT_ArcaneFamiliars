@@ -74,13 +74,15 @@ export class SessionController {
      * @param address eth address of user
      * @returns session data if it exists
      */
-    async getSessionData(address: string): Promise<Session | undefined> {
-        const session: Session | undefined = await this.DB.getSession(address);
-        if(session === undefined) {
-            console.error("No session data found");
-            return undefined;
-        }
-        return session;
+    async getSessionData(address: string): Promise<Session | null> {
+
+        try {
+            const session: Session | undefined = await this.DB.getSession(address);
+            return session;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }      
     }
 
     /**
@@ -88,13 +90,15 @@ export class SessionController {
      * @param address eth address of user
      * @returns user data document, including game data
      */
-    async getUserData(address: string): Promise<User | undefined> {
-        const user: User | undefined = await this.DB.getUserByAddress(address);
-        if(user === undefined) {
-            console.error("No such user");
-            return undefined;
+    async getUserData(address: string): Promise<User | null> {
+
+        try {
+            const user: User = await this.DB.getUserByAddress(address);
+            return user;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        return user;
     }
 
     /**
@@ -102,13 +106,15 @@ export class SessionController {
      * @param address eth address of user
      * @returns true if user was registered successfully
      */
-    async registerUser(address: string): Promise<boolean | undefined> {
-        const success: boolean | undefined = await this.DB.registerNewUser(address);
-        if(success === undefined) {
-            console.error("Register attempt failed");
-            return undefined;
+    async registerUser(address: string): Promise<boolean | null> {
+
+        try {
+            const success: boolean = await this.DB.registerNewUser(address);
+            return success;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        return success;
     }
 
     /**
@@ -117,13 +123,15 @@ export class SessionController {
      * @param stamp unique identified for session
      * @returns 
      */
-    async loginUser(address: string, stamp: string): Promise<boolean | undefined> {
-        const success: boolean | undefined = await this.DB.createSession(address, stamp);
-        if(success === undefined) {
-            console.error("Login attempt failed");
-            return undefined;
+    async loginUser(address: string, stamp: string): Promise<boolean | null> {
+
+        try {
+            const success: boolean | undefined = await this.DB.createSession(address, stamp);
+            return success;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        return success;
     }
 
     /**
@@ -131,19 +139,19 @@ export class SessionController {
      * @param session valid session to be extended
      * @returns true if session was refreshed successfully
      */
-    async #refreshSession(session: Session): Promise<boolean | undefined> {
+    async #refreshSession(session: Session): Promise<boolean | null> {
         const now = Math.floor(Date.now()/1000);
         const newExpiration = Math.min(
             now + (extractNumberEnvVar("EXPIRATION") * 60 * 60),
             session.max_expiration);
-        
-        const success: boolean | undefined = await this.DB.extendSession(session.address, newExpiration);
-        if(success === undefined) {
-            console.error("Unable to extend session");
-            return undefined;
-        }
 
-        return success;
+        try {
+            const success: boolean | undefined = await this.DB.extendSession(session.address, newExpiration);
+            return success;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }   
     }
 
     /**
@@ -152,13 +160,15 @@ export class SessionController {
      * @param address eth address of user to be logged out
      * @returns true if user session was terminated successfully
      */
-    async logoutUser(address: string): Promise<boolean | undefined> {
-        const success: boolean | undefined = await this.DB.logoutSession(address);
-        if(success === undefined) {
-            console.error("Logout attempt failed");
-            return undefined;
+    async logoutUser(address: string): Promise<boolean | null> {
+
+        try {
+            const success: boolean = await this.DB.logoutSession(address);
+            return success;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-        return success;
     }
 
     /**
@@ -168,16 +178,18 @@ export class SessionController {
      * @param progress flag for progress update
      * @returns true if game data was saved successfully
      */
-    async saveUserGame(session: Session, data: User["saveData"], progress: boolean): Promise<boolean | undefined> {
-        const success: boolean | undefined = await this.DB.saveGameData(session.address, data, progress);
-        if(success === undefined) {
-            console.error("Save attempt failed");
-            return undefined;
-        }
+    async saveUserGame(session: Session, data: User["saveData"], progress: boolean): Promise<boolean | null> {
 
-        // if user data was saved, extend session as well
-        await this.#refreshSession(session);
-        return success;
+        try {
+            const success: boolean = await this.DB.saveGameData(session.address, data, progress);
+            
+            // if user data was saved, extend session as well
+            await this.#refreshSession(session);
+            return success;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 
     /**
@@ -185,15 +197,17 @@ export class SessionController {
      * @param session current user session
      * @returns user's current save data
      */
-    async loadUserGame(session: Session): Promise<User["saveData"] | undefined> {
-        const user: User | undefined = await this.DB.getUserByAddress(session.address);
-        if(user === undefined) {
-            console.error("No such user");
-            return undefined;
-        }
+    async loadUserGame(session: Session): Promise<User["saveData"] | null> {
 
-        // if data was loaded, extend user's session as well
-        await this.#refreshSession(session);
-        return user.saveData;
+        try {
+            const user: User | undefined = await this.DB.getUserByAddress(session.address);
+
+             // if data was loaded, extend user's session as well
+            await this.#refreshSession(session);
+            return user.saveData;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }    
     }
 }

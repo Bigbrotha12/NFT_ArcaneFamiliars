@@ -107,22 +107,20 @@ export type Request = {
 
 export type Response = {
     statusCode: number,
-    status: string,
     headers: Object,
     body: string,
-    error: any
 }
 
 export const Responses = {
-    200: { statusCode: 200, status: "OK", headers: { ['Access-Control-Allow-Origin'] : '*'}, isBase64Encoded: false, body: "", error: "" }, // The request succeeded.
-    201: { statusCode: 201, status: "Created", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The request succeeded, and a new resource was created as a result.
-    202: { statusCode: 202, status: "Accepted", headers:{ ['[Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The request has been received but not yet acted upon. 
-    400: { statusCode: 400, status: "Bad Request", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The server cannot or will not process the request due to something that is perceived to be a client error
-    401: { statusCode: 401, status: "Unauthorized", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". 
-    403: { statusCode: 403, status: "Forbidden", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource.
-    404: { statusCode: 404, status: "Not Found", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The server can not find the requested resource.
-    405: { statusCode: 405, status: "Method Not Allowed", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The request method is known by the server but is not supported by the target resource.
-    500: { statusCode: 500, status: "Internal Server Error", headers:{ ['Access-Control-Allow-Origin'] : '*' }, isBase64Encoded: false, body: "", error: ""  }, // The server has encountered a situation it does not know how to handle.
+    200: { statusCode: 200, headers: { "Access-Control-Allow-Origin": "*" } }, // The request succeeded.
+    201: { statusCode: 201, headers: { "Access-Control-Allow-Origin": "*" } }, // The request succeeded, and a new resource was created as a result.
+    202: { statusCode: 202, headers: { "Access-Control-Allow-Origin": "*" } }, // The request has been received but not yet acted upon. 
+    400: { statusCode: 400, headers: { "Access-Control-Allow-Origin": "*" } }, // The server cannot or will not process the request due to something that is perceived to be a client error
+    401: { statusCode: 401, headers: { "Access-Control-Allow-Origin": "*" } }, // Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". 
+    403: { statusCode: 403, headers: { "Access-Control-Allow-Origin": "*" } }, // The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource.
+    404: { statusCode: 404, headers: { "Access-Control-Allow-Origin": "*" } }, // The server can not find the requested resource.
+    405: { statusCode: 405, headers: { "Access-Control-Allow-Origin": "*" } }, // The request method is known by the server but is not supported by the target resource.
+    500: { statusCode: 500, headers: { "Access-Control-Allow-Origin": "*" } }, // The server has encountered a situation it does not know how to handle.
 }
 
 export enum Path {

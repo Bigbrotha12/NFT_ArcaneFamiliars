@@ -28,12 +28,10 @@ exports.handler = async (event, context) => {
 
     // if successful, run process
     const tokenId = Number(event.pathParameters.id);
-    const response = await FamiliarManager(tokenId, cacheDB);
-    return response;
+    return await FamiliarManager(tokenId, cacheDB);
 
   } catch (error) {
     // otherwise return to sender
-    let response = { statusCode: 500, status: "Internal Server Error", error: error }
-    return response;
+    return { statusCode: 500 }
   }
 };

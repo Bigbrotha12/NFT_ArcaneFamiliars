@@ -3,8 +3,8 @@
   "path": "/v1/user/login",
   "headers": {
     "eth_address": "0xe48dC812F1cEe846A4E3d804A8bf7DC4ddF3255f",
-    "eth_timestamp": "1667424079",
-    "eth_signature": "0x28a8a4665551f6b19c157523b86ff15a57a41af3fa2e9834096bab8ea7dfbd0a02b678ed02258064faf6e5a5b014bb5bf1fe3afe7348311ce8e4f8be8c5715df1b"
+    "eth_timestamp": "1667493208",
+    "eth_signature": "0x7a280b1e1df19af47fb68841d5654a4678ac000ed092ec27d1ed6c5ac621d6dd15b9ef62b94584bd31a44d615c47bdb797190f7e558fed1dc60d75ca250cf5401b"
   },
   "body": {
     "game_codehash": "",

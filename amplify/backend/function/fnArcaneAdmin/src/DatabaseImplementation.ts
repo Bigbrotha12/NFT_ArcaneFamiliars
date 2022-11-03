@@ -23,10 +23,9 @@ export class Database implements IDatabase {
      * @param address eth address of user
      * @returns session data regardless of validity
      */
-    async getSession(address: string): Promise<Session | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    async getSession(address: string): Promise<Session> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
@@ -40,14 +39,13 @@ export class Database implements IDatabase {
             const document: Session | undefined = result.shift();
 
             // check if query returned no documents
-            if(document === undefined){
-                console.info("Query returned no documents");
-                return undefined;
+            if(!document){
+                throw new Error("Query returned no documents");
             }
 
             return document;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -56,10 +54,9 @@ export class Database implements IDatabase {
      * @param address eth address of user
      * @returns user data document
      */
-    async getUserByAddress(address: string): Promise<User | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    async getUserByAddress(address: string): Promise<User> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
@@ -73,14 +70,13 @@ export class Database implements IDatabase {
             const document: User | undefined = result.shift();
 
             // check if query returned no documents
-            if(document === undefined){
-                console.info("Query returned no documents");
-                return undefined;
+            if(!document){
+                throw new Error("Query returned no documents");
             }
 
             return document;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -89,10 +85,9 @@ export class Database implements IDatabase {
      * @param address eth address of user
      * @returns true if user was registered successfully
      */
-    async registerNewUser(address: string): Promise<boolean | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    async registerNewUser(address: string): Promise<boolean> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         const now: number = Math.floor(Date.now()/1000);
@@ -124,14 +119,13 @@ export class Database implements IDatabase {
 
             // successful insert should result { ok: 1 }
             if(commandResult.ok !== 1) {
-                console.error("User insert operation failed")
                 console.error(commandResult.writeErrors);
-                return undefined;
+                throw new Error("User insert operation failed")
             }
 
             return true;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -141,10 +135,9 @@ export class Database implements IDatabase {
      * @param stamp unique identifier to be used as session id
      * @returns true is session was initiated successfully
      */
-    async createSession(address: string, stamp: string): Promise<boolean | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    async createSession(address: string, stamp: string): Promise<boolean> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         const now: number = Math.floor(Date.now()/1000);
@@ -167,13 +160,12 @@ export class Database implements IDatabase {
 
             // check if update was successful
             if(!(result.upsertedCount === 1 || result.modifiedCount === 1)){
-                console.info("Session creation failed");
-                return undefined;
+                throw new Error("Session creation failed");
             }
 
             return true;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -182,10 +174,9 @@ export class Database implements IDatabase {
      * @param address eth address of user
      * @returns true is session was extended successfully
      */
-     async extendSession(address: string, newExpiration: number): Promise<boolean | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+     async extendSession(address: string, newExpiration: number): Promise<boolean> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
     
         const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
@@ -198,13 +189,12 @@ export class Database implements IDatabase {
 
             // check if update was successful
             if(result.modifiedCount === 0){
-                console.info("Session creation failed");
-                return undefined;
+                throw new Error("Session creation failed");
             }
 
             return true;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -213,10 +203,9 @@ export class Database implements IDatabase {
      * @param address eth address of user
      * @returns true if session was terminated successfully
      */
-    async logoutSession(address: string): Promise<boolean | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    async logoutSession(address: string): Promise<boolean> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         const now: number = Math.floor(Date.now()/1000);
@@ -235,13 +224,12 @@ export class Database implements IDatabase {
 
             // check if update was successful
             if(result.modifiedCount === 0){
-                console.info("Session deletion failed");
-                return undefined;
+                throw new Error("Session deletion failed");
             }
 
             return true;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -252,10 +240,9 @@ export class Database implements IDatabase {
      * @param progress flag for updating progress tracker
      * @returns true if game data was saved successfully
      */
-    async saveGameData(address: string, gameData: User["saveData"], progress: boolean): Promise<boolean | undefined> {
-        if(this.client === undefined) {
-            console.error("Database not initialized");
-            return undefined;
+    async saveGameData(address: string, gameData: User["saveData"], progress: boolean): Promise<boolean> {
+        if(!this.client) {
+            throw new Error("Database not initialized");
         }
 
         const now: number = Math.floor(Date.now()/1000);
@@ -276,13 +263,12 @@ export class Database implements IDatabase {
 
             // check if update was successful
             if(result.modifiedCount === 0){
-                console.info("Session deletion failed");
-                return undefined;
+                throw new Error("Session deletion failed");
             }
 
             return true;
         } catch (error: any) {
-            return Database.handleDBError(error);
+            throw new Error(error.message);
         }
     }
 
@@ -290,11 +276,11 @@ export class Database implements IDatabase {
      * Initializes connection to MongoDB server. Must be run prior
      * to any database query.
      */
-    async init(): Promise<void | undefined> {
+    async init(): Promise<void> {
         try {
             this.client = await MongoClient.connect(this.URI, this.options);
         } catch (error: any) {
-            Database.handleDBError(error);
+            throw new Error("Initialization failed");
         }
     }
 
@@ -304,15 +290,5 @@ export class Database implements IDatabase {
      */
     isInitialized(): boolean {
         return this.client !== undefined;
-    }
-
-    /**
-     * Helper function for logging database error.
-     * @param error unknown error thrown by MongoDB driver
-     * @returns undefined value to be handled by higher-level functions
-     */
-    static handleDBError(error: any): undefined {
-        console.error(error.stack);
-        return undefined;
     }
 }

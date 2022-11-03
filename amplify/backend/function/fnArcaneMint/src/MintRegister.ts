@@ -9,15 +9,13 @@ import { RegisterController } from "./RegisterController";
  * @returns HTTP response to user request
  */
 export async function MintRegister(event: Request, cachedDB: IDatabase): Promise<Response> {
-    let response: Response;
-    const controller: RegisterController = new RegisterController(cachedDB);
 
+    const controller: RegisterController = new RegisterController(cachedDB);
     const user: User | null = await controller.getUserData(event.headers.eth_address);
     if(!user) {
         console.error("No such user registered");
         console.info("Invalid request from %s", event.headers.eth_address);
-        response = Responses[400]; 
-        response.error = { message: "No such user registered" };
+        let response: Response = {...Responses[400], body: "No such user registered" }; 
 
         return response;
     }
@@ -25,8 +23,7 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
     const validation: boolean = controller.verifyRequest(event, user);
     if(!validation) {
         console.info("Invalid request from %s", event.headers.eth_address);
-        response = Responses[401]; 
-        response.error = { message: "Data verification failed" };
+        let response: Response = {...Responses[401], body: "Data verification failed"}; 
         return response;
     } 
 
@@ -34,8 +31,7 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
     if(!familiar) {
         console.error("Failed to generate familiar");
         console.info("Valid but failed request from %s", event.headers.eth_address);
-        response = Responses[500]; 
-        response.error = {message: "NFT generation failed"}
+        let response: Response = {...Responses[500], body: "NFT generation failed"}; 
         return response;
     }
 
@@ -43,20 +39,17 @@ export async function MintRegister(event: Request, cachedDB: IDatabase): Promise
     if(!result) {
         console.error("Failed to register familiar");
         console.info("Valid but failed request from %s", event.headers.eth_address);
-        response = Responses[500];
-        response.error = { message: "NFT registration failed" }
+        let response: Response = {...Responses[500], body: "NFT registration failed"};
         return response;
     }
 
     if(result) {
-        response = Responses[200];
+        let response: Response = {...Responses[200], body: ""};
         delete familiar.meta;
-        response.body = familiar;
+        response.body = JSON.stringify(familiar);
         return response;
     } else {
-        response = Responses[500];
-        response.error = { message: "Unknown Error" }
+        let response: Response = {...Responses[500], body: "Unknown Error"};
         return response;
     }
-    
 }

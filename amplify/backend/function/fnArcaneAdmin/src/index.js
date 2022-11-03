@@ -34,7 +34,7 @@ exports.handler = async (event, context) => {
 
     } catch (error) {
       // otherwise return to sender
-      let response = { statusCode: 500, status: "Internal Server Error", error: error }
+      let response = { statusCode: 500 }
       return response;
     }
 };

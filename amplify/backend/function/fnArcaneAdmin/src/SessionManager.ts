@@ -17,25 +17,25 @@ export async function Router(event: Request, cachedDB: IDatabase): Promise<Respo
                 return await registration(event, controller) }
             else if(event.httpMethod === Method.GET) { 
                 return await isRegistered(event, controller) }
-            else { return Responses[405] }
+            else { return {...Responses[405], body: "Invalid method" }}
         case Path.LOGIN:
             if(event.httpMethod === Method.PUT) { 
                 return await userLogin(event, controller) }
-            else { return Responses[405] }
+            else { return {...Responses[405], body: "Invalid method" }}
         case Path.LOGOUT:
             if(event.httpMethod === Method.DELETE) { 
                 return await userLogout(event, controller) }
-            else { return Responses[405] }
+            else { return {...Responses[405], body: "Invalid method" }}
         case Path.SAVE:
             if(event.httpMethod === Method.PATCH) { 
                 return await saveGame(event, controller) }
-            else { return Responses[405] }
+            else { return {...Responses[405], body: "Invalid method" }}
         case Path.LOAD:
             if(event.httpMethod === Method.GET) { 
                 return await loadGame(event, controller) }
-            else { return Responses[405] }
+            else { return {...Responses[405], body: "Invalid method" }}
         default:
-            return Responses[404];
+            return {...Responses[404], body: "Invalid Request"};
     }
 }
 
@@ -48,26 +48,25 @@ export async function Router(event: Request, cachedDB: IDatabase): Promise<Respo
  */
 async function registration(event: Request, controller: SessionController): Promise<Response> {
     
-    let response: Response;
     // validate authentication data
     const validRequest: boolean = controller.verifyAuthentication(event);
     if(!validRequest) {
         console.error("Incorrect authentication data");
-        response = Responses[401];
+        let response: Response = {...Responses[401], body: "Incorrect authentication data"};
         return response;
     }
 
     // register the user
-    const success: boolean | undefined = await controller.registerUser(event.headers.eth_address);
-    if(success === undefined) {
+    const success: boolean | null = await controller.registerUser(event.headers.eth_address);
+    if(!success) {
         console.error("Registration failed.")
-        response = Responses[400];
+        let response: Response = {...Responses[400], body: "Registration failed."};
         return response;
     }
 
     // if registration is successful, login user as well
     await controller.loginUser(event.headers.eth_address, event.headers.eth_signature);
-    response = Responses[201];
+    let response: Response = {...Responses[201], body: "Registration successful"};
     return response;
 }
 
@@ -78,18 +77,15 @@ async function registration(event: Request, controller: SessionController): Prom
  */
  async function isRegistered(event: Request, controller: SessionController): Promise<Response> {
     
-    let response: Response;
     // if user data document is undefined, then user is not registered
-    const user: User | undefined = await controller.getUserData(event.headers.eth_address);
-    if(user === undefined) {
-        response = Responses[200];
-        response.body = { isRegistered: false }
+    const user: User | null = await controller.getUserData(event.headers.eth_address);
+    if(!user) {
+        let response: Response = {...Responses[200], body: "false"};
         return response;
     }
 
     // if user data was found, then user is registered
-    response = Responses[200];
-    response.body = { isRegistered: true }
+    let response: Response = {...Responses[200], body: "true"};
     return response;
 }
 
@@ -101,33 +97,31 @@ async function registration(event: Request, controller: SessionController): Prom
  */
 async function userLogin(event: Request, controller: SessionController): Promise<Response> {
     
-    let response: Response;
     // validate authentication data
     const validRequest: boolean = controller.verifyAuthentication(event);
     if(!validRequest) {
         console.error("Incorrect authentication data");
-        response = Responses[401];
+        let response: Response = {...Responses[401], body: "Incorrect authentication data"};
         return response;
     }
 
     // check if user is registered
     // if user data document is undefined, then user is not registered
-    const user: User | undefined = await controller.getUserData(event.headers.eth_address);
-    if(user === undefined) {
-        response = Responses[400];
-        response.error = { message: "Not registered, user must be registered prior to login" }
+    const user: User | null = await controller.getUserData(event.headers.eth_address);
+    if(!user) {
+        let response: Response = {...Responses[400], body: "Not registered."};
         return response;
     }
    
     // login user
-    const success: boolean | undefined = await controller.loginUser(event.headers.eth_address, event.headers.eth_signature);
-    if(success === undefined) {
+    const success: boolean | null = await controller.loginUser(event.headers.eth_address, event.headers.eth_signature);
+    if(!success) {
         console.error("Login attempt failed");
-        response = Responses[500];
+        let response: Response = {...Responses[500], body: "Login attempt failed"};
         return response;
     }
 
-    response = Responses[200];
+    let response: Response = {...Responses[200], body: "Login successful"};
     return response; 
 }
 
@@ -138,24 +132,23 @@ async function userLogin(event: Request, controller: SessionController): Promise
  */
 async function userLogout(event: Request, controller: SessionController): Promise<Response> {
     
-    let response: Response;
     // validate user signature
     const validRequest: boolean = controller.verifyUserSignature(event);
     if(!validRequest) {
         console.error("Incorrect authentication data");
-        response = Responses[401];
+        let response: Response = {...Responses[401], body: "Incorrect authentication data"};
         return response;
     }
 
     // log user out
-    const success: boolean | undefined = await controller.logoutUser(event.headers.eth_address);
-    if(success === undefined) {
+    const success: boolean | null = await controller.logoutUser(event.headers.eth_address);
+    if(!success) {
         console.error("Logout attempt failed");
-        response = Responses[500];
+        let response: Response = {...Responses[500], body: "Logout attempt failed"};
         return response;
     }
 
-    response = Responses[200];
+    let response: Response = {...Responses[200], body: "Logout successful"};
     return response;
 }
 
@@ -167,40 +160,38 @@ async function userLogout(event: Request, controller: SessionController): Promis
  */
 async function saveGame(event: Request, controller: SessionController): Promise<Response> {
     
-    let response: Response;
     // check that there's game data to be saved
     if(!event.body?.game_savedata || !event.body?.progress) {
         console.error("Invalid save data received");
-        response = Responses[400];
-        response.error = {message: "Expected field \"game_savedata\" and \"progress\" to be defined"}
+        let response: Response = {...Responses[400], body: "Invalid save data received"};
         return response;
     }
+
     // validate user request
     const validSignature: boolean = controller.verifyUserSignature(event);
     const validGame: boolean = controller.verifyGameSignature(event);
-    const session: Session | undefined = await controller.getSessionData(event.headers.eth_address);
-    if(session === undefined) {
+    const session: Session | null = await controller.getSessionData(event.headers.eth_address);
+    if(!session) {
         console.error("Not valid session found");
-        response = Responses[401];
+        let response: Response = {...Responses[401], body: "Not valid session found"};
         return response;
     }
     const validSession: boolean = controller.checkValidSession(event, session);
     if(!validSignature || !validGame || !validSession) {
         console.error("Invalid request data");
-        response = Responses[401];
+        let response: Response = {...Responses[401], body: "Invalid request data"};
         return response;
     }
 
     // save user data to database
-    const success: boolean | undefined = await controller.saveUserGame(session, event.body.game_savedata, event.body.progress);
-    if(success === undefined) {
+    const success: boolean | null = await controller.saveUserGame(session, event.body.game_savedata, event.body.progress);
+    if(!success) {
         console.error("Data could not be saved to server");
-        response = Responses[500];
-        response.error = {message: "Save data could not be saved"};
+        let response: Response = {...Responses[500], body: "Data could not be saved to server"};
         return response;
     }
     
-    response = Responses[200]
+    let response: Response = {...Responses[200], body: "Saved successfully"};
     return response;
 }
 
@@ -212,32 +203,30 @@ async function saveGame(event: Request, controller: SessionController): Promise<
  */
 async function loadGame(event: Request, controller: SessionController): Promise<Response> {
     
-    let response: Response;
     // validate user request
-     const validSignature: boolean = controller.verifyUserSignature(event);
-     const session: Session | undefined = await controller.getSessionData(event.headers.eth_address);
-     if(session === undefined) {
-         console.error("Not valid session found");
-         response = Responses[401];
-         return response;
-     }
-     const validSession: boolean = controller.checkValidSession(event, session);
-     if(!validSignature || !validSession) {
-         console.error("Invalid request data");
-         response = Responses[400];
-         return response;
-     }
-
-     // Retrieve user's save data
-     const saveData: User["saveData"] | undefined = await controller.loadUserGame(session);
-     if(saveData === undefined) {
-        console.error("Game data could not be retrieved");
-        response = Responses[500];
-        response.error = { message: "Save data could not be loaded" };
+    const validSignature: boolean = controller.verifyUserSignature(event);
+    const session: Session | null = await controller.getSessionData(event.headers.eth_address);
+    if(!session) {
+        console.error("Not valid session found");
+        let response: Response = {...Responses[401], body: "Not valid session found"};
         return response;
-     }
+    }
+    const validSession: boolean = controller.checkValidSession(event, session);
+    if(!validSignature || !validSession) {
+        console.error("Invalid request data");
+        let response: Response = {...Responses[400], body: "Invalid request data"};
+        return response;
+    }
 
-     response = Responses[200];
-     response.body = saveData;
-     return response;
+    // Retrieve user's save data
+    const saveData: User["saveData"] | null = await controller.loadUserGame(session);
+    if(!saveData) {
+    console.error("Game data could not be retrieved");
+    let response: Response = {...Responses[500], body: "Game data could not be retrieved"};
+    return response;
+    }
+
+    let response: Response = {...Responses[200], body: ""};
+    response.body = JSON.stringify(saveData);
+    return response;
 }

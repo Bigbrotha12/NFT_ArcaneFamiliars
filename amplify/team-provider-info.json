@@ -15,15 +15,15 @@
       "function": {
         "fnArcane": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",
-          "s3Key": "amplify-builds/fnArcane-623877772b36466c5969-build.zip"
+          "s3Key": "amplify-builds/fnArcane-4a32667a6a4b49764a66-build.zip"
         },
         "fnArcaneMint": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",
-          "s3Key": "amplify-builds/fnArcaneMint-646e3443415559584132-build.zip"
+          "s3Key": "amplify-builds/fnArcaneMint-374f53744b4d5a377342-build.zip"
         },
         "fnArcaneAdmin": {
           "deploymentBucketName": "amplify-amplify928eb792f9f64-staging-80048-deployment",
-          "s3Key": "amplify-builds/fnArcaneAdmin-4732616d65375a5a4838-build.zip"
+          "s3Key": "amplify-builds/fnArcaneAdmin-35574938397146585234-build.zip"
         }
       },
       "api": {
