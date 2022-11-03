@@ -110,3 +110,6 @@ Assets/AddressableAssetsData/*/*.bin*
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Local Netlify folder
+.netlify
