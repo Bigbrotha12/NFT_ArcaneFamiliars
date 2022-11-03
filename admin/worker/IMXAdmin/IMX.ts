@@ -6,7 +6,9 @@ import {
     CreateCollectionRequest, Collection, AddMetadataSchemaToCollectionRequest, 
     SuccessResponse, MetadataSchemaRequest, CollectionsApiGetCollectionRequest, 
     CollectionsApiListCollectionsRequest, ListCollectionsResponse, UpdateCollectionRequest, 
-    /*WalletConnection, StarkSigner, RegisterUserResponse, */GetMetadataRefreshResponse 
+    /*WalletConnection, StarkSigner, RegisterUserResponse, */GetMetadataRefreshResponse, 
+    AssetsApiGetAssetRequest,
+    Asset
 } from '@imtbl/core-sdk';
 import { Wallet } from '@ethersproject/wallet';
 import { extractStringEnvVar } from './Environment';
@@ -30,25 +32,6 @@ export default class IMX implements IIMX {
         this.signer = new Wallet(extractStringEnvVar("MINTER_KEY"));
         this.collection = extractStringEnvVar("COLLECTION");
     }
-
-    // async isRegistered(starkSig: StarkSigner) {
-    //     const wallet: WalletConnection = {
-    //         ethSigner: this.signer,
-    //         starkSigner: starkSig
-    //     };
-    //     const response: boolean = await this.client.isRegisteredOnchain(wallet);
-    //     return response;
-    // }
-
-    // async registerAccount(starkSig: StarkSigner) {
-    //     const wallet: WalletConnection = {
-    //         ethSigner: this.signer,
-    //         starkSigner: starkSig
-    //     }
-        
-    //     const response: RegisterUserResponse = await this.client.registerOffchain(wallet);
-    //     return response;
-    // }
 
     async createProject(): Promise<number> {
         const request: CreateProjectRequest = {
@@ -85,7 +68,7 @@ export default class IMX implements IIMX {
         return response;
     }
     
-    async addMetadataSchema() {
+    async addMetadataSchema(): Promise<string> {
         const schema: MetadataSchemaRequest = {
             name: "",
             type: "text",
@@ -99,7 +82,7 @@ export default class IMX implements IIMX {
         const response: SuccessResponse = 
             await this.client.addMetadataSchemaToCollection(this.signer, this.collection, request);
         
-        return response;
+        return response.result;
     }
 
     async getCollectionDetails() {
@@ -126,22 +109,15 @@ export default class IMX implements IIMX {
         return response;
     }
 
-    async updateCollection() {
-        const request: UpdateCollectionRequest = {
-            collection_image_url: "",
-            description: "",
-            icon_url: "",
-            metadata_api_url: "",
-            name: ""
-        };
-
+    async updateCollection(request: UpdateCollectionRequest) {
+        
         const response: Collection = 
             await this.client.updateCollection(this.signer, this.collection, request);
         
         return response;
     }
 
-    async getMetadataSchema() {
+    async getMetadataSchema(): Promise<MetadataSchemaProperty[]> {
         const request: MetadataApiGetMetadataSchemaRequest = {
             address: this.collection
         };
@@ -163,6 +139,16 @@ export default class IMX implements IIMX {
     async getRefreshResult(id: string) {
 
         const response: GetMetadataRefreshResponse = await this.client.getMetadataRefreshResults(this.signer, id);
+        return response;
+    }
+
+    async getAsset(id: string): Promise<Asset> {
+        const request: AssetsApiGetAssetRequest = {
+            tokenAddress: this.collection,
+            tokenId: id
+        }
+        
+        const response = await this.client.getAsset(request);
         return response;
     }
 }
