@@ -28,7 +28,8 @@ exports.handler = async (event, context) => {
 
     // if successful, run process
     const tokenId = Number(event.pathParameters.id);
-    return await FamiliarManager(tokenId, cacheDB);
+    const response = await FamiliarManager(tokenId, cacheDB);
+    return response;
 
   } catch (error) {
     // otherwise return to sender
