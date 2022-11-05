@@ -12,8 +12,8 @@ import Welcome from './components/03_Body/Welcome/Welcome';
 import Frame from './components/03_Body/Game/Frame';
 
 // Handles global state management, caching, and client-side routing
-export default function App() {
-    const [userInfo, setUserInfo] = React.useState(defaultUser);
+export default function App(): JSX.Element {
+    const [userInfo, setUserInfo] = React.useState<UserInfo>(defaultUser);
     const controller: IController = new AppController();
   
     React.useEffect(() => {
