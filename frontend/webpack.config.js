@@ -12,6 +12,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
 module.exports = {
     entry: path.resolve(__dirname, "./src/index.tsx"),
     mode: "development",
+    devtool: 'inline-source-map',
     resolve: {
         extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".css"],
         fallback: {
@@ -29,31 +30,18 @@ module.exports = {
     },
     module: {
         rules: [
-        {
-            test: /\.tsx?$/,
-            loader: "awesome-typescript-loader",
-            exclude: /node_modules/,
-            options: 
-            {
-                useCache: true,
-                useBabel: true,
-                babelOptions: {
-                    babelrc: false,
-                    plugins: ['lodash'],
-                    presets: [
-                        ["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }]
-                    ]
-                },
-                babelCore: "@babel/core", // needed for Babel v7
-            }
-        },
+        // {
+        //     test: /\.tsx?$/,
+        //     loader: "ts-loader",
+        //     exclude: /node_modules/,
+        // },
         // {
         //     enforce: "pre",
         //     test: /\.js$/,
         //     loader: "source-map-loader",
         // },
         {
-            test: /\.jsx?$/i,
+            test: /\.(t|j)sx?$/i,
             exclude: /node_modules/,
             use: ["babel-loader"]
         },
