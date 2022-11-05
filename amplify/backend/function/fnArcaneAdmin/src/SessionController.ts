@@ -123,11 +123,11 @@ export class SessionController {
      * @param stamp unique identified for session
      * @returns 
      */
-    async loginUser(address: string, stamp: string): Promise<boolean | null> {
+    async loginUser(address: string, stamp: string): Promise<Session | null> {
 
         try {
-            const success: boolean | undefined = await this.DB.createSession(address, stamp);
-            return success;
+            const session: Session | undefined = await this.DB.createSession(address, stamp);
+            return session;
         } catch (error) {
             console.error(error);
             return null;

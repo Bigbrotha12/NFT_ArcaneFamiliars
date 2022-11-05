@@ -12,7 +12,7 @@ export class Validator {
      * @returns true if signature matches user's address
      */
     static verifySignature(request: Request): boolean {
-        if(request.headers.eth_address === "TEST") {return true};
+        if(request.headers.eth_signature === "TEST") {return true};
 
         const message: string = hashMessage(request.headers.eth_timestamp);
         const address: string = verifyMessage(message, request.headers.eth_signature);
@@ -25,7 +25,7 @@ export class Validator {
      * @returns true if timestamps are valid
      */
     static verifyTimestamp(request: Request): boolean {
-        if(request.headers.eth_address === "TEST") {return true};
+        if(request.headers.eth_signature === "TEST") {return true};
 
         const now: number = Math.floor(Date.now()/1000);
         const stamp: number = Number(request.headers.eth_timestamp);
@@ -38,7 +38,7 @@ export class Validator {
      * @param request save/load data request
      */
     static verifyGame(request: Request): boolean {
-        if(request.headers.eth_address === "TEST") {return true};
+        if(request.headers.eth_signature === "TEST") {return true};
         
         const canon = extractStringEnvVar("CODEHASH");
         return request.body?.game_codehash === canon;

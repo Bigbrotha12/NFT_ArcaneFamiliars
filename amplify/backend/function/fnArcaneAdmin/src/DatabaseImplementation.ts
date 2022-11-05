@@ -135,7 +135,7 @@ export class Database implements IDatabase {
      * @param stamp unique identifier to be used as session id
      * @returns true is session was initiated successfully
      */
-    async createSession(address: string, stamp: string): Promise<boolean> {
+    async createSession(address: string, stamp: string): Promise<Session> {
         if(!this.client) {
             throw new Error("Database not initialized");
         }
@@ -163,7 +163,7 @@ export class Database implements IDatabase {
                 throw new Error("Session creation failed");
             }
 
-            return true;
+            return session;
         } catch (error: any) {
             throw new Error(error.message);
         }
