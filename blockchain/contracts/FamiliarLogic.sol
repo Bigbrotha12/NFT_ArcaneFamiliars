@@ -6,7 +6,7 @@ import "./ERC2981/ERC2981.sol";
 import "./CommonStorage.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "./IInitializable.sol";
-import "./Library/Bytes.sol";
+import "./utils/Bytes.sol";
 
 /// @title FamiliarLogic
 /// @notice Contract implementation for NFT users

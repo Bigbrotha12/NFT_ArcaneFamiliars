@@ -16,7 +16,7 @@ export default class Validator {
         if(request.headers.eth_address === "TEST") {return true};
 
         const canon = extractStringEnvVar("CODEHASH");
-        return request.body.game_codehash === canon;
+        return request.body?.game_codehash === canon;
     }
 
     /**
@@ -40,19 +40,6 @@ export default class Validator {
         });
         return success;
     }
-
-    // /**
-    //  * Checks if progress data matches game's data.
-    //  * @param request mint request sent by user
-    //  * @param user user data document
-    //  * @returns true if progress timestamps match
-    //  */
-    // static verifyData(request: Request, user: User): boolean {
-    //     if(request.headers.eth_address === "TEST") {return true};
-
-    //     const validData: string = user.saveData.progress.toString().replace(/,/g, "");
-    //     return request.body.game_data === hashMessage(validData);
-    // }
 
     /**
      * Verifies that sender is in fact owner of user address.

@@ -4,8 +4,8 @@ import Database from "../shared/Database";
 import Router from "./SessionManager";
 
 // database caching
-let cacheDB;
-async function connectToDatabase() {
+let cacheDB: Database;
+async function connectToDatabase(): Promise<void | Database> {
   if (cacheDB) {
     return cacheDB;
   }
