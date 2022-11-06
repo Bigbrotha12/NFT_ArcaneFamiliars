@@ -9,7 +9,7 @@ bin
 .env
 
 # outputs
-frontend/public/app/*
+public/app/*
 build
 dist
 admin
