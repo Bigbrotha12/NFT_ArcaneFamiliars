@@ -369,8 +369,8 @@ export default class Database implements IDatabase {
             );
 
             // check if update was successful
-            if(result.modifiedCount === 0){
-                throw new Error("Session deletion failed");
+            if(!result.acknowledged){
+                throw new Error("Data could not be saved");
             }
 
             return true;
