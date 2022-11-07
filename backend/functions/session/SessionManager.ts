@@ -237,7 +237,7 @@ async function saveGame(event: Request, controller: SessionController): Promise<
     const success: boolean | null = await controller.saveUserGame(session, data.game_savedata, data.progress);
     if(!success) {
         console.error("Data could not be saved to server");
-        let body = { message: "Data could not be saved to server" }
+        let body = { ...data.game_savedata }
         let response: Response = {...Responses[500], body: JSON.stringify(body)};
         return response;
     }

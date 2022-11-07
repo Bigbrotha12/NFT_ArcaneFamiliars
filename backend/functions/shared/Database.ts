@@ -450,7 +450,7 @@ export default class Database implements IDatabase {
             }, transactionOptions);
 
             if(!result) {return false}
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error.message);
         } finally {
             await session.endSession();
