@@ -12,6 +12,7 @@ export default async function MetadataManager(tokenId: number, cachedDB: IDataba
         let response: Response = {...Responses[404], body: JSON.stringify(body)};
         return response;
     }
+    delete metadata.meta;
     let response: Response = {...Responses[200], body: JSON.stringify(metadata)};
     return response;
 }
