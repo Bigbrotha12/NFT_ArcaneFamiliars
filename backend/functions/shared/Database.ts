@@ -266,7 +266,7 @@ export default class Database implements IDatabase {
             );
 
             // check if update was successful
-            if(!(result.upsertedCount === 1 || result.modifiedCount === 1)){
+            if(!result.acknowledged){
                 throw new Error("Session creation failed");
             }
 
@@ -295,7 +295,7 @@ export default class Database implements IDatabase {
             );
 
             // check if update was successful
-            if(result.modifiedCount === 0){
+            if(!result.acknowledged){
                 throw new Error("Session creation failed");
             }
 
@@ -330,7 +330,7 @@ export default class Database implements IDatabase {
             );
 
             // check if update was successful
-            if(result.modifiedCount === 0){
+            if(!result.acknowledged){
                 throw new Error("Session deletion failed");
             }
 
