@@ -44,7 +44,7 @@ export default async function Router(event: Request, cachedDB: IDatabase): Promi
 /**
  * Creates new record for user at given address. User registration 
  * requires user address not be present in database. Requires valid
- * authentication data.
+ * authentication data. If user already registered, then log them in.
  * @param event registration request from user
  * @param controller session controller instance
  */
@@ -64,7 +64,7 @@ async function registration(event: Request, controller: SessionController): Prom
     if(!success) {
         console.error("Registration failed.");
         let body = { message: "Registration failed." }
-        let response: Response = {...Responses[400], body: JSON.stringify(body)};
+        let response: Response = {...Responses[500], body: JSON.stringify(body)};
         return response;
     }
 
