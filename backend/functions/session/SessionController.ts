@@ -35,7 +35,7 @@ export default class SessionController {
      */
     verifyUserSignature(request: Request): boolean {
         if(!Validator.verifySignature(request)) {
-            console.error("Unable to recover address from: %s", request.headers.eth_address);
+            console.error("Unable to recover address from: ", request.headers.eth_address);
             return false;
         }
         return true;
@@ -48,7 +48,7 @@ export default class SessionController {
      */
     verifyGameSignature(request: Request): boolean {
         if(!Validator.verifyGame(request)) {
-            console.error("Invalid game signature from: %s", request.headers.eth_address);
+            console.error("Invalid game signature from: ", request.headers.eth_address);
             return false;
         }
         return true;
@@ -80,7 +80,6 @@ export default class SessionController {
             const session: Session | undefined = await this.DB.getSession(address);
             return session;
         } catch (error) {
-            console.error(error);
             return null;
         }      
     }
@@ -93,10 +92,9 @@ export default class SessionController {
     async getUserData(address: string): Promise<User | null> {
 
         try {
-            const user: User = await this.DB.getUserByAddress(address);
+            const user: User = await this.DB.getUser(address);
             return user;
         } catch (error) {
-            console.error(error);
             return null;
         }
     }
@@ -111,8 +109,7 @@ export default class SessionController {
         try {
             const success: boolean = await this.DB.registerNewUser(address);
             return success;
-        } catch (error) {
-            console.error(error);
+        } catch (error: unknown) {
             return null;
         }
     }
@@ -129,7 +126,6 @@ export default class SessionController {
             const session: Session | undefined = await this.DB.createSession(address, stamp);
             return session;
         } catch (error) {
-            console.error(error);
             return null;
         }
     }
@@ -149,7 +145,6 @@ export default class SessionController {
             const success: boolean | undefined = await this.DB.extendSession(session.address, newExpiration);
             return success;
         } catch (error) {
-            console.error(error);
             return null;
         }   
     }
@@ -166,7 +161,6 @@ export default class SessionController {
             const success: boolean = await this.DB.logoutSession(address);
             return success;
         } catch (error) {
-            console.error(error);
             return null;
         }
     }
@@ -187,7 +181,6 @@ export default class SessionController {
             await this.refreshSession(session);
             return success;
         } catch (error) {
-            console.error(error);
             return null;
         }
     }
@@ -200,13 +193,12 @@ export default class SessionController {
     async loadUserGame(session: Session): Promise<User["saveData"] | null> {
 
         try {
-            const user: User | undefined = await this.DB.getUserByAddress(session.address);
+            const user: User | undefined = await this.DB.getUser(session.address);
 
              // if data was loaded, extend user's session as well
             await this.refreshSession(session);
             return user.saveData;
         } catch (error) {
-            console.error(error);
             return null;
         }    
     }

@@ -3,7 +3,7 @@ import { Ability, Collections, Familiar, Query, Rarity, Session, User } from "./
 import IDatabase from "./IDatabase";
 import { 
     MongoClient, MongoClientOptions, Collection, AggregationCursor, ClientSession, 
-    TransactionOptions, ReadPreference, Db, UpdateOptions, UpdateResult
+    TransactionOptions, ReadPreference, Db, UpdateOptions, WriteError, WriteConcernError,
 } from "mongodb";
 
 export default class Database implements IDatabase {
@@ -24,7 +24,7 @@ export default class Database implements IDatabase {
      * @returns Metadata for given token ID as well as mint status
      */
     async getTokenMetadata(tokenId: number): Promise<Familiar> {
-        if(this.client === undefined) {
+        if(!this.client) {
             throw new Error("Database not initialized");
         }
 
@@ -44,8 +44,10 @@ export default class Database implements IDatabase {
             }
 
             return familiar;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof AggregateError){ console.error(error.message); }
+            console.error(error);
+            throw new Error("Database error getting data.");
         }
     }
 
@@ -55,7 +57,7 @@ export default class Database implements IDatabase {
      * @returns Familiar template data
      */
     async getFamiliar(q: Query): Promise<Familiar> {
-        if(this.client === undefined) {
+        if(!this.client) {
             throw new Error("Database not initialized");
         }
 
@@ -82,8 +84,10 @@ export default class Database implements IDatabase {
             }
 
             return familiar;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof AggregateError) { console.error(error.message); }
+            console.error(error);
+            throw new Error("Database error getting familiar metadata.");
         }
     }
 
@@ -120,8 +124,10 @@ export default class Database implements IDatabase {
             }
 
             return ability;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof AggregateError){ console.error(error.message); }
+            console.error(error);
+            throw new Error("Database error getting ability data");
         }
     }
 
@@ -130,29 +136,31 @@ export default class Database implements IDatabase {
      * @param address eth address of user
      * @returns session data regardless of validity
      */
-     async getSession(address: string): Promise<Session> {
+    async getSession(address: string): Promise<Session> {
         if(!this.client) {
             throw new Error("Database not initialized");
         }
 
         const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
-        let cursor: AggregationCursor<any>;
+        let cursor: AggregationCursor<Session>;
         try {
             cursor = collection.aggregate([
                 { "$match": { address: address }}
             ]);
 
-            const result: Array<Session> = await cursor.toArray();
-            const document: Session | undefined = result.shift();
+            const document: Array<Session> = await cursor.toArray();
+            const session: Session | undefined = document.shift();
 
             // check if query returned no documents
-            if(!document){
+            if(!session){
                 throw new Error("Query returned no documents");
             }
 
-            return document;
-        } catch (error: any) {
-            throw new Error(error.message);
+            return session;
+        } catch (error: unknown) {
+            if(error instanceof AggregateError){ console.error(error.message); }
+            console.error(error);
+            throw new Error("Database error getting session data.");
         }
     }
 
@@ -161,7 +169,7 @@ export default class Database implements IDatabase {
      * @param address eth address of user
      * @returns user data document
      */
-    async getUserByAddress(address: string): Promise<User> {
+    async getUser(address: string): Promise<User> {
         if(!this.client) {
             throw new Error("Database not initialized");
         }
@@ -173,17 +181,19 @@ export default class Database implements IDatabase {
                 { "$match": { _id: address }}
             ]);
 
-            const result: Array<User> = await cursor.toArray();
-            const document: User | undefined = result.shift();
+            const document: Array<User> = await cursor.toArray();
+            const user: User | undefined = document.shift();
 
             // check if query returned no documents
-            if(!document){
+            if(!user){
                 throw new Error("Query returned no documents");
             }
 
-            return document;
-        } catch (error: any) {
-            throw new Error(error.message);
+            return user;
+        } catch (error: unknown) {
+            if(error instanceof AggregateError){ console.error(error.message); }
+            console.error(error);
+            throw new Error("Database error getting user data.");
         }
     }
 
@@ -198,7 +208,7 @@ export default class Database implements IDatabase {
         }
 
         const now: number = Math.floor(Date.now()/1000);
-        const DB: Db = this.client.db(this.namespace);
+        const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
         const newUser: User = {
             _id: address,
             total_minted: 0,
@@ -215,24 +225,21 @@ export default class Database implements IDatabase {
             reason: ""
         };
 
-        let commandResult: any;
         try {
-            commandResult = await DB.command(
-                {
-                    insert: Collections.User,
-                    documents: [newUser],
-                }
-            );
-
-            // successful insert should result { ok: 1 }
-            if(commandResult.ok !== 1) {
-                console.error(commandResult.writeErrors);
-                throw new Error("User insert operation failed")
-            }
-
+            await collection.insertOne(newUser);
             return true;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof WriteError && error.code === 11000)
+            {
+                // User already registered
+                return true;
+            }
+            if(error instanceof WriteConcernError && error.code === 64)
+            {
+                throw new Error("Database write request timed out.");
+            }
+            console.error(error);
+            throw new Error("Error registering user to database.");
         }
     }
 
@@ -257,22 +264,20 @@ export default class Database implements IDatabase {
         }
         const options: UpdateOptions = { upsert: true};
         const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
-        let result: UpdateResult;
         try {
-            result = await collection.updateOne(
+            await collection.updateOne(
                 { address: address },
                 { "$set": session }, 
                 options
             );
 
-            // check if update was successful
-            if(!result.acknowledged){
-                throw new Error("Session creation failed");
-            }
-
             return session;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof WriteConcernError && error.code === 64)
+            {
+                throw new Error("Database request timed out.");
+            }
+            throw new Error("Database error creating session.");
         }
     }
 
@@ -287,21 +292,20 @@ export default class Database implements IDatabase {
         }
     
         const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
-        let result: UpdateResult;
         try {
-            result = await collection.updateOne(
+            await collection.updateOne(
                 { address: address },
                 { "$set": { expiration: newExpiration }}, 
             );
 
-            // check if update was successful
-            if(!result.acknowledged){
-                throw new Error("Session creation failed");
-            }
-
             return true;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof WriteConcernError && error.code === 64)
+            {
+                throw new Error("Database request timedout.");
+            }
+            console.error(error);
+            throw new Error("Database error extending session.");
         }
     }
 
@@ -317,9 +321,8 @@ export default class Database implements IDatabase {
 
         const now: number = Math.floor(Date.now()/1000);
         const collection: Collection<Session> = this.client.db(this.namespace).collection<Session>(Collections.Session);
-        let result: UpdateResult;
         try {
-            result = await collection.updateOne(
+            await collection.updateOne(
                 { address: address },
                 { "$set": 
                     {
@@ -329,14 +332,14 @@ export default class Database implements IDatabase {
                 }
             );
 
-            // check if update was successful
-            if(!result.acknowledged){
-                throw new Error("Session deletion failed");
-            }
-
             return true;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof WriteConcernError && error.code === 64)
+            {
+                throw new Error("Database request timed out.");
+            }
+            console.error(error);
+            throw new Error("Database error logging out user.");
         }
     }
 
@@ -361,21 +364,20 @@ export default class Database implements IDatabase {
             "saveData.locations": gameData.locations
         }
         const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
-        let result: UpdateResult;
         try {
-            result = await collection.updateOne(
+            await collection.updateOne(
                 progress ? { ...query, "saveData.progress": 0 } : query,
                 { "$set": progress ? { ...update, "saveData.progress.$": now } : update }
             );
 
-            // check if update was successful
-            if(!result.acknowledged){
-                throw new Error("Data could not be saved");
-            }
-
             return true;
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            if(error instanceof WriteConcernError && error.code === 64)
+            {
+                throw new Error("Database request timed out.");
+            }
+            console.error(error);
+            throw new Error("Database error saving user data.");
         }
     }
 
@@ -450,8 +452,9 @@ export default class Database implements IDatabase {
             }, transactionOptions);
 
             if(!result) {return false}
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            console.error(error);
+            throw new Error("Database error registering familiar.");
         } finally {
             await session.endSession();
         }
@@ -495,8 +498,10 @@ export default class Database implements IDatabase {
             }
             return result;
         }
-        catch (error: any) {
-            throw new Error(error.message);
+        catch (error: unknown) {
+            if(error instanceof AggregateError){ console.error(error.message); }
+            console.error(error)
+            throw new Error("Database error getting list of templates.");
         }
     } 
 
@@ -507,8 +512,9 @@ export default class Database implements IDatabase {
     async init(): Promise<void> {
         try {
             this.client = await MongoClient.connect(this.URI, this.options);
-        } catch (error: any) {
-            throw new Error(error.message);
+        } catch (error: unknown) {
+            console.error(error);
+            throw new Error("Error connecting to database.");
         }
     }
 

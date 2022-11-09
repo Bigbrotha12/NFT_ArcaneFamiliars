@@ -6,7 +6,7 @@ export default interface IDatabase {
     isInitialized(): boolean,
 
     // Getters
-    getUserByAddress(address: string): Promise<User>,
+    getUser(address: string): Promise<User>,
     getTokenMetadata(tokenId: number): Promise<Familiar>,
     getFamiliar(q: Query): Promise<Familiar>,
     getTemplatesByTier(tier: Array<Rarity>): Promise<Array<Familiar>>,
