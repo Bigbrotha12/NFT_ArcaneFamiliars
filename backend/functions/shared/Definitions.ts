@@ -57,7 +57,11 @@ export type User = {
     saveData: {
         name: string,
         level: number,
+        playTime: number,
+        money: number,
         items: Array<string>,
+        spells: Array<string>,
+        recipes: Array<string>,
         locations: Object,
         progress: Array<number>
     }

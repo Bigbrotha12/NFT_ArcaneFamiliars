@@ -217,7 +217,11 @@ export default class Database implements IDatabase {
             saveData: {
                 name: address,
                 level: 1,
+                playTime: 0,
+                money: 0,
                 items: [],
+                spells: [],
+                recipes: [],
                 locations: { hub: "0001" },
                 progress: [0, 0, 0, 0]
             },
@@ -360,7 +364,11 @@ export default class Database implements IDatabase {
         const update = { 
             "saveData.name": gameData.name,
             "saveData.level": gameData.level,
+            "saveData.playTime": gameData.playTime,
+            "saveData.money": gameData.money,
             "saveData.items": gameData.items,
+            "saveData.spells": gameData.spells,
+            "saveData.recipes": gameData.recipes,
             "saveData.locations": gameData.locations
         }
         const collection: Collection<User> = this.client.db(this.namespace).collection<User>(Collections.User);
