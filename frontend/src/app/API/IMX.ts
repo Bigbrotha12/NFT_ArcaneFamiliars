@@ -1,62 +1,36 @@
 import { IIMX } from "./IIMX";
-import { Authentication, Familiar, UserInfo } from "../Definitions";
-import Config from "../constants/AppConfig.json";
-import { hashMessage } from '@ethersproject/hash';
-import { Link } from "@imtbl/imx-sdk";
+import { Familiar, IMXBalance, Error } from "../Definitions";
+import AppConfig from "../constants/AppConfig";
 import axios, { Axios } from "axios";
 
-export class IMX implements IIMX {
-    link: Link;
-    client: Axios;
+const collection: string = AppConfig.Mode === 'Production' ? AppConfig.Blockchain.Collection.Mainnet : AppConfig.Blockchain.Collection.Sandbox;
 
+export class IMX implements IIMX {
+    provider: string;
+    client: Axios;
+        
     constructor(provider: string) {
-        this.link = new Link(provider);
+        this.provider = provider;
         this.client = axios.create({ 
-            baseURL: Config.API.IMX.Sandbox, 
+            baseURL: provider, 
             timeout: 3000,
             headers: { "Content-Type": "application/json" }
         });
     }
-
-    // Link API call
-    async setupUserAccount(): Promise<UserInfo["address"]> {
-        try {
-            const userInfo = await this.link.setup({});
-            return userInfo.address;
-        } catch (error) {
-            throw new Error("Connection attempt failed");
-        }
-    }
-
-    async authenticate(address: string): Promise<Authentication> {
-        try {
-            const now: string = Math.floor(Date.now()/1000).toString();
-            const message: string = hashMessage(now);
-            const signature: { result: string } = await this.link.sign({ 
-                message: message, 
-                description: "Authentication Request"});
-            const auth: Authentication = {
-                eth_address: address,
-                eth_timestamp: Number(now),
-                eth_signature: signature.result
-            }
-            return auth;
-
-        } catch (error) {
-            throw new Error("Authentication Error");
-        }
-    }
+    
 
     // Direct API call
     // GET method. Parameters: assetRequest, URL-encoded
-    async getNFTAssets(address: string, collection: string): Promise<Array<Familiar>> {
+    async getNFTAssets(address: string): Promise<Array<Familiar>> {
         const URI: string = "/v1/assets";
         const request: assetRequest = { user: address, collection: collection };
 
         try {
-            const { data } = await this.client.get<assetResponseOK, any>(URI, {
+            const { data } = await this.client.get(URI, {
                 params: request
             });
+            if (!data) throw new Error("Unable to fetch IMX assets");
+            
             const result: Array<Familiar> = this.parseAssetResponse(data);
             return result;
         } catch (error) {
@@ -65,12 +39,37 @@ export class IMX implements IIMX {
         }
     }
 
-    getMetadata(id: number, collection: string): Promise<Familiar> {
-        throw new Error(id.toString()+collection);
+    async getMetadata(id: number): Promise<Familiar> {
+         const URI: string = `/v1/assets/${collection}/${id}`;
+
+        try {
+            const { data } = await this.client.get(URI);
+            if (!data || !data.metadata) throw new Error("Unable to fetch asset metadata.");
+            
+            const result: Familiar = data.metadata;
+            return result;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Unable to fetch IMX assets.");
+        }
     }
-    getUserBalances(address: string): Promise<{ imx: number; preparing: number; withdrawable: number; }> {
-        throw new Error(address);
+
+    async getUserBalances(address: string): Promise<IMXBalance> {
+        let URI: string = `/v2/balances/${address}`;
+
+        try {
+            const { data } = await this.client.get(URI);
+            if (!data || !data.metadata) throw new Error("Unable to fetch asset metadata.");
+            
+            const [, result] = this.parseUserBalances(data);
+            if (result) return result;
+            else throw new Error("No ETH balance found.");
+        } catch (error) {
+            console.error(error);
+            throw new Error("Unable to fetch IMX assets.");
+        }
     }
+
     transferNFT(id: number, recipient: string): Promise<any> {
         throw new Error(id.toString()+recipient);
     }
@@ -84,10 +83,13 @@ export class IMX implements IIMX {
             return result.metadata;
         });
     }
-    
 
-    
-    
+    parseUserBalances(response: balancesResponseOK): [Error | null, IMXBalance | null] {
+        let ethBalance = response.find((token) => { return token.token_address === ""; });
+        if (!ethBalance) return [{ code: 1, reason: "No ETH balance found." }, null];
+        
+        return [null, { available: ethBalance.balance, preparing: ethBalance.preparing_withdrawal, withdrawable: ethBalance.withdrawable }];
+    }
 }
 
 // Request / Response Schema
@@ -146,8 +148,10 @@ type assetResponseOK = {
     }]                               
 }
 
-// type assetResponseError = {
-//     error: string,                            // The error code
-//     details: string,                          // The error details
-//     message: string                           // The error message
-// }
+type balancesResponseOK = {
+  balance: string,
+  preparing_withdrawal: string,
+  symbol: string,
+  token_address: string,
+  withdrawable: string
+}[]
