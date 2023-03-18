@@ -1,5 +1,5 @@
 import React from "react";
-import Config from "../../app/constants/AppConfig.json"
+import Config from "../../app/constants/AppConfig"
 import { Link } from "react-router-dom";
 import Material from "../../assets/Material";
 

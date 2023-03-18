@@ -3,17 +3,12 @@ import Material from "../../assets/Material";
 
 export default function Status() {
   const [open, setOpen] = React.useState(false);
-  
-  const toggleDrawer = () => {
-    console.info("Toggling Drawer");
-    setOpen(!open);
-  }
 
   return (
     <div className="text-white w-54 h-full flex align-middle justify-center">
       <Material.ClickAwayListener onClickAway={() => setOpen(false)}>
         <Material.List disablePadding={true} sx={{marginTop: "4px"}} >
-          <Material.ListItem onClick={toggleDrawer} >
+          <Material.ListItem onClick={() => setOpen(state => !state)} >
             <Material.ListItemText primary="Balance: 32 ETH" />
             <Material.ListItemIcon sx={{display: "flex", justifyContent: "center"}}>
               {open ? <Material.ExpandLessRounded /> : <Material.ExpandMoreRounded />}

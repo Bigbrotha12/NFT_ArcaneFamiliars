@@ -1,20 +1,25 @@
-import React from "react"
-
-export type UserInfo = {
-    address: string | null,
-    balance: {
-        imx: number,
-        preparing: number,
-        withdrawable: number
-    },
-    isIMXConnected: boolean,
-    isWeb3Connected: boolean,
-    preferences: {
-        darkTheme: boolean
-    }
+export type UserData = {
+    address: string,
+    balance: IMXBalance,
+    assets: Array<Familiar>
 }
 
-export type UserContextType = [UserInfo, React.Dispatch<React.SetStateAction<UserInfo>>]
+export type IMXClient = {
+    connect: () => Promise<void>,
+    disconnect: () => Promise<void>,
+    authenticate: () => Promise<void>,
+}
+export type IMXBalance = {
+    available: string,
+    preparing: string,
+    withdrawable: string
+}
+
+export type Error = {
+    code: number,
+    reason: string,
+    stack?: unknown
+}
 
 export type Authentication = {
     eth_address: string,

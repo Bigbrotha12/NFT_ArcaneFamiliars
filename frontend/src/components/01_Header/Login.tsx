@@ -1,56 +1,22 @@
 import React from "react";
-import { UserContextType } from "../../app/Definitions";
-import { IController } from "../../app/IController";
-import { UserContext, ControllerContext } from "../../state/Context";
+import { useSelector } from 'react-redux';
+import { RootState } from "../../state/Context";
 import Material from "../../assets/Material";
 import Formatter from "../../app/utils/Formatter";
+import { useIMX } from "../../app/IMXHooks";
+import { IMXBalance } from "../../app/Definitions";
 
 export default function Login() {
-  const [userInfo, setUserInfo] = React.useContext<UserContextType>(UserContext);
-  const controller: IController = React.useContext<IController>(ControllerContext);
   const [menu, setMenu] = React.useState<{anchor: HTMLElement | null, open: boolean}>
-    ({ anchor: null, open: false});
+    ({ anchor: null, open: false });
+  const [client, , loading, error] = useIMX();
+  const userAddress = useSelector<RootState, string>(state => state.session.address);
 
-  function openMenu(event: React.MouseEvent<HTMLElement>): void {
-    setMenu({anchor: event.currentTarget, open: true});
-  }
-
-  function closeMenu(): void {
-    setMenu((menu) => {return {...menu, open: false}});
-  }
-
-  async function connect(): Promise<void | null> {
-    const userAddress: string | null = await controller.connectIMX();
-    
-    if(userAddress === null) {
-       return null;
-    }
-
-    setUserInfo((user) => { return {
-      ...user,
-      address: userAddress,
-      isIMXConnected: true
-    }});
-  }
-
-  function disconnect() {
-    controller.deleteUserData();
-
-    setUserInfo((info) => { return {...info, address: null}});
-    closeMenu();
-  }
-
-  React.useEffect(() => {
-    if(userInfo.isIMXConnected) {
-      controller.storeUserData(userInfo);
-    }
-  }, [userInfo.address]);
-  
   return (
     <div className="flex align-middle justify-center px-8 text">
-      <Material.ClickAwayListener onClickAway={closeMenu}>
-        <>
-        {userInfo.address ?
+      <Material.ClickAwayListener onClickAway={() => setMenu(state => { return { ...state, open: false } })}>
+        <React.Fragment>
+        {userAddress ?
         <Material.Button
           sx={{
             backgroundColor: "rgba(0,0,0,0)",
@@ -59,9 +25,9 @@ export default function Login() {
             fontWeight: "bold"
           }}
           variant="outlined"
-          onClick={(event) => openMenu(event)}
+              onClick={(event) => setMenu({ anchor: event.target as HTMLElement, open: true})}
         >
-          {Formatter.formatAddress(userInfo.address)}
+          {Formatter.formatAddress(userAddress)}
         </Material.Button> : 
         <Material.Button 
           sx={{
@@ -72,16 +38,15 @@ export default function Login() {
             color: "black"
           }}
           variant="contained"
-          onClick={connect}>
+          onClick={client.connect}>
           Connect
         </Material.Button>}
 
-        {menu ?
-          <Material.Menu anchorEl={menu.anchor} open={menu.open} onClose={closeMenu}>
-            <Material.MenuItem onClick={disconnect}>Disconnect</Material.MenuItem>
-          </Material.Menu>
-        : null}
-        </>
+        {menu &&
+          <Material.Menu anchorEl={menu.anchor} open={menu.open} onClose={() => setMenu(state => { return { ...state, open: false } })}>
+            <Material.MenuItem onClick={client.disconnect}>Disconnect</Material.MenuItem>
+          </Material.Menu>}
+        </React.Fragment>
       </Material.ClickAwayListener>
     </div>
   )

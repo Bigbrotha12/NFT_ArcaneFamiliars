@@ -1,14 +1,18 @@
-//import style from "../../../styles/Body.module.css";
+import React from 'react';
 import { Select, MenuItem, FormControl, InputLabel, Button,  Input, Typography } from '@mui/material';
-import { UserContext } from '../../../app/constants/AppContext';
+import { Familiar, IMXBalance } from '../../../app/Definitions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../state/Context';
 
 export default function BridgeDeposit() {
-    const [userInfo, setUserInfo] = React.useContext(UserContext);
-    const [amount, setAmount] = React.useState(0);
 
-    const handleSubmit = (event) => {
+    const assets: Array<Familiar> = useSelector<RootState, Array<Familiar>>(state => state.session.assets);
+    const balance: IMXBalance = useSelector<RootState, IMXBalance>(state => state.session.balance);
+    const [amount, setAmount] = React.useState<string>("0");
+
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        const data = Object.fromEntries(new FormData(event.target));
+        const data = new FormData(event.target as HTMLFormElement);
         console.log(data);
     }
 
@@ -23,8 +27,8 @@ export default function BridgeDeposit() {
                 
                 <InputLabel id="asset-type">Asset Type</InputLabel>
                 <Select required value="" labelId="asset-type" label="Asset Type">
-                    {userInfo.NFTs?.map(asset => (
-                    <MenuItem key={asset.tokenId} value={asset.name}>{asset.name}</MenuItem>
+                    {assets.map(asset => (
+                    <MenuItem key={asset._id} value={asset.name}>{asset.name}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
@@ -37,12 +41,14 @@ export default function BridgeDeposit() {
                 type="number"
                 inputProps={{min:'0'}}
                 required
-                error={userInfo.balance < amount}  
-                onChange={event => setAmount(event.target.value)}
+                error={parseInt(balance.available) < parseInt(amount)}  
+                    onChange={event => {
+                        if(/[0-9]{*}/.test(event.target.value)) setAmount(event.target.value)
+                    }}
                 />
             </FormControl>
 
-            <FormControl sx={{marginTop:'10px'}} fullWidth>
+            <FormControl sx={{marginTop: '12px'}} fullWidth>
                 <Button type="submit" variant="outlined">Deposit</Button>   
             </FormControl>
             

@@ -1,4 +1,5 @@
-{
+const AppConfig = {
+    "Mode": "Development",
     "API": {
       "IMX": {
         "Sandbox": "https://api.sandbox.x.immutable.com",
@@ -89,4 +90,5 @@
       }
     }
   }
-   
+  
+export default AppConfig;

@@ -1,14 +1,18 @@
 import React from "react";
-import Config from "../../../app/constants/AppConfig.json";
+import Config from "../../../app/constants/AppConfig";
 import { Authentication } from "../../../app/Definitions";
-import { ControllerContext, UserContext } from "../../../state/Context";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 import Material from "../../../assets/Material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../state/Context";
+import { useIMX } from "../../../app/IMXHooks";
 
 export default function UnityCanvas() {
-  const [userInfo, setUserInfo] = React.useContext(UserContext);
-  const controller = React.useContext(ControllerContext);
+
+  const userAddress: string = useSelector<RootState, string>(state => state.session.address);
+  const [client, auth, loading, error] = useIMX();
+
   const [gameLaunch, setGameLaunch] = React.useState(false);
   const { unityProvider, sendMessage, addEventListener, removeEventListener, unload, loadingProgression } =
     useUnityContext({
@@ -24,17 +28,15 @@ export default function UnityCanvas() {
   };
 
   const requestAuthentication = React.useCallback(async () => {  
-    if(!userInfo.address) {
-      const address = await controller.connectIMX();
-      await setUserInfo(user => {return {...user, address: address}});
+    if(!userAddress) {
+      await client.connect();
     }
-
-    const auth: Authentication | null = await controller.getAuthentication(userInfo.address);
+    await client.authenticate();
+  
     if(auth) {
-      await sendMessage("APIHandler", "ReceiveAuthentication", JSON.stringify(auth));
+      sendMessage("APIHandler", "ReceiveAuthentication", JSON.stringify(auth));
     } 
-    
-  }, [userInfo.address]);
+  }, [userAddress, auth]);
 
   React.useEffect(() => {
     addEventListener("RequestAuth", requestAuthentication);

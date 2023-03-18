@@ -1,52 +1,33 @@
+import { userInfo } from "os";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Familiar } from "../../../app/Definitions";
-import { ControllerContext, UserContext } from "../../../state/Context";
 import Material from "../../../assets/Material";
+import { RootState } from "../../../state/Context";
 import FamiliarCard from './FamiliarCard';
 import SearchBar from "./SearchBar";
 
 export default function Collection() {
-  const controller = React.useContext(ControllerContext);
-  const [userInfo,] = React.useContext(UserContext);
-  const [userAssets, setUserAssets]: 
-    [Familiar[] | null, React.Dispatch<React.SetStateAction<Familiar[] | null>>] = 
-    React.useState<Array<Familiar> | null>(null);
 
-  function createCards(familiars: Array<Familiar>): Array<JSX.Element | null> {
-    return familiars.map( (familiar, index) => {
-      if(Object.keys(familiar).length === 0) {return null}
-
-      return <FamiliarCard key={index} familiar={familiar} />
-    });
-  }
-
-  // If user info is available, fetch NFT data from cache or IMX
-  React.useEffect(() => {
-    
-    if(userInfo.address !== null) {
-      controller.getUserFamiliars(userInfo.address)
-      .then( assets => {
-        console.log(assets);
-        if(assets === null) {
-          console.error("NFTs could not be found");
-        } else {
-          setUserAssets(assets);
-        }
-      });
-    }
-  },[userInfo.address]);
+  const assets: Array<Familiar> = useSelector<RootState, Array<Familiar>>(state => state.session.assets);
 
   // if user assets have been fetched, display array of cards.
   return (
     <div className="h-full w-full">
       <SearchBar />
       <Material.Grid sx={{margin: "auto", padding: "4px", height: "100%", width: "100%"}} container spacing={1}>
-          {userAssets ?
-          createCards(userAssets) : 
-          <p className="m-auto">No Familiars to show</p>}
+        {createCards(assets)}
       </Material.Grid>
     </div>
   )
+}
+
+function createCards(familiars: Array<Familiar>): Array<JSX.Element> {
+  if (familiars.length === 0) { return [<p>No Familiars to show.</p>]; }
+
+  return familiars.map( (familiar, index) => {
+    return <FamiliarCard key={index} familiar={familiar} />
+  });
 }
 
 // const sampleAssets: Array<Familiar> = [

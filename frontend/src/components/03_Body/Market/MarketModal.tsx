@@ -1,4 +1,5 @@
-import { Box, Button, Typography, Modal } from '@mui/material';
+import React from 'react';
+import Material from '@mui/material';
 import FamiliarCard from '../Collection/FamiliarCard';
 
 const style = {
@@ -13,24 +14,24 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal(props) {
+export default function BasicModal(props: { data: string, stats: string}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
-      <Modal
+      <Material.Button onClick={handleOpen}>Open modal</Material.Button>
+      <Material.Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Material.Box sx={style}>
           <FamiliarCard familiarData={props.data} familiarStats={props.stats}/>
-        </Box>
-      </Modal>
+        </Material.Box>
+      </Material.Modal>
     </div>
   );
 }
