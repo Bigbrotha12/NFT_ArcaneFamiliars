@@ -14,7 +14,7 @@ module.exports = {
           accent: "#F19F4D"
         },
         dark: {
-          primary: "#000000",
+          primary: "#242424",
           secondary: "#062F4F",
           minor: "#813772",
           accent: "#B82601"

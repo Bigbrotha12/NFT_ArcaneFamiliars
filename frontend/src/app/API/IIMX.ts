@@ -1,4 +1,5 @@
-import { Familiar, IMXBalance,  } from "../Definitions";
+import { IMXBalance, } from "../../types/IMX";
+import { Familiar } from "../../types/Familiar";
 
 export interface IIMX {
 

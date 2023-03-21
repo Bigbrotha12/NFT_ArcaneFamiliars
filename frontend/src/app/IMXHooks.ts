@@ -1,7 +1,7 @@
 import React from "react";
 import { IController } from "./IController";
 import { AppController } from "./AppController";
-import { Authentication, IMXClient } from "./Definitions";
+import { Authentication, IMXClient } from "../types/IMX";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, refreshAssets, refreshBalance, RootState } from "../state/Context";
 

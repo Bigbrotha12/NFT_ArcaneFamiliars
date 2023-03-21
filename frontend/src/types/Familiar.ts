@@ -1,31 +1,3 @@
-export type UserData = {
-    address: string,
-    balance: IMXBalance,
-    assets: Array<Familiar>
-}
-
-export type IMXClient = {
-    connect: () => Promise<void>,
-    disconnect: () => Promise<void>,
-    authenticate: () => Promise<void>,
-}
-export type IMXBalance = {
-    available: string,
-    preparing: string,
-    withdrawable: string
-}
-
-export type Error = {
-    code: number,
-    reason: string,
-    stack?: unknown
-}
-
-export type Authentication = {
-    eth_address: string,
-    eth_timestamp: number,
-    eth_signature: string
-}
 
 export type Familiar = {
     _id: number,
@@ -56,7 +28,7 @@ export type Familiar = {
     }
 }
 
-export type Ability = {
+type Ability = {
     _id: any,
     name: string,
     description: string,
@@ -64,7 +36,7 @@ export type Ability = {
     drawback: Array<any>
 }
 
-export enum Affinity {
+enum Affinity {
     Light = "Light",
     Dark = "Dark",
     Fire = "Fire",
@@ -73,7 +45,7 @@ export enum Affinity {
     Wind = "Wind"
 }
 
-export enum Rarity {
+enum Rarity {
     common = "common",
     uncommon = "uncommon",
     rare = "rare",

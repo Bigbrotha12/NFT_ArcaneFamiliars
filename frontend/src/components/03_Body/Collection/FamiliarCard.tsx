@@ -1,5 +1,5 @@
 import React from "react";
-import { Familiar } from "../../../app/Definitions";
+import { Familiar } from '../../../types/Familiar';
 import Material from "../../../assets/Material";
 
 export default function FamiliarCard(props: any) {

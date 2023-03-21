@@ -1,7 +1,6 @@
-import { userInfo } from "os";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Familiar } from "../../../app/Definitions";
+import { Familiar } from '../../../types/Familiar';
 import Material from "../../../assets/Material";
 import { RootState } from "../../../state/Context";
 import FamiliarCard from './FamiliarCard';

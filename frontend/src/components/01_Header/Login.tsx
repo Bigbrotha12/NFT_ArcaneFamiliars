@@ -4,7 +4,6 @@ import { RootState } from "../../state/Context";
 import Material from "../../assets/Material";
 import Formatter from "../../app/utils/Formatter";
 import { useIMX } from "../../app/IMXHooks";
-import { IMXBalance } from "../../app/Definitions";
 
 export default function Login() {
   const [menu, setMenu] = React.useState<{anchor: HTMLElement | null, open: boolean}>

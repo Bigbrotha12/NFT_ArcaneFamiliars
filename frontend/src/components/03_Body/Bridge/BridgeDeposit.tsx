@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select, MenuItem, FormControl, InputLabel, Button,  Input, Typography } from '@mui/material';
-import { Familiar, IMXBalance } from '../../../app/Definitions';
+import { IMXBalance } from '../../../types/IMX';
+import { Familiar } from '../../../types/Familiar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../state/Context';
 

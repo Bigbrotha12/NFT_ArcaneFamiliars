@@ -1,8 +1,8 @@
 import { Select, MenuItem, FormControl, InputLabel, Input, Button, Typography } from '@mui/material';
-import { userInfo } from 'os';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Familiar, IMXBalance } from '../../../app/Definitions';
+import { IMXBalance } from '../../../types/IMX';
+import { Familiar } from '../../../types/Familiar';
 import { RootState } from '../../../state/Context';
 
 export default function BridgeWithdraw() {

@@ -1,10 +1,11 @@
-import { Authentication, Familiar, Error, IMXBalance } from "./Definitions";
+import { Authentication, AppError, IMXBalance } from "../types/IMX";
+import { Familiar } from "../types/familiar";
 
 export interface IController {
-    connectIMX(): Promise<[Error | null, string | null]>,
-    getAuthentication(address: string): Promise<[Error | null, Authentication | null]>,
-    getUserFamiliars(address: string): Promise<[Error | null, Array<Familiar> | null]>,
-    getUserBalances(address: string): Promise<[Error | null, IMXBalance | null]>,
+    connectIMX(): Promise<[AppError | null, string | null]>,
+    getAuthentication(address: string): Promise<[AppError | null, Authentication | null]>,
+    getUserFamiliars(address: string): Promise<[AppError | null, Array<Familiar> | null]>,
+    getUserBalances(address: string): Promise<[AppError | null, IMXBalance | null]>,
     storeUserData(data: string): void,
     deleteUserData(): void
 }

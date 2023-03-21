@@ -1,6 +1,6 @@
 import React from "react";
 import Config from "../../../app/constants/AppConfig";
-import { Authentication } from "../../../app/Definitions";
+import { Authentication } from "../../../types/IMX";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 import Material from "../../../assets/Material";

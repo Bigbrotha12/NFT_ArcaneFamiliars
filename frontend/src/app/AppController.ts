@@ -1,4 +1,5 @@
-import { Familiar, Authentication, Error, IMXBalance } from "./Definitions";
+import { Authentication, AppError, IMXBalance } from "../types/IMX";
+import { Familiar } from "../types/familiar";
 import { IController } from "./IController";
 import { IMX } from "./API/IMX";
 import Config from "./constants/AppConfig";
@@ -22,7 +23,7 @@ export class AppController implements IController {
      * Sets up user account connection with IMX Link
      * @returns eth address of user
      */
-    async connectIMX(): Promise<[Error | null, string | null]> {
+    async connectIMX(): Promise<[AppError | null, string | null]> {
         let link: Link = new Link(LinkEndpoint);
     
         try {
@@ -39,7 +40,7 @@ export class AppController implements IController {
      * @param address User address to be authenticated.
      * @returns signed timestamp from user's wallet.
      */
-    async getAuthentication(address: string): Promise<[Error | null, Authentication | null]> {
+    async getAuthentication(address: string): Promise<[AppError | null, Authentication | null]> {
         let link: Link = new Link(LinkEndpoint);
 
         try {
@@ -64,7 +65,7 @@ export class AppController implements IController {
      * @param address eth address of user
      * @returns array of familiars the user owns
      */
-    async getUserFamiliars(address: string): Promise<[Error | null, Array<Familiar> | null]> {
+    async getUserFamiliars(address: string): Promise<[AppError | null, Array<Familiar> | null]> {
         const now = Math.floor(Date.now()/1000);
         if(this.cache && now < this.cache.assets.expiration) {
             console.log("Returning data from cache");
@@ -88,7 +89,7 @@ export class AppController implements IController {
         }
     }
 
-    async getUserBalances(address: string): Promise<[Error | null, IMXBalance | null]> {
+    async getUserBalances(address: string): Promise<[AppError | null, IMXBalance | null]> {
         let IMXClient: IIMX = new IMX(IMXEndpoint);
 
         try {
@@ -109,7 +110,7 @@ export class AppController implements IController {
         }
     }
 
-    getUserData(): [Error | null , string | null] {
+    getUserData(): [AppError | null , string | null] {
         try {
             const data: string | null = localStorage.getItem("UserAddress");
             if (data === null) { return [{code: 5, reason: "No stored data."}, null]}

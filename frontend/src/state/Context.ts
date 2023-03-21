@@ -1,5 +1,7 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Familiar, IMXBalance, UserData } from '../app/Definitions';
+import { IMXBalance } from '../types/IMX';
+import { Familiar } from '../types/Familiar';
+import { UserData } from '../types/UserData';
 
 const initialState: UserData = {
     address: '',

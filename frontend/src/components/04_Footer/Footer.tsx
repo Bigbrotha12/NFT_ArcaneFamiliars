@@ -6,7 +6,7 @@ import Version from "./Version";
 export default function Footer() {
   
   return (
-    <div className="sticky bottom-0 bg-[#D9D9D9] flex flex-row justify-between py-2 shadow-inner">
+    <div className="bg-[#D9D9D9] flex flex-row justify-between py-2 shadow-inner">
       <Blockdata />
       <Copyright />
       <Version />
