@@ -5,6 +5,10 @@ module.exports = {
   './dist/*.html',
   './dist/*.js'],
   theme: {
+    backgroundImage: {
+      mainBackdrop: 'url("./assets/images/main_backdrop.png")'
+      
+    },
     extend: {
       colors: {
         light: {
