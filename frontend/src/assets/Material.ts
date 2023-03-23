@@ -51,6 +51,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import WalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Warning from '@mui/icons-material/Warning';
 
+import Twitter from '@mui/icons-material/Twitter';
+import Facebook from '@mui/icons-material/Facebook';
+
 import styled from '@mui/material/styles/styled';
 
 
@@ -107,6 +110,8 @@ export default {
     MenuIcon,
     WalletIcon,
     Warning,
+    Twitter,
+    Facebook,
 
     styled
 }

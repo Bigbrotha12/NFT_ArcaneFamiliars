@@ -1,31 +1,31 @@
 import React from "react";
 import Material from "../../assets/Material";
-import Blockdata from "./Blockdata";
-import Copyright from "./Copyright";
-import Version from "./Version";
 
 export default function Footer() {
   
   return (
-    <div className="bg-[#242424] flex px-[6rem] py-[6rem]">
-      <div className="text-white">
-        <Material.Typography variant='h4'>Follow Us!</Material.Typography>
-        <Material.Typography>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</Material.Typography>
+    <div className="flex flex-col bg-[#242424] p-12">
+      <div className=" text-white mx-auto">
+        <Material.Typography variant='h5'>Follow Us!</Material.Typography>
+        <div className="flex justify-center">
+        <Material.Twitter />
+        <Material.Facebook />
+        </div>
       </div>
 
-      <div className="text-white">
-        <Material.Typography color='inherit'>Privacy Policy</Material.Typography>
-        <Material.Typography color='inherit'>Terms and Conditions</Material.Typography>
-        <Material.Typography color='inherit'>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</Material.Typography>
+      <div className="flex justify-between gap-6">
+        <div className="text-white">
+          <Material.Typography sx={{fontSize: '.75rem'}} color='inherit'>Privacy Policy</Material.Typography>
+          <Material.Typography sx={{fontSize: '.75rem'}} color='inherit'>Terms and Conditions</Material.Typography>
+
+        </div>
+
+        <div className="text-white">
+          <Material.Typography variant='h6' color='inherit'>Contact</Material.Typography>
+          <Material.Typography color='inherit'>email us @ gaias.keepers@hotmail.com</Material.Typography>
+        </div>
       </div>
 
-      <div className="text-white">
-        <Material.Typography variant='h4' color='inherit'>Contact</Material.Typography>
-        <Material.Typography color='inherit'>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</Material.Typography>
-      </div>
-      {/* <Blockdata />
-      <Copyright />
-      <Version /> */}
     </div>
       
   )
