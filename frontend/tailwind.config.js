@@ -9,6 +9,9 @@ module.exports = {
       mainBackdrop: 'url("./assets/images/main_backdrop.png")'
       
     },
+    fontFamily: {
+      sans: ['Arbutus Slab, Inter, Roboto']
+    },
     extend: {
       colors: {
         light: {

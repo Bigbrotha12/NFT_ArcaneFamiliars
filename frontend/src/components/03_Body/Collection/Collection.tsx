@@ -22,7 +22,7 @@ export default function Collection() {
 }
 
 function createCards(familiars: Array<Familiar>): Array<JSX.Element> {
-  if (familiars.length === 0) { return [<p>No Familiars to show.</p>]; }
+  if (familiars.length === 0) { return [<p key='0'>No Familiars to show.</p>]; }
 
   return familiars.map( (familiar, index) => {
     return <FamiliarCard key={index} familiar={familiar} />

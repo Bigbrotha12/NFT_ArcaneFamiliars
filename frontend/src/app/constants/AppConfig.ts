@@ -55,22 +55,22 @@ const AppConfig = {
             {
               "label": "Play Game",
               "icon": "Cards 2.png",
-              "link": "/game"
+              "link": "/app/game"
             },
             {
               "label": "Collection",
               "icon": "Grimoire 3.png",
-              "link": "/collection"
+              "link": "/app/collection"
             },
             {
               "label": "Marketplace",
               "icon": "Runes 3.png",
-              "link": "/marketplace"
+              "link": "/app/marketplace"
             },
             {
               "label": "Mint",
               "icon": "Tower 2.png",
-              "link": "/minter"
+              "link": "/app/minter"
             }
           ]
         },
@@ -80,7 +80,7 @@ const AppConfig = {
             {
               "label": "Bridge",
               "icon": "Tower 3.png",
-              "link": "/bridge"
+              "link": "/app/bridge"
             }
           ]
         }

@@ -1,10 +1,10 @@
 import React from "react";
 import Material from "../../assets/Material";
-import Penguin from "../../assets/images/Claudio.png";
-import Bunny from "../../assets/images/Renny.png";
+import Claudio from "../../assets/images/Claudio.png";
+import Renny from "../../assets/images/Renny.png";
 import Tommy from "../../assets/images/Tommy.png";
 import Alan from "../../assets/images/Alan.png";
-import Billy from "../../assets/images/Billy.png";
+import Steve from "../../assets/images/Steve.png";
 import Sandy from "../../assets/images/Sandy.png";
 import gameImage from "../../assets/images/gaming-consoles.jpg";
 
@@ -24,7 +24,8 @@ export default function LandingBody(): JSX.Element {
                 before:bg-no-repeat ">
                 <div className="flex flex-col md:max-w-[40%] text-[#ffffff] leading-6 min-h-full px-16 bg-[#353535] mix-blend-multiply">
                     <div className="my-auto">
-                    <Material.Typography variant="h2" sx={{fontWeight: 'bold', marginBottom: '48px'}} textAlign='center'>Heal the World</Material.Typography>
+                    {/* <Material.Typography variant="h3" sx={{fontWeight: 'bold', marginBottom: '12px', backgroundColor: 'limegreen', borderRadius: '12px', paddingX: '12px', paddingY: '6px'}}>Gaia's Keepers</Material.Typography> */}
+                    <Material.Typography variant="h2" sx={{fontSize: '4rem', fontWeight: 'bold', marginBottom: '48px'}} textAlign='center'>Heal the World</Material.Typography>
                     <Material.Typography sx={{mixBlendMode: 'plus-lighter'}} color='inherit'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -53,9 +54,11 @@ export default function LandingBody(): JSX.Element {
             </section>
 
             <section id='how-to-play-section' className="flex align-middle py-12">
-                <div className="md:flex my-auto justify-center px-6 text-[#f0f0f0] leading-6">
-                    <img src={gameImage} className='aspect-square mx-auto mb-12' width='256px' height='256px' alt='Gaming Consoles' />
-                    <div className="mx-6 max-w-[60%]">
+                <div className="flex flex-col md:flex-row my-auto justify-center px-6 text-[#f0f0f0] leading-6">
+                    <Material.Card sx={{maxWidth: {xs: '100%', md: '30%'}, backgroundColor: '#0000', boxShadow: 'none', marginBottom: '12px'}}>
+                        <Material.CardMedia component='img' src={gameImage} width='256px' height='256px' alt='Gaming console' />
+                    </Material.Card>
+                    <div className="mx-6 md:max-w-[60%]">
                         <Material.Typography sx={{marginBottom: '2rem'}} variant='h5'>How to Play</Material.Typography>
                         <Material.Typography sx={{marginBottom: '2rem'}}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -67,7 +70,7 @@ export default function LandingBody(): JSX.Element {
                             cupidatat non proident, sunt in culpa qui officia deserunt mollit
                             anim id est laborum.
                         </Material.Typography>
-                        <Material.Button sx={{color: '#f0f0f0', borderColor: '#f0f0f0', marginY: '12px'}} variant='outlined'>Play Now</Material.Button>
+                        <Material.Button sx={{color: '#f0f0f0', borderColor: '#f0f0f0', marginBottom: '12px'}} variant='outlined'>Play Now</Material.Button>
                     </div>
                     
                     
@@ -77,102 +80,57 @@ export default function LandingBody(): JSX.Element {
             <section id='animals-section' className="flex justify-center align-middle py-3">
                 <div className="my-auto mx-6 text-[#f0f0f0] leading-6 justify-center">
                     <h6 className="text-center text-2xl text-bold mb-12">Meet Gaia's Guardians</h6>
-                    <Material.Grid container justifyContent='center' spacing={2}>
-                        <Material.Grid md={2}>
-                            <Material.Card sx={{maxWidth: '256px'}} >
-                            <Material.CardMedia
-                                component='img'
-                                image={Penguin}
-                                height='96'
-                                alt='Claudio The Penguin'
-                            />
-                            <Material.CardContent>
-                            <Material.Typography fontWeight='bold'>Claudio</Material.Typography>
-                            <Material.Typography>The Penguin</Material.Typography>
-                            </Material.CardContent>
-                            </Material.Card>
-                        </Material.Grid>
-                        
-                        <Material.Grid md={2}>
-                            <Material.Card sx={{maxWidth: '256px'}}>
-                            <Material.CardMedia
-                                component='img'
-                                image={Bunny}
-                                height='96'
-                                alt='Renny The Bunny'
-                            />
-                            <Material.CardContent>
-                                <Material.Typography fontWeight='bold'>Renny</Material.Typography>
-                                <Material.Typography>The Bunny</Material.Typography>
-                            </Material.CardContent>
-                            </Material.Card>
-                        </Material.Grid>
-
-                        <Material.Grid md={2}>
-                            <Material.Card sx={{maxWidth: '256px'}}>
-                                <Material.CardMedia
-                                    component='img'
-                                    image={Tommy}
-                                    height='96'
-                                    alt='Tommy The Caveman'
-                                />
-                            <Material.CardContent>
-                                <Material.Typography fontWeight='bold'>Tommy</Material.Typography>
-                                <Material.Typography>The Caveman</Material.Typography>
-                            </Material.CardContent>
-                            </Material.Card>
-                        </Material.Grid>
-
-                        <Material.Grid md={2}>
-                            <Material.Card sx={{maxWidth: '256px'}}>
-                                <Material.CardMedia
-                                    component='img'
-                                    image={Alan}
-                                    height='96'
-                                    alt='Alan The Hawk'
-                                />
-                            <Material.CardContent>
-                                <Material.Typography fontWeight='bold'>Alan</Material.Typography>
-                                <Material.Typography>The Hawk</Material.Typography>
-                            </Material.CardContent>
-                            </Material.Card>
-                        </Material.Grid>
-
-                        <Material.Grid md={2}>
-                            <Material.Card sx={{maxWidth: '256px'}}>
-                                <Material.CardMedia
-                                    component='img'
-                                    image={Billy}
-                                    height='96'
-                                    alt='Billy The Squirrel'
-                                />
-                            <Material.CardContent>
-                                <Material.Typography fontWeight='bold'>Alan</Material.Typography>
-                                <Material.Typography>The Hawk</Material.Typography>
-                            </Material.CardContent>
-                            </Material.Card>
-                        </Material.Grid>
-
-                        <Material.Grid md={2}>
-                            <Material.Card sx={{maxWidth: '256px'}}>
-                                <Material.CardMedia
-                                    component='img'
-                                    image={Sandy}
-                                    height='96'
-                                    alt='Sandy The Fish'
-                                />
-                            <Material.CardContent>
-                                <Material.Typography fontWeight='bold'>Alan</Material.Typography>
-                                <Material.Typography>The Hawk</Material.Typography>
-                            </Material.CardContent>
-                            </Material.Card>
-                        </Material.Grid>
- 
-                    </Material.Grid>
+                    <CharacterCard cardData={[
+                        {title: "Claudio", subtitle: "The Penguin", description: "Claudio loves ice cream and likes to keep cool. He often complains about the heat and likes to play around with Sandy in the sea.", image: Claudio, },
+                        {title: "Renny", subtitle: "The Bunny", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio officia laboriosam aliquam est esse dolorum reiciendis dolorem provident maiores accusantium.", image: Renny },
+                        {title: "Sandy", subtitle: "The Fish", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio officia laboriosam aliquam est esse dolorum reiciendis dolorem provident maiores accusantium.", image: Sandy },
+                        {title: "Tommy", subtitle: "The Caveman", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio officia laboriosam aliquam est esse dolorum reiciendis dolorem provident maiores accusantium.", image: Tommy },
+                        {title: "Alan", subtitle: "The Squirrel", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio officia laboriosam aliquam est esse dolorum reiciendis dolorem provident maiores accusantium.", image: Alan },
+                        {title: "Steve", subtitle: "The Hawk", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio officia laboriosam aliquam est esse dolorum reiciendis dolorem provident maiores accusantium.", image: Steve }
+                    ]} />
                     
                 </div>
             </section>
 
         </div>
+    )
+}
+
+function CharacterCard(props: {cardData: {title: string, subtitle: string, description: string, image: string}[]}): JSX.Element {
+
+    return (
+    <Material.Grid container justifyContent='center' spacing={2}>
+        {
+            props.cardData.map( data => {
+                return ( 
+                    <Material.Grid key={data.title} md={2}>
+                        <div className="
+                        bg-white 
+                        rounded-md 
+                        relative
+                        hover:scale-[1.20]
+                        hover:ease-in-out 
+                        duration-200
+                        ">
+                            <div className="hover:bg-[rgba(32,32,32,0.6)] hover:text-white text-transparent text-sm p-3 absolute top-0 right-0 left-0 bottom-0 ">{data.description}</div>
+                            <div className="max-w-[256px] ">
+                            <img
+                                className="rounded-t-md"
+                                src={data.image}
+                                height='96'
+                                alt={`${data.title} ${data.subtitle}`}
+                            />
+                            <div className="p-4">
+                                <Material.Typography fontWeight='bold' color='black'>{data.title}</Material.Typography>
+                                <Material.Typography color='black'>{data.subtitle}</Material.Typography>
+                            </div>
+                            </div>
+                        </div>
+                    </Material.Grid>  
+                )
+            })
+        }
+        
+    </Material.Grid>
     )
 }

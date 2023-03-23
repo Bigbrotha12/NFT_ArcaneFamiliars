@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { appStore } from './state/Context';
 
-import Layout from './Layout';
+import Layout from './components/00_Layout/Layout';
 import ComingSoon from './components/Common/ComingSoon';
 import Collection from './components/03_Body/Collection/Collection';
 import Welcome from './components/03_Body/Welcome/Welcome';
