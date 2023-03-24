@@ -1,5 +1,5 @@
 const AppConfig = {
-    "Mode": "Development",
+    "Mode": "Production", //"Development",
     "API": {
       "IMX": {
         "Sandbox": "https://api.sandbox.x.immutable.com",
@@ -40,7 +40,7 @@ const AppConfig = {
       },
       "Collection": {
         "Sandbox": "0xb7eaa855fa6432d0597f297bace4613c33a075d1",
-        "Mainnet": "",
+        "Mainnet": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
         "Images": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/images/"
       }
     },

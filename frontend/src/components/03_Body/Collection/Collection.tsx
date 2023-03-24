@@ -5,11 +5,13 @@ import Material from "../../../assets/Material";
 import { RootState } from "../../../state/Context";
 import FamiliarCard from './FamiliarCard';
 import SearchBar from "./SearchBar";
+import { useIMX } from "../../../app/IMXHooks";
 
 export default function Collection() {
 
   const assets: Array<Familiar> = useSelector<RootState, Array<Familiar>>(state => state.session.assets);
-
+  const [client, , loading, error] = useIMX();
+  console.log(assets);
   // if user assets have been fetched, display array of cards.
   return (
     <div className="h-full w-full">

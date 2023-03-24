@@ -16,30 +16,16 @@ export default function Login() {
       <Material.ClickAwayListener onClickAway={() => setMenu(state => { return { ...state, open: false } })}>
         <React.Fragment>
         {userAddress ?
-        <Material.Button
-          sx={{
-            backgroundColor: "rgba(0,0,0,0)",
-            border: "none",
-            color: "white",
-            fontWeight: "bold"
-          }}
-          variant="outlined"
-              onClick={(event) => setMenu({ anchor: event.target as HTMLElement, open: true})}
-        >
-          {Formatter.formatAddress(userAddress)}
-        </Material.Button> : 
-        <Material.Button 
-          sx={{
-            margin: "auto",
-            height: "2.5rem",
-            width: "8rem",
-            backgroundColor: "#F9CF00",
-            color: "black"
-          }}
-          variant="contained"
-          onClick={client.connect}>
+            <div className="hidden md:block text-white mx-3 my-auto border-2 border-transparent hover:border-2 hover:border-white  px-3 py-1" onClick={(event) => setMenu({ anchor: event.target as HTMLElement, open: true})}>
+              <Material.Typography sx={{fontFamily: 'inheirt',letterSpacing: '0.05rem' }}>
+              {Formatter.formatAddress(userAddress)}
+              </Material.Typography>
+            </div> : 
+        <button className='bg-white p-3 rounded-md my-auto hover:bg-purple-500 hover:shadow-md font-bold'
+            color='inherit'
+            onClick={client.connect}>
           Connect
-        </Material.Button>}
+        </button>}
 
         {menu &&
           <Material.Menu anchorEl={menu.anchor} open={menu.open} onClose={() => setMenu(state => { return { ...state, open: false } })}>

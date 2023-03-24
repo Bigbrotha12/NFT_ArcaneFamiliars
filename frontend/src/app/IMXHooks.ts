@@ -1,16 +1,13 @@
 import React from "react";
-import { IController } from "./IController";
 import { AppController } from "./AppController";
-import { Authentication, IMXClient } from "../types/IMX";
+import { Authentication, IMXClient, IMXHandler, IController } from "../types";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, refreshAssets, refreshBalance, RootState } from "../state/Context";
 
-const controller: IController = new AppController();
-    
-export const useIMX = (): [client: IMXClient, authentication: Authentication, loading: boolean, error: string]  => {
-    
+export const useIMX = (IMXProvider: string, LinkProvider: string, collection: string): IMXHandler => {
     const dispatch = useDispatch();
     const loginAddress: string = useSelector<RootState, string>(state => state.session.address);
+    const controller: IController = new AppController(IMXProvider, LinkProvider);
     
     const [authentication, setAuthentication] = React.useState<Authentication>({ eth_address: '', eth_signature: '', eth_timestamp: 0 });
     const [loading, setLoading] = React.useState<boolean>(false);
@@ -49,10 +46,11 @@ export const useIMX = (): [client: IMXClient, authentication: Authentication, lo
     }
 
     React.useEffect(() => {
+        console.log("Running IMX hook.");
         (async () => {
             if (!isValidAddress(loginAddress)) return;
 
-            let [assetError, assets] = await controller.getUserFamiliars(loginAddress);
+            let [assetError, assets] = await controller.getUserFamiliars(loginAddress, collection);
             let [, balance] = await controller.getUserBalances(loginAddress);
             if (assets && balance) {
                 dispatch(refreshAssets(assets));

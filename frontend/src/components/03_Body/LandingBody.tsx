@@ -21,21 +21,15 @@ export default function LandingBody(): JSX.Element {
                 before:right-0
                 before:bg-mainBackdrop
                 before:bg-cover
+                before:bg-center
                 before:bg-no-repeat ">
-                <div className="flex flex-col md:max-w-[40%] text-[#ffffff] leading-6 min-h-full px-16 bg-[#353535] mix-blend-multiply">
+                <div className="flex flex-col md:max-w-[40%] text-[#ffffff] leading-6 min-h-full px-16 bg-purple-700 mix-blend-multiply">
                     <div className="my-auto">
                     {/* <Material.Typography variant="h3" sx={{fontWeight: 'bold', marginBottom: '12px', backgroundColor: 'limegreen', borderRadius: '12px', paddingX: '12px', paddingY: '6px'}}>Gaia's Keepers</Material.Typography> */}
                     <Material.Typography variant="h2" sx={{fontSize: '4rem', fontWeight: 'bold', marginBottom: '48px'}} textAlign='center'>Heal the World</Material.Typography>
-                    <Material.Typography sx={{mixBlendMode: 'plus-lighter'}} color='inherit'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    <Material.Typography sx={{mixBlendMode: 'plus-lighter'}} fontSize='2rem' textAlign='center' color='inherit'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                    anim id est laborum.Ex sint et fugiat cupidatat velit ipsum et tempor magna ipsum dolor.
-                    Do ullamco in duis quis eu. Incididunt magna minim pariatur pariatur ipsum sit sint ut ex.
-                    Cillum ea non officia ipsum nisi anim quis.</Material.Typography>
+                    aliqua.</Material.Typography>
                     </div>
                 </div>
                 </div>

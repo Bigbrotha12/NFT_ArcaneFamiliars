@@ -1,30 +1,28 @@
-import { Authentication, AppError, IMXBalance } from "../types/IMX";
-import { Familiar } from "../types/familiar";
-import { IController } from "./IController";
-import { IMX } from "./API/IMX";
-import Config from "./constants/AppConfig";
-import { IIMX } from "./API/IIMX";
+import { Authentication, AppError, IMXBalance, Familiar, IController } from "../types";
 import { Link } from "@imtbl/imx-sdk";
 import { hashMessage } from '@ethersproject/hash';
-
-const LinkEndpoint = Config.Mode === "Production" ? Config.API.Link.Mainnet : Config.API.Link.Sandbox;
-const IMXEndpoint = Config.Mode === "Production" ? Config.API.IMX.Mainnet : Config.API.IMX.Sandbox;
-const Collection = Config.Mode === "Production" ? Config.Blockchain.Collection.Mainnet : Config.Blockchain.Collection.Sandbox;
+import axios, { Axios } from "axios";
 
 export class AppController implements IController {
-    cache: {
-        assets: {
-            data: Array<Familiar>,
-            expiration: number
-        }
-    };
-
+    IMXProvider: string;
+    LinkProvider: string;
+    client: Axios;
+        
+    constructor(IMXProvider: string, LinkProvider: string) {
+        this.IMXProvider = IMXProvider;
+        this.LinkProvider = LinkProvider;
+        this.client = axios.create({ 
+            baseURL: IMXProvider, 
+            timeout: 3000,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
     /**
      * Sets up user account connection with IMX Link
      * @returns eth address of user
      */
     async connectIMX(): Promise<[AppError | null, string | null]> {
-        let link: Link = new Link(LinkEndpoint);
+        let link: Link = new Link(this.LinkProvider);
     
         try {
             const userInfo = await link.setup({});
@@ -41,7 +39,7 @@ export class AppController implements IController {
      * @returns signed timestamp from user's wallet.
      */
     async getAuthentication(address: string): Promise<[AppError | null, Authentication | null]> {
-        let link: Link = new Link(LinkEndpoint);
+        let link: Link = new Link(this.LinkProvider);
 
         try {
             const now: string = Math.floor(Date.now()/1000).toString();
@@ -65,37 +63,30 @@ export class AppController implements IController {
      * @param address eth address of user
      * @returns array of familiars the user owns
      */
-    async getUserFamiliars(address: string): Promise<[AppError | null, Array<Familiar> | null]> {
-        const now = Math.floor(Date.now()/1000);
-        if(this.cache && now < this.cache.assets.expiration) {
-            console.log("Returning data from cache");
-            return [null, this.cache.assets.data];
-        }
-
-        let IMXClient: IIMX = new IMX(IMXEndpoint);
-
+    async getUserFamiliars(user: string, collection: string): Promise<[AppError | null, Array<Familiar> | null]> {
         try {
-            console.log("Fetching data from IMX");
-            const familiars = await IMXClient.getNFTAssets(address);
-            this.cache = {
-                assets: {
-                    data: familiars,
-                    expiration: now + (Config.API.IMX.CacheExpiration * 60)
-                }
-            }
+            const URI: string = "/v1/assets";
+            const { data } = await this.client.get(URI, { params: { user, collection } });
+            if (!data) throw new Error("Unable to fetch IMX assets");
+            
+            const familiars = data;
+            console.log(familiars);
             return [null, familiars];
+
         } catch (error) {
             return [{code: error.code || 1, reason: "Unable to fetch user's NFT assets.", stack: error.stack}, null];
         }
     }
 
     async getUserBalances(address: string): Promise<[AppError | null, IMXBalance | null]> {
-        let IMXClient: IIMX = new IMX(IMXEndpoint);
-
         try {
-            const balances: IMXBalance = await IMXClient.getUserBalances(address);
-
+            let URI: string = `/v2/balances/${address}`;
+            const { data } = await this.client.get(URI);
+            if (!data) throw new Error("Unable to fetch asset metadata.");
+            
+            let balances = data;
             return [null, balances];
+            
         } catch (error) {
             return [{code: error.code || 1, reason: "Unable to fetch user's balance.", stack: error.stack}, null];
         }

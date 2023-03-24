@@ -1,94 +1,80 @@
-import { IIMX } from "./IIMX";
-import { IMXBalance, AppError, assetResponseOK, balancesResponseOK, assetRequest } from "../../types/IMX";
-import { Familiar } from "../../types/familiar";
-import AppConfig from "../constants/AppConfig";
-import axios, { Axios } from "axios";
+// import { IIMX } from "./IIMX";
+// import { IMXBalance, AppError, assetResponseOK, balancesResponseOK, assetRequest } from "../../types/IMX";
+// import { Familiar } from "../../types/familiar";
+// import AppConfig from "../constants/AppConfig";
+// import axios, { Axios } from "axios";
 
-const collection: string = AppConfig.Mode === 'Production' ? AppConfig.Blockchain.Collection.Mainnet : AppConfig.Blockchain.Collection.Sandbox;
+// const collection: string = AppConfig.Mode === 'Production' ? AppConfig.Blockchain.Collection.Mainnet : AppConfig.Blockchain.Collection.Sandbox;
 
-export class IMX implements IIMX {
-    provider: string;
-    client: Axios;
+// export class IMX implements IIMX {
+//     provider: string;
+//     client: Axios;
         
-    constructor(provider: string) {
-        this.provider = provider;
-        this.client = axios.create({ 
-            baseURL: provider, 
-            timeout: 3000,
-            headers: { "Content-Type": "application/json" }
-        });
-    }
+//     constructor(provider: string) {
+//         this.provider = provider;
+//         this.client = axios.create({ 
+//             baseURL: provider, 
+//             timeout: 3000,
+//             headers: { "Content-Type": "application/json" }
+//         });
+//     }
     
 
-    // Direct API call
-    // GET method. Parameters: assetRequest, URL-encoded
-    async getNFTAssets(address: string): Promise<Array<Familiar>> {
-        const URI: string = "/v1/assets";
-        const request: assetRequest = { user: address, collection: collection };
+//     // Direct API call
+//     // GET method. Parameters: assetRequest, URL-encoded
 
-        try {
-            const { data } = await this.client.get(URI, {
-                params: request
-            });
-            if (!data) throw new Error("Unable to fetch IMX assets");
+
+//     async getMetadata(id: number): Promise<Familiar> {
+//          const URI: string = `/v1/assets/${collection}/${id}`;
+
+//         try {
+//             const { data } = await this.client.get(URI);
+//             if (!data || !data.metadata) throw new Error("Unable to fetch asset metadata.");
             
-            const result: Array<Familiar> = this.parseAssetResponse(data);
-            return result;
-        } catch (error) {
-            console.error(error);
-            throw new Error("Unable to fetch IMX assets");
-        }
-    }
+//             const result: Familiar = data.metadata;
+//             return result;
+//         } catch (error) {
+//             console.error(error);
+//             throw new Error("Unable to fetch IMX assets.");
+//         }
+//     }
 
-    async getMetadata(id: number): Promise<Familiar> {
-         const URI: string = `/v1/assets/${collection}/${id}`;
+//     async getUserBalances(address: string): Promise<IMXBalance> {
+//         let testAddress = "0xa9541386b554983bc1eb1b62f8a5f0da9c2e02e7";
+//         let URI: string = `/v2/balances/${testAddress}`;
 
-        try {
-            const { data } = await this.client.get(URI);
-            if (!data || !data.metadata) throw new Error("Unable to fetch asset metadata.");
+//         try {
+//             const { data } = await this.client.get(URI);
             
-            const result: Familiar = data.metadata;
-            return result;
-        } catch (error) {
-            console.error(error);
-            throw new Error("Unable to fetch IMX assets.");
-        }
-    }
-
-    async getUserBalances(address: string): Promise<IMXBalance> {
-        let URI: string = `/v2/balances/${address}`;
-
-        try {
-            const { data } = await this.client.get(URI);
-            if (!data || !data.metadata) throw new Error("Unable to fetch asset metadata.");
+//             if (!data) throw new Error("Unable to fetch asset metadata.");
             
-            const [, result] = this.parseUserBalances(data);
-            if (result) return result;
-            else throw new Error("No ETH balance found.");
-        } catch (error) {
-            console.error(error);
-            throw new Error("Unable to fetch IMX assets.");
-        }
-    }
+//             const [, result] = this.parseUserBalances(data);
+//             if (result) return result;
+//             else throw new Error("No ETH balance found.");
+//         } catch (error) {
+//             console.error(error);
+//             throw new Error("Unable to fetch IMX assets.");
+//         }
+//     }
 
-    transferNFT(id: number, recipient: string): Promise<any> {
-        throw new Error(id.toString()+recipient);
-    }
-    importToEthereum(id: number): Promise<any> {
-        throw new Error(id.toString());
-    }
+//     transferNFT(id: number, recipient: string): Promise<any> {
+//         throw new Error(id.toString()+recipient);
+//     }
+//     importToEthereum(id: number): Promise<any> {
+//         throw new Error(id.toString());
+//     }
 
-    // Helper function to retrieve familiar metadata
-    parseAssetResponse(response: assetResponseOK): Array<Familiar> {
-        return response.result?.map( (result) => {
-            return result.metadata;
-        });
-    }
+//     // Helper function to retrieve familiar metadata
+//     parseAssetResponse(response: assetResponseOK): Array<Familiar> {
+//         return response.result?.map( (result) => {
+//             return result.metadata;
+//         });
+//     }
 
-    parseUserBalances(response: balancesResponseOK): [AppError | null, IMXBalance | null] {
-        let ethBalance = response.find((token) => { return token.token_address === ""; });
-        if (!ethBalance) return [{ code: 1, reason: "No ETH balance found." }, null];
+//     parseUserBalances(response: balancesResponseOK): [AppError | null, IMXBalance | null] {
+//         let ethBalance = response.find((token) => { return token.token_address === ""; });
+//         if (!ethBalance) return [{ code: 1, reason: "No ETH balance found." }, null];
         
-        return [null, { available: ethBalance.balance, preparing: ethBalance.preparing_withdrawal, withdrawable: ethBalance.withdrawable }];
-    }
-}
+//         return [null, { available: ethBalance.balance, preparing: ethBalance.preparing_withdrawal, withdrawable: ethBalance.withdrawable }];
+//     }
+// }

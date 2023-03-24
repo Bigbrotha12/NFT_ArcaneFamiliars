@@ -3,6 +3,7 @@ import Material from "../../assets/Material";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/icons/Logo.svg";
 import profilePic from "../../assets/icons/profilePic.png";
+import Login from "./Login";
 
 export default function LandingHeader(props: { items: Array<{title: string, link: string}>}): JSX.Element {
     return (
@@ -26,11 +27,12 @@ export default function LandingHeader(props: { items: Array<{title: string, link
                     <img className="rounded-3xl" src={profilePic} width='45px' height='45px' alt='profile picture' />
                 </div>   
             </div>
-            <p className="hidden md:block text-white mx-3 my-auto">0x9333.54fac</p>
+            {/* <p className="hidden md:block text-white mx-3 my-auto">0x9333.54fac</p> */}
 
-            <div>
+            <Login />
+            {/* <div>
                 <button className='bg-white p-3 rounded-md my-auto' color='inherit'>Connect</button>
-            </div>
+            </div> */}
         </header>
     )
 }
