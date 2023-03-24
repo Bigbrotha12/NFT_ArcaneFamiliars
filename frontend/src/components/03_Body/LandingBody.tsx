@@ -104,6 +104,7 @@ function CharacterCard(props: {cardData: {title: string, subtitle: string, descr
                         relative
                         hover:scale-[1.20]
                         hover:ease-in-out 
+                        hover:z-10
                         duration-200
                         ">
                             <div className="hover:bg-[rgba(32,32,32,0.6)] hover:text-white text-transparent text-sm p-3 absolute top-0 right-0 left-0 bottom-0 ">{data.description}</div>
