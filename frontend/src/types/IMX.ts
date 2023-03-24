@@ -5,6 +5,7 @@ export type IMXClient = {
     disconnect: () => Promise<void>,
     authenticate: () => Promise<void>,
 }
+
 export type IMXBalance = {
     available: string,
     preparing: string,
@@ -23,7 +24,7 @@ export type Authentication = {
     eth_signature: string
 }
 
-export type assetRequest = {
+export type AssetRequest = {
     auxiliary_fee_percentages?: string,     // Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
     auxiliary_fee_recipients?: string       // Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
     buy_orders?: boolean,                   // Set flag to true to fetch an array of buy order details with accepted status associated with the asset
@@ -42,7 +43,7 @@ export type assetRequest = {
     user?: string                           // Ethereum address of the user who owns these assets
 }
 
-export type assetResponseOK = {
+export type AssetResponseOK = {
     cursor: string,                         // Generated cursor returned by previous query
     remaining: number,                      // Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
     result: [                               // Assets matching query parameters
