@@ -1,5 +1,6 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IMXBalance, Familiar, UserData, IMXHandler } from '../types';
+import React from 'react';
+import { IMXBalance, Familiar, UserData, IMXHandler, IMXClient, Authentication } from '../types';
 
 const initialState: UserData = {
     address: '',
@@ -10,6 +11,18 @@ const initialState: UserData = {
     },
     assets: []
 }
+
+const defaultClient: IMXClient = {
+    async connect() {},
+    async disconnect() {},
+    async authenticate() {},
+}
+const defaultAuth: Authentication = {
+    eth_address: '',
+    eth_timestamp: 0,
+    eth_signature: ''
+}
+export const IMX = React.createContext<IMXHandler>([defaultClient, defaultAuth, false,'']);
 
 export const userData = createSlice({
     name: "session",
