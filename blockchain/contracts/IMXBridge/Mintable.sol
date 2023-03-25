@@ -5,7 +5,7 @@ import "./IMintable.sol";
 import "./Minting.sol";
 import "../CommonStorage.sol";
 
-abstract contract Mintable is CommonStorage, IMintable {
+abstract contract Mintable is IMintable {
 
     event AssetMinted(address to, uint256 id, bytes blueprint);
 
