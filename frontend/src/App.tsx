@@ -29,7 +29,7 @@ export default function App(): JSX.Element {
               
               </Route>
               <Route path="/app" element={<Layout />}>
-                  <Route index element={<Welcome />} />
+                  <Route index element={<Frame />} />
                   <Route path="game" element={<Frame />} />
                   <Route path="collection" element={<Collection />} />
                   <Route path="marketplace" element={<ComingSoon />} />

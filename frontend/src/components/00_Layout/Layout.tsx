@@ -18,7 +18,7 @@ export default function Layout() {
       <LandingHeader items={navItems}/>
       <div className="flex flex-row h-full">
         <div className="hidden md:block">
-          <Sidebar />
+          {/* <Sidebar /> */}
         </div>
         
         <Body />
