@@ -28,10 +28,10 @@ const AppConfig = {
       }
     },
     "Unity": {
-      "loader": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.loader.js",
-      "framework": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.framework.js",
-      "code": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.wasm",
-      "data": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.data"
+      "loader": "https://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.loader.js",
+      "framework": "https://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.framework.js",
+      "code": "https://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.wasm",
+      "data": "https://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.data"
     },
     "Blockchain": {
       "IMX": {
@@ -41,7 +41,7 @@ const AppConfig = {
       "Collection": {
         "Sandbox": "0xb7eaa855fa6432d0597f297bace4613c33a075d1",
         "Mainnet": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
-        "Images": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/images/"
+        "Images": "https://my-unity-game.s3-website-us-east-1.amazonaws.com/images/"
       }
     },
     "SiteContent": {
