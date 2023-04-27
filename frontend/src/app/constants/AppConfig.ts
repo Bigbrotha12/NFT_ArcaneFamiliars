@@ -28,10 +28,10 @@ const AppConfig = {
       }
     },
     "Unity": {
-      "loader": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.loader.js",
-      "framework": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.framework.js",
-      "code": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.wasm",
-      "data": "http://my-unity-game.s3-website-us-east-1.amazonaws.com/game/Build.data"
+      "loader": "https://d2kfg9lrtnnxhq.cloudfront.net/Build.loader.js",
+      "framework": "http://d2kfg9lrtnnxhq.cloudfront.net/Build.framework.js",
+      "code": "http://d2kfg9lrtnnxhq.cloudfront.net/Build.wasm",
+      "data": "http://d2kfg9lrtnnxhq.cloudfront.net/Build.data"
     },
     "Blockchain": {
       "IMX": {
