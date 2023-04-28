@@ -45,15 +45,15 @@ export default function UnityCanvas() {
   }, []);
 
   const displayLevelInfo = () => {
-    sendMessage("GameManager", "ReceiveLevelInfo");
+    sendMessage("GameUI", "ReceiveLevelInfo");
   }
 
   const displayLevelSelect = () => {
-    sendMessage("GameManager", "ReceiveLevelSelect");
+    sendMessage("GameUI", "ReceiveLevelSelect");
   }
 
   const restartLevel = () => {
-    sendMessage("GameManager", "ReceiveRestartLevel");
+    sendMessage("GameUI", "ReceiveRestartLevel");
   }
 
   const HideMenu = React.useCallback(async () => {  
