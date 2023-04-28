@@ -11,7 +11,7 @@ import { IMXHandler } from "../../../types";
 export default function UnityCanvas() {
 
   const userAddress: string = useSelector<RootState, string>(state => state.session.address);
-  const [client, auth,,] = React.useContext<IMXHandler>(IMX);
+  const [client,,,] = React.useContext<IMXHandler>(IMX);
 
   const [gameLaunch, setGameLaunch] = React.useState(false);
   const [showGameMenu, setShowGameMenu] = React.useState(false);
@@ -32,11 +32,13 @@ export default function UnityCanvas() {
     if(!userAddress) {
       await client.connect();
     }
-    console.log(userAddress);
-    if(userAddress) {
-      sendMessage("GameManager", "ReceiveWeb3Address", JSON.stringify(userAddress));
-    } 
   }, []);
+
+  React.useEffect(() => {
+    if(userAddress != "") {
+      sendMessage("GameManager", "ReceiveWeb3Address", JSON.stringify(userAddress));
+    }
+  }, [userAddress]);
 
   const ShowMenu = React.useCallback(async () => {  
     setShowGameMenu(true);
