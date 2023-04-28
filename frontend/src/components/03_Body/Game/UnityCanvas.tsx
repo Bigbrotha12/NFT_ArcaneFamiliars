@@ -32,7 +32,7 @@ export default function UnityCanvas() {
     if(!userAddress) {
       await client.connect();
     }
-  
+    console.log(userAddress);
     if(userAddress) {
       sendMessage("GameManager", "ReceiveWeb3Address", JSON.stringify(userAddress));
     } 
