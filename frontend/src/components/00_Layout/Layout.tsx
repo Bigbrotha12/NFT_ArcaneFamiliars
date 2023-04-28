@@ -7,9 +7,9 @@ import Body from "../03_Body/Body";
 // Handles layout
 export default function Layout() {
   const navItems: Array<{ title: string, link: string }> = [
-        { title: "Home", link: "/app" },
-        { title: "Docs", link: "/app" },
-        { title: "Support", link: "/app" },
+        { title: "Home", link: "/" },
+        { title: "Docs", link: "/app/other" },
+        { title: "Support", link: "/app/other" },
         { title: "Play Now", link: "/app" }
     ]
 

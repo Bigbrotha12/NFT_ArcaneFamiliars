@@ -31,7 +31,7 @@ export default function App(): JSX.Element {
               <Route path="/app" element={<Layout />}>
                   <Route index element={<Frame />} />
                   <Route path="game" element={<Frame />} />
-                  <Route path="collection" element={<Collection />} />
+                  <Route path="collection" element={<ComingSoon />} />
                   <Route path="marketplace" element={<ComingSoon />} />
                   <Route path="minter" element={<ComingSoon />} />
                   <Route path="bridge" element={<ComingSoon />} />

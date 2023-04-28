@@ -7,6 +7,7 @@ import Alan from "../../assets/images/Alan.png";
 import Steve from "../../assets/images/Steve.png";
 import Sandy from "../../assets/images/Sandy.png";
 import gameImage from "../../assets/images/gaming-consoles.jpg";
+import { Link } from "react-router-dom";
 
 export default function LandingBody(): JSX.Element {
     return (
@@ -35,25 +36,25 @@ export default function LandingBody(): JSX.Element {
                 </div>
             </section>
 
-            <section id='service-section' className="flex align-middle py-10 pb-12 relative before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:h-3 before:bg-blue-200  after:content-[''] after:absolute after:top-[100%] after:right-0 after:bottom-0 after:left-0 after:h-3 after:bg-orange-200">
+            <section id='service-section' className="flex align-middle py-[10rem] relative before:content-[''] before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:h-3 before:bg-blue-200  after:content-[''] after:absolute after:top-[100%] after:right-0 after:bottom-0 after:left-0 after:h-3 after:bg-orange-200">
                 <div className="my-auto mx-12 text-[#f0f0f0] leading-6">
-                    <h6 className="text-2xl text-bold mb-3">Play in Browser!</h6>
-                    <Material.Typography>
+                    <h6 className="text-[4rem] text-bold mb-12">Play in Browser!</h6>
+                    <Material.Typography sx={{maxWidth: "50%"}}>
                         Adipisicing tempor ut quis aliquip id sunt Lorem. Veniam reprehenderit cupidatat non est sit ea do ut et.
                         Sint ut enim eu magna occaecat laboris et sint dolore eu ipsum sit. Culpa proident ad commodo laboris
                         dolore sit aliquip aute qui.
                     </Material.Typography>
-                    <button className='text-[#f0f0f0] border-[1px] border-[#f0f0f0] rounded-md my-3 px-4 py-2 hover:bg-purple-400'>Play Now</button>
+                    <Link to="/app"><button className='text-[#f0f0f0] border-[1px] border-[#f0f0f0] rounded-md my-3 px-4 py-2 hover:bg-purple-400'>Play Now</button></Link>
                 </div>
             </section>
 
-            <section id='how-to-play-section' className="flex align-middle py-12">
-                <div className="flex flex-col md:flex-row my-auto justify-center px-6 text-[#f0f0f0] leading-6">
+            <section id='how-to-play-section' className="py-[10rem] flex align-middle ">
+                <div className="flex flex-col md:flex-row my-auto justify-center px-8 text-[#f0f0f0] leading-6">
                     <Material.Card sx={{maxWidth: {xs: '100%', md: '30%'}, backgroundColor: '#0000', boxShadow: 'none', marginBottom: '12px'}}>
                         <Material.CardMedia component='img' src={gameImage} width='256px' height='256px' alt='Gaming console' />
                     </Material.Card>
                     <div className="mx-6 md:max-w-[60%]">
-                        <Material.Typography sx={{marginBottom: '2rem'}} variant='h5'>How to Play</Material.Typography>
+                        <Material.Typography sx={{marginBottom: '2rem', fontSize: '4rem'}} variant='h5'>How to Play</Material.Typography>
                         <Material.Typography sx={{marginBottom: '2rem'}}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                             sed do eiusmod tempor incididunt ut labore et dolore magna
@@ -64,7 +65,7 @@ export default function LandingBody(): JSX.Element {
                             cupidatat non proident, sunt in culpa qui officia deserunt mollit
                             anim id est laborum.
                         </Material.Typography>
-                        <Material.Button sx={{color: '#f0f0f0', borderColor: '#f0f0f0', marginBottom: '12px'}} variant='outlined'>Play Now</Material.Button>
+                        <Link to="/app"><Material.Button sx={{color: '#f0f0f0', borderColor: '#f0f0f0', marginBottom: '12px'}} variant='outlined'>Play Now</Material.Button></Link>
                     </div>
                     
                     

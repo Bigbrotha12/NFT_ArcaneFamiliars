@@ -1,11 +1,12 @@
 import React from "react";
+import Material from "../../assets/Material";
 
 export default function ComingSoon(): JSX.Element {
     return (
-        <div className="flex justify-center items-center h-full w-4/5 relative">
-            <h1>
-                This Feature is Coming Soon
-            </h1>
+        <div className="flex justify-center min-h-screen w-4/5 relative">
+            <Material.Typography sx={{fontSize: "4rem", color: "white", marginBlock: "auto" }}>
+                Not Available is Demo Version.
+            </Material.Typography>
         </div>
     ); 
 }
